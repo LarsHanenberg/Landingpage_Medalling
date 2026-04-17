@@ -93,7 +93,7 @@
                     .every(v => typeof v === "string" && v.trim().length > 0);
 
             if (!isValid) {
-                setPreorderStatus(status, "Vul alle velden in voordat je verzendt.", "error");
+                setPreorderStatus(status, "Vul alle velde in voordat je verzendt.", "error");
                 return;
             }
 
