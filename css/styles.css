@@ -501,6 +501,36 @@ textarea:focus {
     border-color: var(--color-blue);
 }
 
+.preorder-form {
+    display: grid;
+    gap: 16px;
+}
+
+.preorder-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.preorder-status {
+    min-height: 24px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.preorder-status.is-loading {
+    color: var(--color-brown-soft);
+}
+
+.preorder-status.is-success {
+    color: #1f7a42;
+}
+
+.preorder-status.is-error {
+    color: #b42318;
+}
+
 .page-main {
     padding-top: var(--space-5);
 }

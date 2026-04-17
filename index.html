@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medalling | Home</title>
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/analytics.js"></script>
     <script src="js/main.js" defer></script>
+    <script src="js/preorder.js" defer></script>
 </head>
 <body>
     <header class="site-header">
@@ -111,7 +111,7 @@
        
         <div style="flex: 1;">
             <h2 style="text-align: left;"> Design 3 - Hybride </h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+            <p>Design 3 combineert </p>
         </div>
 
         <div style="flex: 1; margin-top: 2%;">
@@ -197,42 +197,40 @@
         </div>
 
         <div style="flex: 1; margin-top: 50px;">
-            <div>
-                <label for="fname">Voornaam:</label>
-            <input type="text" id="fname" name="fname" placeholder="Voornaam" required>
-            </div>
+            <form id="preorder-form" class="preorder-form">
+                <div>
+                    <label for="fname">Voornaam:</label>
+                    <input type="text" id="fname" name="fname" placeholder="Voornaam" required>
+                </div>
 
-            <br>
+                <div>
+                    <label for="lname">Achternaam:</label>
+                    <input type="text" id="lname" name="lname" placeholder="Achternaam" required>
+                </div>
 
-            <div>
-                <label for="lname">Achternaam:</label>
-                <input type="text" id="lname" name="lname" placeholder="Achternaam" required>
-            </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="email@voorbeeld.com" required>
+                </div>
+                
+                <div>
+                    <label for="design">Designkeuze:</label>
+                    <select id="design" name="design" required>
+                        <option value="">--Kies een design--</option>
+                        <option value="Design 1">Design 1</option>
+                        <option value="Design 2">Design 2</option>
+                        <option value="Design 3">Design 3</option>
+                        <option value="Design 4">Design 4</option>
+                    </select>
+                </div>
 
-            <br>
+                <p id="preorder-status" class="preorder-status" aria-live="polite"></p>
 
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="email@voorbeeld.com" required>
-            </div>
-
-            <br>
-            
-            <div>
-                <label for="Design">Designkeuze:</label>
-                <select id="Design" name="Design" required>
-                    <option value="">--Kies een design--</option>
-                    <option value="Design 1">Design 1</option>
-                    <option value="Design 2">Design 2</option>
-                    <option value="Design 3">Design 3</option>
-                    <option value="Design 4">Design 4</option>
-                </select>
-            </div>
-
-            <div style="margin-top: 20px;">
-                <button type="submit">Bevestigen</button>
-                <button type="reset">Resetten</button>
-            </div>
+                <div class="preorder-actions">
+                    <button type="submit">Bevestigen</button>
+                    <button type="reset">Resetten</button>
+                </div>
+            </form>
         </div>
     </div>    
 </main>
