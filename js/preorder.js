@@ -77,10 +77,10 @@
             const submitButton = form.querySelector('button[type="submit"]');
             const formData = new FormData(form);
             const payload = {
-                name: formData.get("fname")?.toString().trim(),
-                surname: formData.get("lname")?.toString().trim(),
+                fname: formData.get("fname")?.toString().trim(),
+                lname: formData.get("lname")?.toString().trim(),
                 email: formData.get("email")?.toString().trim(),
-                preferred_design: formData.get("design")?.toString().trim()
+                design: formData.get("design")?.toString().trim()
             };
 
             if (!payload.name || !payload.surname || !payload.email || !payload.preferred_design) {
