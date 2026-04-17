@@ -20,27 +20,38 @@ async function submitPreorder(payload) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Accept: "application/json",
             apikey: SUPABASE_ANON_KEY,
             Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-            Prefer: "return=minimal"
+            Prefer: "return=representation"
         },
         body: JSON.stringify(payload)
     });
 
-    if (!response.ok) {
-        let errorMessage = "Er ging iets mis bij het opslaan van je aanvraag.";
+    const responseText = await response.text();
+    let responseData = null;
 
+    if (responseText) {
         try {
-            const errorData = await response.json();
-            if (errorData?.message) {
-                errorMessage = errorData.message;
-            }
+            responseData = JSON.parse(responseText);
         } catch (error) {
-            // Ignore JSON parse errors and use the default message.
+            responseData = responseText;
+        }
+    }
+
+    if (!response.ok) {
+        let errorMessage = `Supabase fout (${response.status} ${response.statusText}).`;
+
+        if (responseData && typeof responseData === "object" && "message" in responseData) {
+            errorMessage = `${errorMessage} ${responseData.message}`;
+        } else if (typeof responseData === "string" && responseData.trim()) {
+            errorMessage = `${errorMessage} ${responseData}`;
         }
 
         throw new Error(errorMessage);
     }
+
+    return responseData;
 }
 
 function setupPreorderForm() {
@@ -72,11 +83,17 @@ function setupPreorderForm() {
             preferred_design: formData.get("design")?.toString().trim()
         };
 
+        if (!payload.name || !payload.surname || !payload.email || !payload.preferred_design) {
+            setPreorderStatus(status, "Vul alle velden in voordat je verzendt.", "error");
+            return;
+        }
+
         submitButton.disabled = true;
         setPreorderStatus(status, "Je gegevens worden opgeslagen...", "loading");
 
         try {
-            await submitPreorder(payload);
+            const insertedRows = await submitPreorder(payload);
+            console.log("Preorder opgeslagen in Supabase:", insertedRows);
             form.reset();
             setPreorderStatus(status, "Je pre-order is opgeslagen. Bedankt!", "success");
         } catch (error) {
