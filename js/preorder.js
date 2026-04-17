@@ -83,7 +83,7 @@
                 design: formData.get("design")?.toString().trim()
             };
 
-            if (!payload.name || !payload.surname || !payload.email || !payload.preferred_design) {
+            if (!payload.fname || !payload.lname || !payload.email || !payload.design) {
                 setPreorderStatus(status, "Vul alle velden in voordat je verzendt.", "error");
                 return;
             }
