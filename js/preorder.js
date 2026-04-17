@@ -82,11 +82,21 @@
                 email: formData.get("email")?.toString().trim(),
                 design: formData.get("design")?.toString().trim()
             };
-
+            /*
             if (!payload.fname || !payload.lname || !payload.email || !payload.design) {
                 setPreorderStatus(status, "Vul alle velden in voordat je verzendt.", "error");
                 return;
             }
+            */
+            const isValid =
+                [payload.fname, payload.lname, payload.email, payload.design]
+                    .every(v => typeof v === "string" && v.trim().length > 0);
+
+            if (!isValid) {
+                setPreorderStatus(status, "Vul alle velden in voordat je verzendt.", "error");
+                return;
+            }
+
 
             submitButton.disabled = true;
             setPreorderStatus(status, "Je gegevens worden opgeslagen...", "loading");
