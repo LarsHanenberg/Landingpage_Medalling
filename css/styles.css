@@ -684,11 +684,13 @@ textarea:focus {
 
     .brand-link img,
     .site-header img {
-        width: 104px;
+        width: 72px;
+        max-width: 72px;
     }
 
     .brand-link {
-        width: 100%;
+        width: auto;
+        flex: 0 0 auto;
         justify-content: center;
     }
 
