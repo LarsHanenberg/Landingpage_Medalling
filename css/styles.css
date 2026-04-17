@@ -726,14 +726,9 @@ textarea:focus {
     }
 
     .site-nav a,
-    .site-header a {
+    .site-header > div > div:last-child a {
         width: 100%;
         justify-content: flex-start;
-    }
-
-    .site-nav a:first-child,
-    .site-header a:first-child {
-        margin-top: 0;
     }
 
     main {
