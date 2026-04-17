@@ -677,11 +677,19 @@ textarea:focus {
 
     .site-header > div {
         align-items: center !important;
+        justify-content: center;
+        flex-wrap: wrap;
+        position: relative;
     }
 
     .brand-link img,
     .site-header img {
         width: 104px;
+    }
+
+    .brand-link {
+        width: 100%;
+        justify-content: center;
     }
 
     .site-header > div,
@@ -691,7 +699,7 @@ textarea:focus {
 
     .menu-toggle {
         display: inline-flex;
-        margin-left: auto;
+        margin: 0 auto;
     }
 
     .site-nav,
