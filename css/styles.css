@@ -152,58 +152,36 @@ main > * + * {
 
 .menu-toggle {
     display: none;
-    width: 48px;
+    min-width: 48px;
     height: 48px;
+    padding: 0 14px;
     border: 1px solid rgba(90, 70, 58, 0.12);
     border-radius: 14px;
     background: #fff;
     cursor: pointer;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     box-shadow: var(--shadow-card);
 }
 
-.menu-toggle span {
-    position: relative;
-    width: 22px;
-    height: 2px;
-    background: var(--color-brown);
-    border-radius: 99px;
-    transition: background-color 0.2s ease;
+.menu-toggle__label {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-brown);
 }
 
-.menu-toggle span::before,
-.menu-toggle span::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 22px;
-    height: 2px;
-    background: var(--color-brown);
-    border-radius: 99px;
-    transition: transform 0.2s ease, top 0.2s ease;
+.menu-toggle__chevron {
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--color-brown);
+    border-bottom: 2px solid var(--color-brown);
+    transform: rotate(45deg) translateY(-1px);
+    transition: transform 0.2s ease;
 }
 
-.menu-toggle span::before {
-    top: -7px;
-}
-
-.menu-toggle span::after {
-    top: 7px;
-}
-
-.menu-toggle[aria-expanded="true"] span {
-    background: transparent;
-}
-
-.menu-toggle[aria-expanded="true"] span::before {
-    top: 0;
-    transform: rotate(45deg);
-}
-
-.menu-toggle[aria-expanded="true"] span::after {
-    top: 0;
-    transform: rotate(-45deg);
+.menu-toggle[aria-expanded="true"] .menu-toggle__chevron {
+    transform: rotate(-135deg) translateY(-1px);
 }
 
 .hero {
@@ -697,6 +675,15 @@ textarea:focus {
         padding: 12px 16px;
     }
 
+    .site-header > div {
+        align-items: center !important;
+    }
+
+    .brand-link img,
+    .site-header img {
+        width: 104px;
+    }
+
     .site-header > div,
     .nav-shell {
         gap: var(--space-2);
@@ -732,6 +719,11 @@ textarea:focus {
     .site-header a {
         width: 100%;
         justify-content: flex-start;
+    }
+
+    .site-nav a:first-child,
+    .site-header a:first-child {
+        margin-top: 0;
     }
 
     main {

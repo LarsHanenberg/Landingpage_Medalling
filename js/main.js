@@ -144,7 +144,7 @@ function setupHeader(header) {
         toggle.setAttribute("aria-expanded", "false");
         toggle.setAttribute("aria-controls", nav.id);
         toggle.setAttribute("aria-label", "Open navigatiemenu");
-        toggle.innerHTML = "<span></span>";
+        toggle.innerHTML = '<span class="menu-toggle__label">Menu</span><span class="menu-toggle__chevron" aria-hidden="true"></span>';
 
         toggle.addEventListener("click", () => {
             const isOpen = header.classList.toggle("is-open");
@@ -160,6 +160,28 @@ function setupHeader(header) {
                 toggle.setAttribute("aria-expanded", "false");
                 toggle.setAttribute("aria-label", "Open navigatiemenu");
             });
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!header.classList.contains("is-open")) {
+                return;
+            }
+
+            if (header.contains(event.target)) {
+                return;
+            }
+
+            header.classList.remove("is-open");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Open navigatiemenu");
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 768 && header.classList.contains("is-open")) {
+                header.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                toggle.setAttribute("aria-label", "Open navigatiemenu");
+            }
         });
     }
 
