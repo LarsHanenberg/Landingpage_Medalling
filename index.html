@@ -82,9 +82,24 @@
         </div>
     </div>
 
+    <!-- Changed: added a visible event highlight section for Halve Marathon Veghel. -->
+    <section class="event-highlight" aria-labelledby="event-highlight-title">
+        <div class="event-highlight__logo" aria-hidden="true">HMV</div>
+        <div class="event-highlight__content">
+            <p class="event-highlight__eyebrow">Aankomend Event</p>
+            <h2 id="event-highlight-title">Halve Marathon Veghel</h2>
+            <p class="event-highlight__meta">31 May</p>
+            <p class="event-highlight__text">
+                Medalling is erbij tijdens de Halve Marathon Veghel. Ontdek onze designs en laat je inspireren
+                door een sportmoment dat het verdient om zichtbaar te blijven.
+            </p>
+        </div>
+    </section>
+
     <h1 style="text-align: center;"><b>Designs</b></h1>
 
-    <div style="display: flex; justify-content: space-between; text-align: left; gap: 3%;">
+    <!-- Changed: kept the existing desktop layout and marked it as desktop-only on mobile. -->
+    <div class="designs-desktop" style="display: flex; justify-content: space-between; text-align: left; gap: 3%;">
         <div style="flex: 1;">
             <h2 style="text-align: left;"> Design 1 - Modern </h2>
             <p>Design 1 geeft een moderne look, in dit design is zichtbaar dat het bovenaanzicht van de stad weergeven wordt waarin het parcours in het rood ingekleurd is. Aan de linkse kant is je naam, tijd en locatie zichtbaar. Aan de rechtse kant wordt een persoonlijke foto in het design verwerkt.</p>
@@ -104,7 +119,8 @@
         </div>
     </div>
 
-    <div style="display: flex; justify-content: space-between; text-align: left; gap: 5%;">
+    <!-- Changed: kept the existing desktop layout and marked it as desktop-only on mobile. -->
+    <div class="designs-desktop" style="display: flex; justify-content: space-between; text-align: left; gap: 5%;">
        <div style="flex: 1; margin-top: 4%;">
             <img src="images/Design 3.png" style="width: 100%;">
         </div>
@@ -123,6 +139,33 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
         </div>
     </div>
+
+    <!-- Changed: added a mobile-only designs stack so each title, text, and image stays grouped correctly on phones. -->
+    <section class="designs-mobile" aria-label="Designs mobiel">
+        <article class="design-card-mobile">
+            <h2>Design 1 - Modern</h2>
+            <p>Design 1 geeft een moderne look, in dit design is zichtbaar dat het bovenaanzicht van de stad weergeven wordt waarin het parcours in het rood ingekleurd is. Aan de linkse kant is je naam, tijd en locatie zichtbaar. Aan de rechtse kant wordt een persoonlijke foto in het design verwerkt.</p>
+            <img src="images/Design 1.png" alt="Design 1 - Modern">
+        </article>
+
+        <article class="design-card-mobile">
+            <h2>Design 2 - Simpel</h2>
+            <p>Design 2 biedt een eenvoudig maar stijlvol ontwerp, waarbij vergelijkbaar als design 1 het parcours, persoonlijke foto en je naam, tijd en locatie weergeven wordt. Vanwege de lichte kleuren springt de medaille uit het design.</p>
+            <img src="images/Design 2.png" alt="Design 2 - Simpel">
+        </article>
+
+        <article class="design-card-mobile">
+            <h2>Design 3 - Hybride</h2>
+            <p>Design 3 combineert </p>
+            <img src="images/Design 3.png" alt="Design 3 - Hybride">
+        </article>
+
+        <article class="design-card-mobile">
+            <h2>Design 4 - Parcours</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+            <img src="images/Design 4.png" alt="Design 4 - Parcours">
+        </article>
+    </section>
 <!--comment
     <div style="display: flex; justify-content: space-between; text-align: left; gap: 1%;">
         <h2 style="flex: 1; text-align: center;"> Design 1 - Modern </h2>

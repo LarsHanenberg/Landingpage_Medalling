@@ -119,16 +119,7 @@ function setupHeader(header) {
 
     nav.id = nav.id || "site-navigation";
 
-    const existingLabels = Array.from(nav.querySelectorAll("a")).map((link) =>
-        link.textContent.trim().toLowerCase()
-    );
-
-    if (!existingLabels.includes("home")) {
-        const homeLink = document.createElement("a");
-        homeLink.href = makeRelativePath("/index.html");
-        homeLink.textContent = "Home";
-        nav.insertBefore(homeLink, nav.firstChild);
-    }
+    // Changed: do not inject a redundant "Home" navigation item because the logo already links home.
 
     Array.from(nav.querySelectorAll("a")).forEach((link) => {
         const text = link.textContent.trim().toLowerCase();
@@ -144,7 +135,8 @@ function setupHeader(header) {
         toggle.setAttribute("aria-expanded", "false");
         toggle.setAttribute("aria-controls", nav.id);
         toggle.setAttribute("aria-label", "Open navigatiemenu");
-        toggle.innerHTML = '<span class="menu-toggle__label">Menu</span><span class="menu-toggle__chevron" aria-hidden="true"></span>';
+        // Changed: replace the mobile "Menu" label with a hamburger icon while keeping the same toggle behavior.
+        toggle.innerHTML = '<span class="menu-toggle__icon" aria-hidden="true"></span>';
 
         toggle.addEventListener("click", () => {
             const isOpen = header.classList.toggle("is-open");

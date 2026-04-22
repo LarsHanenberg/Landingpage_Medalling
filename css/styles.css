@@ -152,36 +152,59 @@ main > * + * {
 
 .menu-toggle {
     display: none;
-    min-width: 48px;
+    width: 48px;
     height: 48px;
-    padding: 0 14px;
+    padding: 0;
     border: 1px solid rgba(90, 70, 58, 0.12);
     border-radius: 14px;
     background: #fff;
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     box-shadow: var(--shadow-card);
 }
 
-.menu-toggle__label {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--color-brown);
+.menu-toggle__icon {
+    position: relative;
+    width: 20px;
+    height: 2px;
+    background: var(--color-brown);
+    border-radius: 99px;
+    transition: background-color 0.2s ease;
 }
 
-.menu-toggle__chevron {
-    width: 10px;
-    height: 10px;
-    border-right: 2px solid var(--color-brown);
-    border-bottom: 2px solid var(--color-brown);
-    transform: rotate(45deg) translateY(-1px);
-    transition: transform 0.2s ease;
+.menu-toggle__icon::before,
+.menu-toggle__icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 20px;
+    height: 2px;
+    background: var(--color-brown);
+    border-radius: 99px;
+    transition: transform 0.2s ease, top 0.2s ease;
 }
 
-.menu-toggle[aria-expanded="true"] .menu-toggle__chevron {
-    transform: rotate(-135deg) translateY(-1px);
+.menu-toggle__icon::before {
+    top: -6px;
+}
+
+.menu-toggle__icon::after {
+    top: 6px;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__icon {
+    background: transparent;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__icon::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle__icon::after {
+    top: 0;
+    transform: rotate(-45deg);
 }
 
 .hero {
@@ -310,6 +333,54 @@ main > * + * {
 
 .hero-cta {
     margin-top: var(--space-3);
+}
+
+.event-highlight {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: linear-gradient(135deg, rgba(30, 78, 216, 0.08), rgba(255, 250, 244, 0.96));
+    border: 1px solid rgba(30, 78, 216, 0.12);
+    border-radius: 28px;
+    box-shadow: var(--shadow-card);
+}
+
+.event-highlight__logo {
+    width: 92px;
+    aspect-ratio: 1 / 1;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    background: linear-gradient(135deg, var(--color-blue), #4e77e6);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    box-shadow: 0 16px 32px rgba(30, 78, 216, 0.18);
+}
+
+.event-highlight__eyebrow {
+    margin-bottom: 6px;
+    color: var(--color-blue);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.event-highlight__meta {
+    margin-bottom: 8px;
+    color: var(--color-brown);
+    font-weight: 700;
+}
+
+.event-highlight__text {
+    margin: 0;
+    color: var(--color-brown-soft);
+}
+
+.designs-mobile {
+    display: none;
 }
 
 main > div[style*="text-align: center"][style*="gap: 40px"] {
@@ -677,8 +748,8 @@ textarea:focus {
 
     .site-header > div {
         align-items: center !important;
-        justify-content: center;
-        flex-wrap: wrap;
+        justify-content: space-between;
+        flex-wrap: nowrap;
         position: relative;
     }
 
@@ -691,7 +762,7 @@ textarea:focus {
     .brand-link {
         width: auto;
         flex: 0 0 auto;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
     .site-header > div,
@@ -701,7 +772,8 @@ textarea:focus {
 
     .menu-toggle {
         display: inline-flex;
-        margin: 0 auto;
+        margin-left: auto;
+        flex: 0 0 auto;
     }
 
     .site-nav,
@@ -729,6 +801,16 @@ textarea:focus {
     .site-header > div > div:last-child a {
         width: 100%;
         justify-content: flex-start;
+    }
+
+    .event-highlight {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: var(--space-3);
+    }
+
+    .event-highlight__logo {
+        margin: 0 auto;
     }
 
     main {
@@ -807,6 +889,38 @@ textarea:focus {
 
     .hero-description {
         font-size: 1rem;
+    }
+
+    /* Changed: keep the original design rows for desktop only and use the corrected mobile card stack on phones. */
+    .designs-desktop {
+        display: none !important;
+    }
+
+    .designs-mobile {
+        display: grid;
+        gap: var(--space-3);
+    }
+
+    .design-card-mobile {
+        padding: 24px 20px;
+        background: rgba(255, 250, 244, 0.9);
+        border: 1px solid rgba(90, 70, 58, 0.12);
+        border-radius: 24px;
+        box-shadow: var(--shadow-card);
+    }
+
+    .design-card-mobile h2 {
+        text-align: left;
+    }
+
+    .design-card-mobile p {
+        color: var(--color-brown-soft);
+    }
+
+    .design-card-mobile img {
+        width: 100%;
+        border-radius: 18px;
+        margin-top: 8px;
     }
 
     main > div[style*="display: flex"] {
