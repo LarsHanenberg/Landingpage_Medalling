@@ -120,7 +120,7 @@ main > * + * {
 .site-header > div > div:last-child {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 12px;
     flex: 1;
     flex-wrap: wrap;
@@ -388,6 +388,37 @@ main > * + * {
     gap: var(--space-3);
 }
 
+.design-slider {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(260px, 82%);
+    gap: var(--space-2);
+    overflow-x: auto;
+    padding: 4px 2px 10px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+}
+
+.design-slide {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    box-shadow: var(--shadow-card);
+    scroll-snap-align: start;
+}
+
+.design-slide img {
+    width: 100%;
+    border-radius: 18px;
+}
+
+.design-slide__body p {
+    color: var(--color-brown-soft);
+}
+
 .bullet-list {
     margin: 0;
     padding-left: 20px;
@@ -562,6 +593,34 @@ textarea:focus {
     display: none;
 }
 
+.site-nav,
+.site-header > div > div:last-child {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 16px;
+    right: 16px;
+    display: none !important;
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-2);
+    background: rgba(255, 250, 244, 0.98);
+    border: 1px solid rgba(90, 70, 58, 0.12);
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    z-index: 10;
+}
+
+.site-header.is-open .site-nav,
+.site-header.is-open > div > div:last-child {
+    display: flex !important;
+}
+
+.site-nav a,
+.site-header > div > div:last-child a {
+    width: 100%;
+    justify-content: flex-start;
+}
+
 @media (min-width: 769px) {
     :root {
         --header-height: 88px;
@@ -600,10 +659,24 @@ textarea:focus {
     .site-header > div > div:last-child {
         display: flex !important;
         position: static;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
         background: transparent;
         box-shadow: none;
         border: 0;
         padding: 0;
+        left: auto;
+        right: auto;
+        top: auto;
+        width: auto;
+    }
+
+    .site-nav a,
+    .site-header > div > div:last-child a {
+        width: auto;
+        justify-content: center;
+        white-space: nowrap;
     }
 
     .hero {
@@ -705,6 +778,11 @@ textarea:focus {
     .section-grid--three,
     .steps-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .design-slider {
+        grid-auto-columns: minmax(260px, 1fr);
+        grid-template-columns: repeat(4, minmax(260px, 1fr));
     }
 
     .event-highlight {
