@@ -625,12 +625,99 @@ textarea:focus {
 
 .designs-desktop,
 .designs-mobile,
-.stats-grid,
-.page-main,
-.page-hero,
-.detail-layout,
-.footer-note {
+.stats-grid {
     display: none;
+}
+
+.page-main {
+    width: min(calc(100% - 24px), var(--container));
+    margin: 0 auto;
+    padding: var(--space-4) 0 var(--space-5);
+}
+
+.page-main > * + * {
+    margin-top: var(--space-4);
+}
+
+.page-hero {
+    display: grid;
+    gap: var(--space-3);
+    align-items: center;
+}
+
+.page-hero__eyebrow {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: var(--color-gold);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.page-hero__title {
+    font-size: clamp(2.2rem, 8vw, 3.6rem);
+}
+
+.page-hero__lead {
+    max-width: 60ch;
+    color: var(--color-brown-soft);
+}
+
+.page-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: var(--space-3);
+}
+
+.page-image-card,
+.full-width-card,
+.design-overview-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    box-shadow: var(--shadow-card);
+}
+
+.page-image-card {
+    padding: var(--space-2);
+}
+
+.page-image-card img {
+    width: 100%;
+    border-radius: 18px;
+}
+
+.full-width-card,
+.design-overview-card {
+    padding: var(--space-3);
+}
+
+.detail-layout {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.design-overview-card {
+    display: grid;
+    gap: var(--space-2);
+}
+
+.design-overview-card img {
+    width: 100%;
+    border-radius: 18px;
+}
+
+.design-overview-card p,
+.full-width-card p,
+.footer-note {
+    color: var(--color-brown-soft);
+}
+
+.footer-note {
+    text-align: center;
+    margin-bottom: 0;
 }
 
 .site-nav,
@@ -672,6 +759,15 @@ textarea:focus {
     }
 
     main > * + * {
+        margin-top: var(--space-5);
+    }
+
+    .page-main {
+        width: min(calc(100% - 48px), var(--container));
+        padding: calc(var(--space-5) + var(--space-2)) 0 var(--space-6);
+    }
+
+    .page-main > * + * {
         margin-top: var(--space-5);
     }
 
@@ -813,6 +909,11 @@ textarea:focus {
 
     .section-grid,
     .solution-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .page-hero,
+    .detail-layout {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
