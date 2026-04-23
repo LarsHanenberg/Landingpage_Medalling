@@ -1,8 +1,8 @@
-const GA_MEASUREMENT_ID = "G-44BLRLP6CE"; 
+const GA_MEASUREMENT_ID = "G-44BLRLP6CE";
 
 function setupGoogleAnalytics(measurementId) {
     const trimmedId = measurementId.trim();
-    const hasPlaceholderId = trimmedId === "G-44BLRLP6CE";
+    const hasPlaceholderId = trimmedId === "G-XXXXXXXXXX";
 
     if (!trimmedId || hasPlaceholderId) {
         console.info(
@@ -17,14 +17,14 @@ function setupGoogleAnalytics(measurementId) {
         window.dataLayer.push(arguments);
     }
 
-    window.gtag = gtag;
-    gtag("js", new Date());
-    gtag("config", trimmedId);
-
     const script = document.createElement("script");
     script.async = true;
     script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(trimmedId)}`;
     document.head.appendChild(script);
+
+    window.gtag = gtag;
+    gtag("js", new Date());
+    gtag("config", trimmedId);
 }
 
 setupGoogleAnalytics(GA_MEASUREMENT_ID);

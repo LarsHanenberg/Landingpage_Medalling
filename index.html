@@ -15,6 +15,7 @@
     <meta property="og:image" content="https://medailledesign.nl/images/Design%201.png">
     <meta property="og:image:alt" content="Modern medaillehouder design van Medalling voor sportmedailles">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/analytics.js"></script>
     <script src="js/main.js" defer></script>
     <script src="js/preorder.js" defer></script>
     <script type="application/ld+json">
@@ -217,6 +218,13 @@
                         </select>
                     </div>
 
+                    <label class="checkbox-field" for="terms">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <span>
+                            Ik ga akkoord met de <a href="pages/AlgemeneVoorwaarden.html">algemene voorwaarden</a>.
+                        </span>
+                    </label>
+
                     <p id="preorder-status" class="preorder-status" aria-live="polite"></p>
 
                     <div class="preorder-actions">
@@ -226,5 +234,20 @@
             </div>
         </section>
     </main>
+
+    <footer class="site-footer">
+        <div class="site-footer__inner">
+            <div>
+                <p class="site-footer__title">Medalling</p>
+                <p class="site-footer__text">Medaille herinneringen voor sporters, met ruimte voor trots en verhaal.</p>
+            </div>
+            <div class="site-footer__links" aria-label="Contact en socials">
+                <a href="mailto:info@medailledesign.nl">info@medailledesign.nl</a>
+                <a href="https://www.instagram.com/medalling" target="_blank" rel="noreferrer">Instagram</a>
+                <a href="https://www.linkedin.com/company/medalling" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a href="pages/AlgemeneVoorwaarden.html">Algemene voorwaarden</a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

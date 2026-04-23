@@ -65,6 +65,11 @@
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
 
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
             if (SUPABASE_ANON_KEY === "PASTE_YOUR_SUPABASE_ANON_KEY_HERE") {
                 setPreorderStatus(
                     status,
@@ -82,18 +87,13 @@
                 email: formData.get("email")?.toString().trim(),
                 design: formData.get("design")?.toString().trim()
             };
-            /*
-            if (!payload.fname || !payload.lname || !payload.email || !payload.design) {
-                setPreorderStatus(status, "Vul alle velden in voordat je verzendt.", "error");
-                return;
-            }
-            */
+
             const isValid =
                 [payload.fname, payload.lname, payload.email, payload.design]
                     .every(v => typeof v === "string" && v.trim().length > 0);
 
             if (!isValid) {
-                setPreorderStatus(status, "Vul alle velde in voordat je verzendt.", "error");
+                setPreorderStatus(status, "Vul alle velden in voordat je verzendt.", "error");
                 return;
             }
 
