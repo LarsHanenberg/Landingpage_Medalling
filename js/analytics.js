@@ -1,8 +1,8 @@
-const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
+const GA_MEASUREMENT_ID = "G-44BLRLP6CE"; 
 
 function setupGoogleAnalytics(measurementId) {
     const trimmedId = measurementId.trim();
-    const hasPlaceholderId = trimmedId === "G-XXXXXXXXXX";
+    const hasPlaceholderId = trimmedId === "G-44BLRLP6CE";
 
     if (!trimmedId || hasPlaceholderId) {
         console.info(
