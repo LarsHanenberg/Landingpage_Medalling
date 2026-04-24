@@ -231,13 +231,13 @@ main > * + * {
     position: absolute;
     left: 50%;
     bottom: 0;
-    width: min(130%, 860px);
+    width: min(138%, 940px);
     height: 100%;
     object-fit: contain;
     object-position: center;
     transform: translateX(-50%);
     opacity: 0;
-    filter: saturate(1.02) drop-shadow(0 36px 64px rgba(0, 0, 0, 0.28));
+    filter: saturate(1.08) brightness(1.02) drop-shadow(0 36px 64px rgba(0, 0, 0, 0.2));
     animation: heroFade 16s infinite;
 }
 
@@ -263,11 +263,11 @@ main > * + * {
 
 @keyframes heroFade {
     0% {
-        opacity: 0.55;
+        opacity: 0.8;
         transform: translateX(-50%) scale(1.02);
     }
     22% {
-        opacity: 0.55;
+        opacity: 0.8;
         transform: translateX(-50%) scale(1);
     }
     28% {
@@ -283,7 +283,9 @@ main > * + * {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(20, 15, 12, 0.34) 0%, rgba(20, 15, 12, 0.68) 100%);
+    background:
+        linear-gradient(180deg, rgba(20, 15, 12, 0.18) 0%, rgba(20, 15, 12, 0.44) 100%),
+        linear-gradient(90deg, rgba(20, 15, 12, 0.48) 0%, rgba(20, 15, 12, 0.24) 46%, rgba(20, 15, 12, 0.14) 100%);
 }
 
 .hero-content {
@@ -292,7 +294,12 @@ main > * + * {
     width: min(100%, 520px);
     margin: 0 auto;
     text-align: center;
-    padding-bottom: 24px;
+    padding: 28px 22px;
+    border: 1px solid rgba(255, 248, 240, 0.12);
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(32, 24, 20, 0.5), rgba(32, 24, 20, 0.28));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
 }
 
 .hero-kicker {
@@ -474,6 +481,80 @@ main > * + * {
 .event-highlight__text,
 .final-cta p {
     color: var(--color-brown-soft);
+}
+
+.comparison-grid {
+    display: grid;
+    gap: var(--space-3);
+}
+
+.comparison-card {
+    padding: var(--space-3);
+    border-radius: 24px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
+}
+
+.comparison-card--problem {
+    background: linear-gradient(180deg, rgba(188, 59, 47, 0.08), rgba(255, 250, 244, 0.96));
+    border-color: rgba(188, 59, 47, 0.18);
+}
+
+.comparison-card--solution {
+    background: linear-gradient(180deg, rgba(31, 122, 66, 0.08), rgba(255, 250, 244, 0.96));
+    border-color: rgba(31, 122, 66, 0.18);
+}
+
+.comparison-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 8px 14px;
+    margin-bottom: 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.comparison-badge--problem {
+    background: rgba(188, 59, 47, 0.12);
+    color: #a13b31;
+}
+
+.comparison-badge--solution {
+    background: rgba(31, 122, 66, 0.12);
+    color: #1f7a42;
+}
+
+.comparison-list {
+    margin: 0;
+    padding-left: 20px;
+    color: var(--color-brown-soft);
+}
+
+.comparison-list li + li {
+    margin-top: 10px;
+}
+
+.usp-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.usp-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    margin-bottom: var(--space-2);
+    border-radius: 14px;
+    background: rgba(30, 78, 216, 0.1);
+    color: var(--color-blue);
+    font-weight: 800;
+    letter-spacing: 0.04em;
 }
 
 .step-number {
@@ -891,7 +972,7 @@ textarea:focus {
         width: min(100%, 620px);
         margin: 0;
         text-align: left;
-        padding: 0 0 56px;
+        padding: 30px 30px 34px;
     }
 
     .hero-title {
@@ -909,7 +990,7 @@ textarea:focus {
     .intro-slider img {
         left: 50%;
         bottom: 0;
-        width: min(88%, 1400px);
+        width: min(96%, 1480px);
         height: calc(100% - 20px);
         transform: translateX(-50%);
         opacity: 0;
@@ -921,8 +1002,8 @@ textarea:focus {
 
     .hero-overlay {
         background:
-            linear-gradient(90deg, rgba(20, 15, 12, 0.9) 0%, rgba(20, 15, 12, 0.78) 28%, rgba(20, 15, 12, 0.42) 54%, rgba(20, 15, 12, 0.08) 78%, rgba(20, 15, 12, 0.12) 100%),
-            linear-gradient(180deg, rgba(20, 15, 12, 0.08) 0%, rgba(20, 15, 12, 0.22) 100%);
+            linear-gradient(90deg, rgba(20, 15, 12, 0.72) 0%, rgba(20, 15, 12, 0.58) 26%, rgba(20, 15, 12, 0.26) 52%, rgba(20, 15, 12, 0.06) 76%, rgba(20, 15, 12, 0.08) 100%),
+            linear-gradient(180deg, rgba(20, 15, 12, 0.06) 0%, rgba(20, 15, 12, 0.18) 100%);
     }
 
     .hero-scroll {
@@ -975,6 +1056,10 @@ textarea:focus {
 
     .section-grid,
     .solution-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .comparison-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
