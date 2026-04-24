@@ -622,14 +622,14 @@ main > * + * {
 
 .preorder-form {
     display: grid;
-    gap: 16px;
+    gap: 10px;
 }
 
 .preorder-actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-top: 4px;
+    margin-top: 0;
 }
 
 .preorder-actions button {
@@ -637,7 +637,7 @@ main > * + * {
 }
 
 .preorder-status {
-    min-height: 24px;
+    min-height: 0px;
     margin: 0;
     font-weight: 600;
 }
