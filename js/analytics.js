@@ -28,3 +28,13 @@ function setupGoogleAnalytics(measurementId) {
 }
 
 setupGoogleAnalytics(GA_MEASUREMENT_ID);
+
+function trackAnalyticsEvent(eventName, parameters = {}) {
+    if (typeof window.gtag !== "function") {
+        return;
+    }
+
+    window.gtag("event", eventName, parameters);
+}
+
+window.trackAnalyticsEvent = trackAnalyticsEvent;

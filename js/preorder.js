@@ -54,6 +54,35 @@
         return responseData;
     }
 
+    function trackPreorderAnalytics(payload) {
+        if (typeof window.trackAnalyticsEvent !== "function") {
+            return;
+        }
+
+        window.trackAnalyticsEvent("generate_lead", {
+            lead_type: "preorder",
+            design: payload.design,
+            newsletter_opt_in: payload.newsletter ? "yes" : "no"
+        });
+
+        window.trackAnalyticsEvent("preorder_submit", {
+            design: payload.design,
+            newsletter_opt_in: payload.newsletter ? "yes" : "no"
+        });
+
+        if (payload.newsletter) {
+            window.trackAnalyticsEvent("sign_up", {
+                method: "preorder_form",
+                form_type: "newsletter"
+            });
+
+            window.trackAnalyticsEvent("newsletter_signup", {
+                source: "preorder_form",
+                design: payload.design
+            });
+        }
+    }
+
     function setupPreorderForm() {
         const form = document.getElementById("preorder-form");
         const status = document.getElementById("preorder-status");
@@ -85,7 +114,8 @@
                 fname: formData.get("fname")?.toString().trim(),
                 lname: formData.get("lname")?.toString().trim(),
                 email: formData.get("email")?.toString().trim(),
-                design: formData.get("design")?.toString().trim()
+                design: formData.get("design")?.toString().trim(),
+                newsletter: formData.get("newsletter") === "on"
             };
 
             const isValid =
@@ -104,6 +134,7 @@
             try {
                 const insertedRows = await submitPreorder(payload);
                 console.log("Preorder opgeslagen in Supabase:", insertedRows);
+                trackPreorderAnalytics(payload);
                 form.reset();
                 setPreorderStatus(status, "Je pre-order is opgeslagen. Bedankt!", "success");
             } catch (error) {
