@@ -1,7 +1,4 @@
-    const SUPABASE_URL = "https://kkkcbkiolcfqfzosupiy.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_L1YZ7Kji3dR2Bf5rHds5iw_C_ADWVCb";
-    const SUPABASE_TABLE = "preorders";
-    const CONFIRMATION_EMAIL_ENDPOINT = `${SUPABASE_URL}/functions/v1/send-preorder-confirmation`;
+    const PREORDER_ENDPOINT = "https://kkkcbkiolcfqfzosupiy.supabase.co/functions/v1/send-preorder-confirmation";
 
     function setPreorderStatus(element, message, type = "") {
         if (!element) {
@@ -17,14 +14,10 @@
     }
 
     async function submitPreorder(payload) {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_TABLE}`, {
+        const response = await fetch(PREORDER_ENDPOINT, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                apikey: SUPABASE_ANON_KEY,
-                Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-                Prefer: "return=representation"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(payload)
         });
@@ -53,30 +46,6 @@
         }
 
         return responseData;
-    }
-
-    async function sendConfirmationEmail(payload) {
-        if (!CONFIRMATION_EMAIL_ENDPOINT) {
-            return;
-        }
-
-        const response = await fetch(CONFIRMATION_EMAIL_ENDPOINT, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${SUPABASE_ANON_KEY}`
-            },
-            body: JSON.stringify({
-                to: payload.email,
-                fname: payload.fname,
-                lname: payload.lname,
-                design: payload.design
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`Bevestigingsmail kon niet worden verstuurd (${response.status}).`);
-        }
     }
 
     function redirectToThankYouPage(payload) {
@@ -134,15 +103,6 @@
                 return;
             }
 
-            if (SUPABASE_ANON_KEY === "PASTE_YOUR_SUPABASE_ANON_KEY_HERE") {
-                setPreorderStatus(
-                    status,
-                    "Voeg eerst je Supabase anon key toe in js/preorder.js voordat dit formulier data kan opslaan.",
-                    "error"
-                );
-                return;
-            }
-
             const submitButton = form.querySelector('button[type="submit"]');
             const formData = new FormData(form);
             const payload = {
@@ -168,12 +128,7 @@
 
             try {
                 const insertedRows = await submitPreorder(payload);
-                console.log("Preorder opgeslagen in Supabase:", insertedRows);
-                try {
-                    await sendConfirmationEmail(payload);
-                } catch (mailError) {
-                    console.warn("Preorder opgeslagen, maar bevestigingsmail niet verstuurd:", mailError);
-                }
+                console.log("Preorder verwerkt:", insertedRows);
                 trackPreorderAnalytics(payload);
                 form.reset();
                 setPreorderStatus(status, "Je pre-order is opgeslagen. Je wordt doorgestuurd...", "success");
