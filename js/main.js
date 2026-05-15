@@ -16,8 +16,9 @@ function markActiveLinks(links) {
     const currentPath = normalizePath(window.location.pathname);
 
     links.forEach((link) => {
-        const linkPath = normalizePath(new URL(link.href, window.location.href).pathname);
-        const isActive = linkPath === currentPath;
+        const linkUrl = new URL(link.href, window.location.href);
+        const linkPath = normalizePath(linkUrl.pathname);
+        const isActive = linkPath === currentPath && !linkUrl.hash;
         link.classList.toggle("is-active", isActive);
         if (isActive) {
             link.setAttribute("aria-current", "page");
@@ -126,7 +127,17 @@ function setupHeader(header) {
         if (text === "over ons" || text === "over ons ") {
             link.textContent = "Over Ons";
         }
+        if (text === "designs") {
+            link.textContent = "Design";
+        }
     });
+
+    if (!Array.from(nav.querySelectorAll("a")).some((link) => link.textContent.trim().toLowerCase() === "contact")) {
+        const contactLink = document.createElement("a");
+        contactLink.href = makeRelativePath("/index.html#contact");
+        contactLink.textContent = "Contact";
+        nav.appendChild(contactLink);
+    }
 
     if (!header.querySelector(".menu-toggle")) {
         const toggle = document.createElement("button");

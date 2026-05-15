@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedankt voor je pre-order | Medalling</title>
+    <meta name="description" content="Bedankt voor je pre-order bij Medalling. We bevestigen dat je op de pre-order lijst staat.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/main.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <div class="nav-shell">
+            <img src="../images/Medalling_cropped.png" alt="Medalling logo">
+
+            <nav class="site-nav" aria-label="Hoofdnavigatie">
+                <a href="../index.html#design">Design</a>
+                <a href="FAQ.html">Veelgestelde vragen</a>
+                <a href="OverOns.html">Over Ons</a>
+                <a href="../index.html#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-main">
+        <section class="page-hero">
+            <div>
+                <span class="page-hero__eyebrow">Pre-order ontvangen</span>
+                <h1 class="page-hero__title">Bedankt voor je pre-order<span id="thank-you-name"></span></h1>
+                <p class="page-hero__lead">
+                    Je staat op de lijst. We nemen contact met je op zodra er meer informatie is over productie,
+                    levering en de volgende stap.
+                </p>
+                <div class="page-hero__actions">
+                    <a class="button-link" href="../index.html#design">Bekijk het design</a>
+                    <a class="button-link button-link--secondary" href="../index.html">Terug naar home</a>
+                </div>
+            </div>
+
+            <div class="page-image-card">
+                <img src="../images/Design 1.png" alt="Medalling design voor sportmedailles">
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+        <div class="site-footer__inner">
+            <div>
+                <p class="site-footer__title">Medalling</p>
+                <p class="site-footer__text">Medaille herinneringen voor sporters, met ruimte voor trots en verhaal.</p>
+            </div>
+            <div class="site-footer__links" aria-label="Contact en socials">
+                <a href="mailto:info@medailledesign.nl">info@medailledesign.nl</a>
+                <a href="https://www.instagram.com/medalling" target="_blank" rel="noreferrer">Instagram</a>
+                <a href="https://www.linkedin.com/company/medalling" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a href="AlgemeneVoorwaarden.html">Algemene voorwaarden</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const name = new URLSearchParams(window.location.search).get("naam");
+        const nameTarget = document.getElementById("thank-you-name");
+
+        if (name && nameTarget) {
+            nameTarget.textContent = `, ${name}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,6 +1,7 @@
     const SUPABASE_URL = "https://kkkcbkiolcfqfzosupiy.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_L1YZ7Kji3dR2Bf5rHds5iw_C_ADWVCb";
     const SUPABASE_TABLE = "preorders";
+    const CONFIRMATION_EMAIL_ENDPOINT = `${SUPABASE_URL}/functions/v1/send-preorder-confirmation`;
 
     function setPreorderStatus(element, message, type = "") {
         if (!element) {
@@ -52,6 +53,40 @@
         }
 
         return responseData;
+    }
+
+    async function sendConfirmationEmail(payload) {
+        if (!CONFIRMATION_EMAIL_ENDPOINT) {
+            return;
+        }
+
+        const response = await fetch(CONFIRMATION_EMAIL_ENDPOINT, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+            },
+            body: JSON.stringify({
+                to: payload.email,
+                fname: payload.fname,
+                lname: payload.lname,
+                design: payload.design
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Bevestigingsmail kon niet worden verstuurd (${response.status}).`);
+        }
+    }
+
+    function redirectToThankYouPage(payload) {
+        const params = new URLSearchParams();
+
+        if (payload.fname) {
+            params.set("naam", payload.fname);
+        }
+
+        window.location.href = `pages/thank-you.html?${params.toString()}`;
     }
 
     function trackPreorderAnalytics(payload) {
@@ -134,9 +169,15 @@
             try {
                 const insertedRows = await submitPreorder(payload);
                 console.log("Preorder opgeslagen in Supabase:", insertedRows);
+                try {
+                    await sendConfirmationEmail(payload);
+                } catch (mailError) {
+                    console.warn("Preorder opgeslagen, maar bevestigingsmail niet verstuurd:", mailError);
+                }
                 trackPreorderAnalytics(payload);
                 form.reset();
-                setPreorderStatus(status, "Je pre-order is opgeslagen. Bedankt!", "success");
+                setPreorderStatus(status, "Je pre-order is opgeslagen. Je wordt doorgestuurd...", "success");
+                redirectToThankYouPage(payload);
             } catch (error) {
                 setPreorderStatus(
                     status,

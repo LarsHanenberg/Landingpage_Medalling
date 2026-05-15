@@ -36,12 +36,13 @@
 <body>
     <header class="site-header">
         <div class="nav-shell">
-            <img src="images/Medalling_logo-removebg-preview.png" width="125" height="125" alt="Medalling logo">
+            <img src="images/Medalling_logo-removebg-preview.png" width="94" height="94" alt="Medalling logo">
 
             <nav class="site-nav" aria-label="Hoofdnavigatie">
-                <a href="pages/Designs.html">Designs</a>
+                <a href="#design">Design</a>
                 <a href="pages/FAQ.html">Veelgestelde vragen</a>
                 <a href="pages/OverOns.html">Over ons</a>
+                <a href="#contact">Contact</a>
             </nav>
         </div>
     </header>
@@ -52,12 +53,6 @@
                 <img src="images/Medalling_lights.png" alt="Medalling medaillehouder met verlichting voor sporters en marathon medaille">
                 <img src="images/HMV.jpg" alt="Aankomend event">
 
-                <!---
-                <img src="images/Design 1.png" alt="Modern medaillehouder design voor sportmedailles en marathon medailles">
-                <img src="images/Design 2.png" alt="Simpel medaillerek voor sporters die hun medaille willen ophangen">
-                <img src="images/Acryl - design.png" alt="Acryl medaille display voor een persoonlijke medaillehouder">
-                <img src="images/Design 4.png" alt="Parcours medaille design om een sport medaille mooi te bewaren">
-                -->
             </div>
             <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -121,50 +116,24 @@
             </div>
         </section>
 
-        <section class="content-section compact-section">
+        <section class="content-section compact-section" id="design">
             <div class="section-heading section-heading--center">
-                <p class="section-kicker">Designs</p>
-                <h2>Kies een medaillerek of medaillehouder die bij je past</h2>
-                <p>Swipe of scroll door de designs voor een medaillehouder muur sport, een hardloop medaille display of ideeën om je medaille netjes op te hangen.</p>
+                <p class="section-kicker">Design</p>
+                <h2>Het Medalling design</h2>
+                <p>Een persoonlijke medaillehouder waarin jouw prestatie, route en herinnering een vaste plek krijgen.</p>
             </div>
-            <div class="design-slider" aria-label="Design keuzes">
-                <article class="design-slide">
+            <div class="design-feature">
+                <article class="design-slide design-slide--featured">
                     <a href="pages/Design1.html">
                         <img src="images/Design 1.png" alt="Modern medaillehouder design voor een marathon medaille of andere sport medaille">
                     </a>
                     <div class="design-slide__body">
                         <h3><a href="pages/Design1.html">Modern medaillehouder design</a></h3>
-                        <p>Strak ontwerp met route, naam en persoonlijke foto.</p>
-                    </div>
-                </article>
-
-                <article class="design-slide">
-                    <a href="pages/Design2.html">
-                        <img src="images/Design 2.png" alt="Simpel medaillerek om je medaille mooi op te hangen">
-                    </a>
-                    <div class="design-slide__body">
-                        <h3><a href="pages/Design2.html">Simpel medaillerek design</a></h3>
-                        <p>Rustige uitstraling waarbij de medaille extra opvalt.</p>
-                    </div>
-                </article>
-
-                <article class="design-slide">
-                    <a href="pages/Design3.html">
-                        <img src="images/Acryl - design.png" alt="Acryl medaille display als persoonlijke medaillehouder">
-                    </a>
-                    <div class="design-slide__body">
-                        <h3><a href="pages/Design3.html">Acryl medaille display</a></h3>
-                        <p>Een strak design van acryl met een moderne uitstraling en verlichting.</p>
-                    </div>
-                </article>
-
-                <article class="design-slide">
-                    <a href="pages/Design4.html">
-                        <img src="images/Design 4.png" alt="Parcours medaille design om een sport medaille te bewaren">
-                    </a>
-                    <div class="design-slide__body">
-                        <h3><a href="pages/Design4.html">Parcours medaille design</a></h3>
-                        <p>De route staat centraal in het complete ontwerp.</p>
+                        <p>Het design combineert je medaille met persoonlijke details zoals naam, eindtijd, event en route. Zo wordt je sportprestatie een rustig en stijlvol object voor aan de muur.</p>
+                        <div class="design-slide__actions">
+                            <a class="button-link" href="pages/Design1.html">Meer info</a>
+                            <a class="button-link button-link--secondary" href="#preorder">Pre-order</a>
+                        </div>
                     </div>
                 </article>
             </div>
@@ -178,8 +147,8 @@
             <div class="steps-grid">
                 <article class="step-card">
                     <span class="step-number">1</span>
-                    <h3>Kies</h3>
-                    <p>Selecteer je favoriete design.</p>
+                    <h3>Bekijk</h3>
+                    <p>Bekijk het design en de specificaties.</p>
                 </article>
                 <article class="step-card">
                     <span class="step-number">2</span>
@@ -228,11 +197,13 @@
             <div class="section-heading section-heading--center">
                 <p class="section-kicker">Pre-order</p>
                 <h2>Sta als eerste op de lijst</h2>
-                <p>Kies je design en laat je gegevens achter.</p>
+                <p>Laat je gegevens achter en ontvang een bevestiging van je pre-order.</p>
             </div>
 
             <div class="preorder-panel">
                 <form id="preorder-form" class="preorder-form">
+                    <input type="hidden" id="design" name="design" value="Medalling design">
+
                     <div>
                         <label for="fname">Voornaam</label>
                         <input type="text" id="fname" name="fname" placeholder="Voornaam" required>
@@ -248,17 +219,6 @@
                         <input type="email" id="email" name="email" placeholder="naam@voorbeeld.nl" required>
                     </div>
 
-                    <div>
-                        <label for="design">Voorkeursdesign</label>
-                        <select id="design" name="design" required>
-                            <option value="">-- Kies een design --</option>
-                            <option value="Design 1">Design 1</option>
-                            <option value="Design 2">Design 2</option>
-                            <option value="Design 3">Design 3</option>
-                            <option value="Design 4">Design 4</option>
-                        </select>
-                    </div>
-
                     <label class="checkbox-field" for="terms">
                         <input type="checkbox" id="terms" name="terms" required>
                         <span>
@@ -269,21 +229,21 @@
                     <label class="checkbox-field checkbox-field--optional" for="newsletter">
                         <input type="checkbox" id="newsletter" name="newsletter">
                         <span>
-                            Ik wil me aanmelden voor de nieuwsbrief en updates ontvangen over nieuwe designs, events en pre-orders.
+                            Ik wil me aanmelden voor de nieuwsbrief en updates ontvangen over het design, events en pre-orders.
                         </span>
                     </label>
 
                     <p id="preorder-status" class="preorder-status" aria-live="polite"></p>
 
                     <div class="preorder-actions">
-                        <button type="submit">Reserveer jouw plek</button>
+                        <button type="submit">Pre-order</button>
                     </div>
                 </form>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer" id="contact">
         <div class="site-footer__inner">
             <div>
                 <p class="site-footer__title">Medalling</p>
