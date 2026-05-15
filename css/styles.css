@@ -1155,12 +1155,16 @@ textarea:focus {
     }
 
     .site-footer__inner {
-        grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+        grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
         align-items: start;
     }
 
     .site-footer__columns {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 28px;
+        grid-template-columns: minmax(260px, 1.25fr) minmax(130px, 0.85fr) minmax(150px, 0.9fr);
+        gap: 36px;
+    }
+
+    .site-footer__group:nth-child(2) {
+        padding-left: 12px;
     }
 }
