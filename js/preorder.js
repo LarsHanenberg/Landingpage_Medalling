@@ -38,6 +38,8 @@
 
             if (responseData && typeof responseData === "object" && "message" in responseData) {
                 errorMessage = `${errorMessage} ${responseData.message}`;
+            } else if (responseData && typeof responseData === "object" && "error" in responseData) {
+                errorMessage = `${errorMessage} ${responseData.error}`;
             } else if (typeof responseData === "string" && responseData.trim()) {
                 errorMessage = `${errorMessage} ${responseData}`;
             }

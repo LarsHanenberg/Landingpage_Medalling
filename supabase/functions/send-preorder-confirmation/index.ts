@@ -1,7 +1,7 @@
 /// <reference lib="deno.ns" />
 
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+const PROJECT_URL = Deno.env.get("PROJECT_URL");
+const SERVICE_ROLE_KEY = Deno.env.get("SERVICE_ROLE_KEY");
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const FROM_EMAIL = Deno.env.get("CONFIRMATION_FROM_EMAIL") ?? "Medalling <info@medailledesign.nl>";
 const ALLOWED_ORIGINS = (Deno.env.get("ALLOWED_ORIGINS") ?? "https://medailledesign.nl,https://www.medailledesign.nl,http://localhost:5500,http://127.0.0.1:5500,http://localhost:5173,http://127.0.0.1:5173")
@@ -52,17 +52,17 @@ function escapeHtml(value: string) {
 }
 
 async function savePreorder(payload: Required<PreorderPayload>) {
-  if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  if (!PROJECT_URL || !SERVICE_ROLE_KEY) {
     throw new Error("Supabase environment variables are not configured.");
   }
 
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/preorders`, {
+  const response = await fetch(`${PROJECT_URL}/rest/v1/preorders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json",
-      "Authorization": `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-      "apikey": SUPABASE_SERVICE_ROLE_KEY,
+      "Authorization": `Bearer ${SERVICE_ROLE_KEY}`,
+      "apikey": SERVICE_ROLE_KEY,
       "Prefer": "return=representation",
     },
     body: JSON.stringify(payload),
@@ -110,6 +110,30 @@ async function sendConfirmationEmail(payload: Required<PreorderPayload>) {
   return response.json();
 }
 
+function getErrorMessage(error: unknown) {
+  if (!(error instanceof Error)) {
+    return "Onbekende fout.";
+  }
+
+  try {
+    const parsed = JSON.parse(error.message);
+
+    if (parsed && typeof parsed === "object") {
+      if ("message" in parsed && typeof parsed.message === "string") {
+        return parsed.message;
+      }
+
+      if ("error" in parsed && typeof parsed.error === "string") {
+        return parsed.error;
+      }
+    }
+  } catch (_) {
+    // Keep the original message when it is not JSON.
+  }
+
+  return error.message;
+}
+
 Deno.serve(async (req) => {
   const origin = req.headers.get("Origin");
   const hasBlockedOrigin = origin && !ALLOWED_ORIGINS.includes(origin);
@@ -141,11 +165,21 @@ Deno.serve(async (req) => {
     }
 
     const preorder = await savePreorder(payload);
-    const email = await sendConfirmationEmail(payload);
+    let email: unknown = null;
+
+    try {
+      email = await sendConfirmationEmail(payload);
+    } catch (emailError) {
+      email = {
+        skipped: true,
+        reason: getErrorMessage(emailError),
+      };
+      console.warn("Preorder saved, but confirmation email failed:", email);
+    }
 
     return jsonResponse({ preorder, email }, 200, origin);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Onbekende fout.";
-    return jsonResponse({ error: message }, 500, origin);
+    const message = getErrorMessage(error);
+    return jsonResponse({ error: message, message }, 500, origin);
   }
 });
