@@ -134,7 +134,7 @@ function setupHeader(header) {
 
     if (!Array.from(nav.querySelectorAll("a")).some((link) => link.textContent.trim().toLowerCase() === "contact")) {
         const contactLink = document.createElement("a");
-        contactLink.href = makeRelativePath("/index.html#contact");
+        contactLink.href = makeRelativePath("/pages/Contact.html");
         contactLink.textContent = "Contact";
         nav.appendChild(contactLink);
     }
