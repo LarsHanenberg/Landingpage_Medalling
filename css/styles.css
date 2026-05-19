@@ -40,6 +40,9 @@ body {
         radial-gradient(circle at top left, rgba(200, 164, 77, 0.18), transparent 28%),
         linear-gradient(180deg, #fbf7f1 0%, var(--color-bg) 100%);
     line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 img {
@@ -111,8 +114,8 @@ main > * + * {
 
 .brand-link img,
 .site-header img {
-    width: 54px;
-    max-width: 54px;
+    width: 68px;
+    max-width: 68px;
     height: auto;
 }
 
@@ -918,11 +921,11 @@ textarea:focus {
 }
 
 .site-footer__logo {
-    width: 58px;
-    height: 58px;
+    width: 72px;
+    height: auto;
     object-fit: contain;
-    border-radius: 14px;
-    background: rgba(255, 250, 244, 0.08);
+    border-radius: 0;
+    background: transparent;
 }
 
 .site-footer__title {
@@ -997,6 +1000,59 @@ textarea:focus {
 .site-header.is-open .site-nav,
 .site-header.is-open > div > div:last-child {
     display: flex !important;
+}
+
+/* Ensure main expands so footer sticks to bottom on short pages (thank-you) */
+main,
+.page-main {
+    flex: 1 0 auto;
+}
+
+/* Mobile: stack hero content above the hero image so image appears under heading */
+@media (max-width: 700px) {
+    .hero {
+        min-height: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-content {
+        order: 1;
+        width: 100%;
+        padding-bottom: 8px;
+    }
+
+    .hero-background {
+        position: static;
+        order: 2;
+        width: 100%;
+        height: auto;
+    }
+
+    .hero-overlay {
+        display: none;
+    }
+
+    .intro-slider img {
+        position: static;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        transform: none;
+        opacity: 1;
+        animation: none;
+        filter: none;
+        margin-top: 12px;
+    }
+}
+
+/* Small modifier to reduce the inline logo on the Over Ons page */
+.inline-logo--small {
+    width: 75%;
+    height: auto;
+    max-width: 220px;
 }
 
 .site-nav a,
