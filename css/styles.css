@@ -1008,7 +1008,7 @@ main,
     flex: 1 0 auto;
 }
 
-/* Mobile: stack hero content above the slideshow so both fit on one screen */
+/* Mobile: slideshow on top, then text below with no overlap */
 @media (max-width: 480px) {
     .hero {
         min-height: auto;
@@ -1026,8 +1026,55 @@ main,
         margin-right: calc(50% - 50vw);
     }
 
-    .hero-content {
+    .hero-background {
         order: 1;
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        min-height: 180px;
+        overflow: hidden;
+        border-radius: 0;
+        flex-shrink: 0;
+    }
+
+    .intro-slider {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .intro-slider img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        animation: heroFade 8s infinite;
+        filter: none;
+    }
+
+    .intro-slider img:first-child {
+        opacity: 0.9;
+        z-index: 2;
+    }
+
+    .intro-slider img:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .intro-slider img:nth-child(2) {
+        animation-delay: 4s;
+        z-index: 1;
+    }
+
+    .hero-overlay {
+        display: none;
+    }
+
+    .hero-content {
+        order: 2;
         width: 100%;
         padding: 16px;
         z-index: 1;
@@ -1061,23 +1108,34 @@ main,
         font-size: 0.9rem;
         align-self: flex-start;
     }
+}
+
+@media (min-width: 481px) and (max-width: 700px) {
+    .hero {
+        min-height: auto;
+        height: auto;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        overflow: visible;
+        background: linear-gradient(135deg, #211a16 0%, #3a2d25 36%, #5a463a 100%);
+        width: 100vw;
+        margin-top: calc(-1 * var(--space-4));
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+    }
 
     .hero-background {
+        order: 1;
         position: relative;
-        order: 2;
         width: 100%;
         aspect-ratio: 16 / 9;
-        min-height: 180px;
+        min-height: 220px;
         overflow: hidden;
         border-radius: 0;
         flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .hero-overlay {
-        display: none;
     }
 
     .intro-slider {
@@ -1111,27 +1169,13 @@ main,
         animation-delay: 4s;
         z-index: 1;
     }
-}
 
-@media (min-width: 481px) and (max-width: 700px) {
-    .hero {
-        min-height: auto;
-        height: auto;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
-        overflow: visible;
-        background: linear-gradient(135deg, #211a16 0%, #3a2d25 36%, #5a463a 100%);
-        width: 100vw;
-        margin-top: calc(-1 * var(--space-4));
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
+    .hero-overlay {
+        display: none;
     }
 
     .hero-content {
-        order: 1;
+        order: 2;
         width: 100%;
         padding: 20px;
         z-index: 1;
@@ -1163,56 +1207,6 @@ main,
         min-height: 44px;
         padding: 11px 18px;
         align-self: flex-start;
-    }
-
-    .hero-background {
-        position: relative;
-        order: 2;
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        min-height: 220px;
-        overflow: hidden;
-        border-radius: 0;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .hero-overlay {
-        display: none;
-    }
-
-    .intro-slider {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .intro-slider img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 0;
-        animation: heroFade 8s infinite;
-        filter: none;
-    }
-
-    .intro-slider img:first-child {
-        opacity: 0.9;
-        z-index: 2;
-    }
-
-    .intro-slider img:nth-child(1) {
-        animation-delay: 0s;
-    }
-
-    .intro-slider img:nth-child(2) {
-        animation-delay: 4s;
-        z-index: 1;
     }
 }
 
