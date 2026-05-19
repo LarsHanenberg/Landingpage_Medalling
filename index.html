@@ -41,7 +41,7 @@
             <img src="images/Medalling_logo-removebg-preview.png" width="94" height="94" alt="Medalling logo">
 
             <nav class="site-nav" aria-label="Hoofdnavigatie">
-                <a href="#design">Design</a>
+                <a href="pages/Acryl_design.html">Design</a>
                 <a href="pages/FAQ.html">Veelgestelde vragen</a>
                 <a href="pages/OverOns.html">Over ons</a>
                 <a href="#contact">Contact</a>
@@ -188,44 +188,50 @@
             </div>
 
             <div class="preorder-panel">
-                <form id="preorder-form" class="preorder-form">
-                    <input type="hidden" id="design" name="design" value="Acryl design">
+                <div class="preorder-preview">
+                    <img src="images/Medalling_lights.png" alt="Acryl design van Medalling met warme LED-verlichting">
+                </div>
 
-                    <div>
-                        <label for="fname">Voornaam</label>
-                        <input type="text" id="fname" name="fname" placeholder="Voornaam" required>
-                    </div>
+                <div class="preorder-panel__form">
+                    <form id="preorder-form" class="preorder-form">
+                        <input type="hidden" id="design" name="design" value="Acryl design">
 
-                    <div>
-                        <label for="lname">Achternaam</label>
-                        <input type="text" id="lname" name="lname" placeholder="Achternaam" required>
-                    </div>
+                        <div>
+                            <label for="fname">Voornaam</label>
+                            <input type="text" id="fname" name="fname" placeholder="Voornaam" required>
+                        </div>
 
-                    <div>
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email" placeholder="naam@voorbeeld.nl" required>
-                    </div>
+                        <div>
+                            <label for="lname">Achternaam</label>
+                            <input type="text" id="lname" name="lname" placeholder="Achternaam" required>
+                        </div>
 
-                    <label class="checkbox-field" for="terms">
-                        <input type="checkbox" id="terms" name="terms" required>
-                        <span>
-                            Ik ga akkoord met de <a href="pages/AlgemeneVoorwaarden.html">algemene voorwaarden</a>.
-                        </span>
-                    </label>
+                        <div>
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="naam@voorbeeld.nl" required>
+                        </div>
 
-                    <label class="checkbox-field checkbox-field--optional" for="newsletter">
-                        <input type="checkbox" id="newsletter" name="newsletter">
-                        <span>
-                            Ik wil me aanmelden voor de nieuwsbrief en updates ontvangen over het design, events en pre-orders.
-                        </span>
-                    </label>
+                        <label class="checkbox-field" for="terms">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <span>
+                                Ik ga akkoord met de <a href="pages/AlgemeneVoorwaarden.html">algemene voorwaarden</a>.
+                            </span>
+                        </label>
 
-                    <p id="preorder-status" class="preorder-status" aria-live="polite"></p>
+                        <label class="checkbox-field checkbox-field--optional" for="newsletter">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <span>
+                                Ik wil me aanmelden voor de nieuwsbrief en updates ontvangen over het design, events en pre-orders.
+                            </span>
+                        </label>
 
-                    <div class="preorder-actions">
-                        <button type="submit">Pre-order</button>
-                    </div>
-                </form>
+                        <p id="preorder-status" class="preorder-status" aria-live="polite"></p>
+
+                        <div class="preorder-actions">
+                            <button type="submit">Pre-order</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </section>
     </main>
@@ -236,7 +242,7 @@
                 <img class="site-footer__logo" src="images/Medalling-removebg.png" alt="Medalling logo">
                 <div>
                     <p class="site-footer__title">Medalling</p>
-                    <p class="site-footer__text">Persoonlijke medaillehouders die sportprestaties zichtbaar maken.</p>
+                    <p class="site-footer__text">Unieke medaillehouders die sportprestaties zichtbaar maken.</p>
                 </div>
             </div>
             <div class="site-footer__columns" aria-label="Contact en socials">
