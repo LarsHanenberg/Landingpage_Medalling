@@ -1,4 +1,0 @@
-User-agent: *
-
-Allow: /
-Sitemap: https://medailledesign.nl/sitemap.xml
