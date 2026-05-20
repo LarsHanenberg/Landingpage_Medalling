@@ -2,6 +2,13 @@
     const REQUEST_TIMEOUT_MS = 15000;
     const DEBUG_PREORDER = window.location.search.indexOf("debugPreorder") !== -1;
 
+    if (
+        window.location.protocol === "http:" &&
+        (window.location.hostname === "medailledesign.nl" || window.location.hostname === "www.medailledesign.nl")
+    ) {
+        window.location.replace(`https://${window.location.host}${window.location.pathname}${window.location.search}${window.location.hash}`);
+    }
+
     function setPreorderStatus(element, message, type = "") {
         if (!element) {
             return;
@@ -57,6 +64,17 @@
         };
     }
 
+    function getPageDiagnostics() {
+        return {
+            href: window.location.href,
+            origin: window.location.origin || `${window.location.protocol}//${window.location.host}`,
+            protocol: window.location.protocol,
+            host: window.location.host,
+            userAgent: navigator.userAgent,
+            online: navigator.onLine
+        };
+    }
+
     async function submitPreorder(payload) {
         if (typeof fetch !== "function") {
             throw new Error("Deze browser ondersteunt fetch niet. Gebruik een recente browser of laad een fetch-polyfill.");
@@ -74,8 +92,7 @@
                 design: payload.design,
                 newsletter: payload.newsletter
             },
-            userAgent: navigator.userAgent,
-            online: navigator.onLine
+            page: getPageDiagnostics()
         });
 
         try {
@@ -85,20 +102,27 @@
                 cache: "no-store",
                 credentials: "omit",
                 headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
+                    "Accept": "application/json"
                 },
                 body: JSON.stringify(payload),
                 signal: timeout.signal
             });
         } catch (error) {
-            logPreorderDebug("request:network-error", error);
+            const diagnostics = getPageDiagnostics();
+
+            logPreorderDebug("request:network-error", {
+                error: error,
+                diagnostics: diagnostics
+            });
 
             if (error && error.name === "AbortError") {
                 throw new Error("De aanvraag duurde te lang. Controleer je verbinding en probeer opnieuw.");
             }
 
-            throw new Error("Netwerkfout bij verzenden. Controleer je internetverbinding, adblocker/privacy-instellingen of CORS-configuratie.");
+            throw new Error(
+                "Netwerkfout bij verzenden. Open de site via https://medailledesign.nl en probeer Safari/Chrome buiten Instagram, TikTok of LinkedIn om. " +
+                `Debug: origin=${diagnostics.origin}, protocol=${diagnostics.protocol}, online=${diagnostics.online ? "ja" : "nee"}.`
+            );
         } finally {
             timeout.cancel();
         }
