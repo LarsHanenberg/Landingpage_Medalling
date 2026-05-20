@@ -65,7 +65,7 @@ function setupPreorderAnchor() {
         heading.textContent.toLowerCase().includes("pre-order lijst")
     );
 
-    const preorderSection = preorderHeading?.closest('div[style*="display: flex"]');
+    const preorderSection = preorderHeading ? preorderHeading.closest('div[style*="display: flex"]') : null;
     if (preorderSection) {
         preorderSection.id = "preorder";
     }
@@ -80,7 +80,7 @@ function setupHeroNextAnchor() {
         heading.textContent.toLowerCase().includes("onze missie")
     );
 
-    const nextSection = missionHeading?.closest('div[style*="text-align: center"][style*="gap: 40px"]');
+    const nextSection = missionHeading ? missionHeading.closest('div[style*="text-align: center"][style*="gap: 40px"]') : null;
     if (nextSection) {
         nextSection.id = "hero-next";
     }

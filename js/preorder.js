@@ -1,4 +1,6 @@
     const PREORDER_ENDPOINT = "https://kkkcbkiolcfqfzosupiy.supabase.co/functions/v1/send-preorder-confirmation";
+    const REQUEST_TIMEOUT_MS = 15000;
+    const DEBUG_PREORDER = window.location.search.indexOf("debugPreorder") !== -1;
 
     function setPreorderStatus(element, message, type = "") {
         if (!element) {
@@ -13,17 +15,103 @@
         }
     }
 
-    async function submitPreorder(payload) {
-        const response = await fetch(PREORDER_ENDPOINT, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
+    function logPreorderDebug(label, data) {
+        if (!DEBUG_PREORDER) {
+            return;
+        }
+
+        console.log(`[preorder] ${label}`, data || "");
+    }
+
+    if (DEBUG_PREORDER) {
+        window.addEventListener("error", function (event) {
+            console.error("[preorder] uncaught-error", {
+                message: event.message,
+                source: event.filename,
+                line: event.lineno,
+                column: event.colno,
+                error: event.error
+            });
         });
+
+        window.addEventListener("unhandledrejection", function (event) {
+            console.error("[preorder] unhandled-rejection", event.reason);
+        });
+    }
+
+    function createTimeoutController(timeoutMs) {
+        if (typeof AbortController !== "function") {
+            return { signal: undefined, cancel: function () {} };
+        }
+
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(function () {
+            controller.abort();
+        }, timeoutMs);
+
+        return {
+            signal: controller.signal,
+            cancel: function () {
+                window.clearTimeout(timeoutId);
+            }
+        };
+    }
+
+    async function submitPreorder(payload) {
+        if (typeof fetch !== "function") {
+            throw new Error("Deze browser ondersteunt fetch niet. Gebruik een recente browser of laad een fetch-polyfill.");
+        }
+
+        const timeout = createTimeoutController(REQUEST_TIMEOUT_MS);
+        let response;
+
+        logPreorderDebug("request:start", {
+            endpoint: PREORDER_ENDPOINT,
+            payload: {
+                fname: payload.fname,
+                lname: payload.lname,
+                email: payload.email ? "[ingevuld]" : "",
+                design: payload.design,
+                newsletter: payload.newsletter
+            },
+            userAgent: navigator.userAgent,
+            online: navigator.onLine
+        });
+
+        try {
+            response = await fetch(PREORDER_ENDPOINT, {
+                method: "POST",
+                mode: "cors",
+                cache: "no-store",
+                credentials: "omit",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload),
+                signal: timeout.signal
+            });
+        } catch (error) {
+            logPreorderDebug("request:network-error", error);
+
+            if (error && error.name === "AbortError") {
+                throw new Error("De aanvraag duurde te lang. Controleer je verbinding en probeer opnieuw.");
+            }
+
+            throw new Error("Netwerkfout bij verzenden. Controleer je internetverbinding, adblocker/privacy-instellingen of CORS-configuratie.");
+        } finally {
+            timeout.cancel();
+        }
 
         const responseText = await response.text();
         let responseData = null;
+
+        logPreorderDebug("response", {
+            ok: response.ok,
+            status: response.status,
+            statusText: response.statusText,
+            body: responseText
+        });
 
         if (responseText) {
             try {
@@ -97,7 +185,7 @@
             return;
         }
 
-        form.addEventListener("submit", async (event) => {
+        form.addEventListener("submit", async function (event) {
             event.preventDefault();
 
             if (!form.checkValidity()) {
@@ -108,16 +196,18 @@
             const submitButton = form.querySelector('button[type="submit"]');
             const formData = new FormData(form);
             const payload = {
-                fname: formData.get("fname")?.toString().trim(),
-                lname: formData.get("lname")?.toString().trim(),
-                email: formData.get("email")?.toString().trim(),
-                design: formData.get("design")?.toString().trim(),
+                fname: String(formData.get("fname") || "").trim(),
+                lname: String(formData.get("lname") || "").trim(),
+                email: String(formData.get("email") || "").trim().toLowerCase(),
+                design: String(formData.get("design") || "").trim(),
                 newsletter: formData.get("newsletter") === "on"
             };
 
             const isValid =
                 [payload.fname, payload.lname, payload.email, payload.design]
-                    .every(v => typeof v === "string" && v.trim().length > 0);
+                    .every(function (v) {
+                        return typeof v === "string" && v.trim().length > 0;
+                    });
 
             if (!isValid) {
                 setPreorderStatus(status, "Vul alle velden in voordat je verzendt.", "error");
@@ -125,7 +215,10 @@
             }
 
 
-            submitButton.disabled = true;
+            if (submitButton) {
+                submitButton.disabled = true;
+            }
+
             setPreorderStatus(status, "Je gegevens worden opgeslagen...", "loading");
 
             try {
@@ -142,11 +235,13 @@
                     "error"
                 );
             } finally {
-                submitButton.disabled = false;
+                if (submitButton) {
+                    submitButton.disabled = false;
+                }
             }
         });
 
-        form.addEventListener("reset", () => {
+        form.addEventListener("reset", function () {
             setPreorderStatus(status, "");
         });
     }

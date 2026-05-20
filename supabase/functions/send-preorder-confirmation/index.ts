@@ -21,6 +21,15 @@ function getCorsHeaders(origin: string | null) {
   };
 }
 
+function getBlockedCorsHeaders(origin: string | null) {
+  return {
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Vary": "Origin",
+    "X-Blocked-Origin": origin ?? "none",
+  };
+}
+
 type PreorderPayload = {
   fname?: string;
   lname?: string;
@@ -225,11 +234,21 @@ Deno.serve(async (req) => {
   const hasBlockedOrigin = origin && !ALLOWED_ORIGINS.includes(origin);
 
   if (req.method === "OPTIONS") {
+    if (hasBlockedOrigin) {
+      return new Response("Origin not allowed", { status: 403, headers: getBlockedCorsHeaders(origin) });
+    }
+
     return new Response("ok", { headers: getCorsHeaders(origin) });
   }
 
   if (hasBlockedOrigin) {
-    return jsonResponse({ error: "Origin not allowed" }, 403, origin);
+    return new Response(JSON.stringify({ error: "Origin not allowed", origin }), {
+      status: 403,
+      headers: {
+        ...getBlockedCorsHeaders(origin),
+        "Content-Type": "application/json",
+      },
+    });
   }
 
   if (req.method !== "POST") {
