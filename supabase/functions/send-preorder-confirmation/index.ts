@@ -125,19 +125,62 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bevestiging van je Medalling pre-order</title>
+        <style>
+          @media only screen and (max-width: 560px) {
+            .email-shell {
+              padding: 16px 10px !important;
+            }
+
+            .email-card {
+              border-radius: 16px !important;
+            }
+
+            .email-section {
+              padding-left: 20px !important;
+              padding-right: 20px !important;
+            }
+
+            .design-card,
+            .design-card-row,
+            .design-card-media,
+            .design-card-body {
+              display: block !important;
+              width: 100% !important;
+            }
+
+            .design-card-media img {
+              width: 100% !important;
+              max-width: 100% !important;
+            }
+
+            .design-card-body {
+              padding: 18px 18px 20px !important;
+              box-sizing: border-box !important;
+            }
+
+            .design-card-title {
+              font-size: 21px !important;
+            }
+
+            .design-card-text {
+              font-size: 15px !important;
+              line-height: 1.58 !important;
+            }
+          }
+        </style>
       </head>
       <body style="margin:0; padding:0; background:#f6f1e8; color:#4f3f35; font-family:Inter, Arial, sans-serif;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f1e8; padding:28px 12px;">
+        <table class="email-shell" role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f1e8; padding:28px 12px;">
           <tr>
             <td align="center">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px; overflow:hidden; background:#fffaf4; border:1px solid rgba(79,63,53,0.14); border-radius:20px;">
+              <table class="email-card" role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px; overflow:hidden; background:#fffaf4; border:1px solid rgba(79,63,53,0.14); border-radius:20px;">
                 <tr>
-                  <td style="padding:30px 30px 18px;">
+                  <td class="email-section" style="padding:30px 30px 18px;">
                     <p style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Pre-order bevestigd</p>
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding:0 30px 24px;">
+                  <td class="email-section" style="padding:0 30px 24px;">
                     <p style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
                     <p style="margin:0 0 14px; color:#725f53; font-size:16px; line-height:1.6;">
                       Bedankt voor je pre-order bij Medalling. Je staat op de lijst voor het <strong style="color:#4f3f35;">${design}</strong>.
@@ -145,17 +188,17 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding:0 30px 26px;">
-                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3ecdf; border:1px solid rgba(79,63,53,0.12); border-radius:18px; overflow:hidden;">
-                      <tr>
-                        <td width="260" valign="top" style="padding:0;">
+                  <td class="email-section" style="padding:0 30px 26px;">
+                    <table class="design-card" role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3ecdf; border:1px solid rgba(79,63,53,0.12); border-radius:18px; overflow:hidden;">
+                      <tr class="design-card-row">
+                        <td class="design-card-media" width="260" valign="top" style="padding:0;">
                           <a href="${designPageUrl}" style="text-decoration:none;">
                             <img src="${designUrl}" alt="Modern medaillehouder design voor een marathon medaille of andere sport medaille" width="260" style="display:block; width:100%; max-width:260px; height:auto;">
                           </a>
                         </td>
-                        <td valign="top" style="padding:22px 22px 20px;">
-                          <h2 style="margin:0 0 10px; color:#4f3f35; font-family:Georgia, 'Times New Roman', serif; font-size:22px; line-height:1.2;">Acryl design</h2>
-                          <p style="margin:0; color:#725f53; font-size:15px; line-height:1.6;">
+                        <td class="design-card-body" valign="top" style="padding:22px 22px 20px;">
+                          <h2 class="design-card-title" style="margin:0 0 10px; color:#4f3f35; font-family:Georgia, 'Times New Roman', serif; font-size:22px; line-height:1.2;">Acryl design</h2>
+                          <p class="design-card-text" style="margin:0; color:#725f53; font-size:15px; line-height:1.6;">
                             Het design is gemaakt van hoogwaardig acryl en beukenhout, met een LED-lamp die je medaille en route tot leven brengt. Het ontwerp combineert je medaille met de gelopen route met bovenaanzicht van de stad erin verwerkt.
                           </p>
                         </td>
@@ -164,14 +207,14 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding:0 30px 30px;">
+                  <td class="email-section" style="padding:0 30px 30px;">
                     <p style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
                       We houden je op de hoogte wanneer het product gereed is om de mogelijkheid te krijgen om het te bestellen. Hierin volgt dan ook de leverdatum.
                     </p>
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding:24px 30px 26px; background:#4f3f35;">
+                  <td class="email-section" style="padding:24px 30px 26px; background:#4f3f35;">
                     <p style="margin:0 0 14px; color:#fffaf4; font-size:14px; line-height:1.55;">Sportieve groet,<br><strong>Team Medalling</strong></p>
                     <img src="${logoUrl}" width="132" alt="Medalling logo" style="display:block; width:132px; max-width:132px; height:auto; margin:0 0 12px; border-radius:10px;">
                     <p style="margin:0; color:rgba(255,250,244,0.82); font-size:13px; line-height:1.5;">Unieke medaillehouders die sportprestaties zichtbaar maken.</p>
@@ -211,14 +254,30 @@ async function sendNewsletterConfirmationEmail(payload: Required<PreorderPayload
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Bevestiging nieuwsbrief Medalling</title>
+        <style>
+          @media only screen and (max-width: 560px) {
+            .email-shell {
+              padding: 16px 10px !important;
+            }
+
+            .email-card {
+              border-radius: 16px !important;
+            }
+
+            .email-section {
+              padding-left: 20px !important;
+              padding-right: 20px !important;
+            }
+          }
+        </style>
       </head>
       <body style="margin:0; padding:0; background:#f6f1e8; color:#4f3f35; font-family:Inter, Arial, sans-serif;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f1e8; padding:28px 12px;">
+        <table class="email-shell" role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f1e8; padding:28px 12px;">
           <tr>
             <td align="center">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px; overflow:hidden; background:#fffaf4; border:1px solid rgba(79,63,53,0.14); border-radius:20px;">
+              <table class="email-card" role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px; overflow:hidden; background:#fffaf4; border:1px solid rgba(79,63,53,0.14); border-radius:20px;">
                 <tr>
-                  <td style="padding:30px;">
+                  <td class="email-section" style="padding:30px;">
                     <p style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Nieuwsbrief</p>
                     <p style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
                     <p style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
@@ -227,7 +286,7 @@ async function sendNewsletterConfirmationEmail(payload: Required<PreorderPayload
                   </td>
                 </tr>
                 <tr>
-                  <td style="padding:24px 30px 26px; background:#4f3f35;">
+                  <td class="email-section" style="padding:24px 30px 26px; background:#4f3f35;">
                     <p style="margin:0 0 14px; color:#fffaf4; font-size:14px; line-height:1.55;">Met sportieve groet,<br><strong>Team Medalling</strong></p>
                     <img src="${logoUrl}" width="132" alt="Medalling logo" style="display:block; width:132px; max-width:132px; height:auto; margin:0; border-radius:10px;">
                   </td>
