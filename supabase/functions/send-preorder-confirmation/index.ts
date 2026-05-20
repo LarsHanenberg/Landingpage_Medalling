@@ -124,8 +124,15 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light dark">
+        <meta name="supported-color-schemes" content="light dark">
         <title>Bevestiging van je Medalling pre-order</title>
         <style>
+          :root {
+            color-scheme: light dark;
+            supported-color-schemes: light dark;
+          }
+
           @media only screen and (max-width: 560px) {
             .email-shell {
               padding: 16px 10px !important;
@@ -167,6 +174,49 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
               line-height: 1.58 !important;
             }
           }
+
+          @media (prefers-color-scheme: dark) {
+            body {
+              background: #171411 !important;
+              color: #e7d8c8 !important;
+            }
+
+            .email-shell {
+              background: #171411 !important;
+            }
+
+            .email-card {
+              background: #241f1a !important;
+              border-color: rgba(255, 250, 244, 0.16) !important;
+            }
+
+            .design-card {
+              background: #302820 !important;
+              border-color: rgba(255, 250, 244, 0.14) !important;
+            }
+
+            .email-kicker {
+              color: #d4ad55 !important;
+            }
+
+            .email-text,
+            .design-card-text {
+              color: #e7d8c8 !important;
+            }
+
+            .email-strong,
+            .design-card-title {
+              color: #fff6e8 !important;
+            }
+
+            .email-footer {
+              background: #3d332b !important;
+            }
+
+            .email-footer-text {
+              color: rgba(255, 250, 244, 0.86) !important;
+            }
+          }
         </style>
       </head>
       <body style="margin:0; padding:0; background:#f6f1e8; color:#4f3f35; font-family:Inter, Arial, sans-serif;">
@@ -176,14 +226,14 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
               <table class="email-card" role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px; overflow:hidden; background:#fffaf4; border:1px solid rgba(79,63,53,0.14); border-radius:20px;">
                 <tr>
                   <td class="email-section" style="padding:30px 30px 18px;">
-                    <p style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Pre-order bevestigd</p>
+                    <p class="email-kicker" style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Pre-order bevestigd</p>
                   </td>
                 </tr>
                 <tr>
                   <td class="email-section" style="padding:0 30px 24px;">
-                    <p style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
-                    <p style="margin:0 0 14px; color:#725f53; font-size:16px; line-height:1.6;">
-                      Bedankt voor je pre-order bij Medalling. Je staat op de lijst voor het <strong style="color:#4f3f35;">${design}</strong>.
+                    <p class="email-strong" style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
+                    <p class="email-text" style="margin:0 0 14px; color:#725f53; font-size:16px; line-height:1.6;">
+                      Bedankt voor je pre-order bij Medalling. Je staat op de lijst voor het <strong class="email-strong" style="color:#4f3f35;">${design}</strong>.
                     </p>
                   </td>
                 </tr>
@@ -208,16 +258,16 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
                 </tr>
                 <tr>
                   <td class="email-section" style="padding:0 30px 30px;">
-                    <p style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
+                    <p class="email-text" style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
                       We houden je op de hoogte wanneer het product gereed is om de mogelijkheid te krijgen om het te bestellen. Hierin volgt dan ook de leverdatum.
                     </p>
                   </td>
                 </tr>
                 <tr>
-                  <td class="email-section" style="padding:24px 30px 26px; background:#4f3f35;">
-                    <p style="margin:0 0 14px; color:#fffaf4; font-size:14px; line-height:1.55;">Sportieve groet,<br><strong>Team Medalling</strong></p>
+                  <td class="email-section email-footer" style="padding:24px 30px 26px; background:#4f3f35;">
+                    <p class="email-footer-text" style="margin:0 0 14px; color:#fffaf4; font-size:14px; line-height:1.55;">Sportieve groet,<br><strong>Team Medalling</strong></p>
                     <img src="${logoUrl}" width="132" alt="Medalling logo" style="display:block; width:132px; max-width:132px; height:auto; margin:0 0 12px; border-radius:10px;">
-                    <p style="margin:0; color:rgba(255,250,244,0.82); font-size:13px; line-height:1.5;">Unieke medaillehouders die sportprestaties zichtbaar maken.</p>
+                    <p class="email-footer-text" style="margin:0; color:rgba(255,250,244,0.82); font-size:13px; line-height:1.5;">Unieke medaillehouders die sportprestaties zichtbaar maken.</p>
                   </td>
                 </tr>
               </table>
@@ -253,8 +303,15 @@ async function sendNewsletterConfirmationEmail(payload: Required<PreorderPayload
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="light dark">
+        <meta name="supported-color-schemes" content="light dark">
         <title>Bevestiging nieuwsbrief Medalling</title>
         <style>
+          :root {
+            color-scheme: light dark;
+            supported-color-schemes: light dark;
+          }
+
           @media only screen and (max-width: 560px) {
             .email-shell {
               padding: 16px 10px !important;
@@ -269,6 +326,42 @@ async function sendNewsletterConfirmationEmail(payload: Required<PreorderPayload
               padding-right: 20px !important;
             }
           }
+
+          @media (prefers-color-scheme: dark) {
+            body {
+              background: #171411 !important;
+              color: #e7d8c8 !important;
+            }
+
+            .email-shell {
+              background: #171411 !important;
+            }
+
+            .email-card {
+              background: #241f1a !important;
+              border-color: rgba(255, 250, 244, 0.16) !important;
+            }
+
+            .email-kicker {
+              color: #d4ad55 !important;
+            }
+
+            .email-text {
+              color: #e7d8c8 !important;
+            }
+
+            .email-strong {
+              color: #fff6e8 !important;
+            }
+
+            .email-footer {
+              background: #3d332b !important;
+            }
+
+            .email-footer-text {
+              color: rgba(255, 250, 244, 0.86) !important;
+            }
+          }
         </style>
       </head>
       <body style="margin:0; padding:0; background:#f6f1e8; color:#4f3f35; font-family:Inter, Arial, sans-serif;">
@@ -278,16 +371,16 @@ async function sendNewsletterConfirmationEmail(payload: Required<PreorderPayload
               <table class="email-card" role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px; overflow:hidden; background:#fffaf4; border:1px solid rgba(79,63,53,0.14); border-radius:20px;">
                 <tr>
                   <td class="email-section" style="padding:30px;">
-                    <p style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Nieuwsbrief</p>
-                    <p style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
-                    <p style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
+                    <p class="email-kicker" style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Nieuwsbrief</p>
+                    <p class="email-strong" style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
+                    <p class="email-text" style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
                       Bedankt voor het aanmelden voor de nieuwsbrief. Wanneer we een speciale mededeling hebben, ben jij de eerste die het hoort.
                     </p>
                   </td>
                 </tr>
                 <tr>
-                  <td class="email-section" style="padding:24px 30px 26px; background:#4f3f35;">
-                    <p style="margin:0 0 14px; color:#fffaf4; font-size:14px; line-height:1.55;">Met sportieve groet,<br><strong>Team Medalling</strong></p>
+                  <td class="email-section email-footer" style="padding:24px 30px 26px; background:#4f3f35;">
+                    <p class="email-footer-text" style="margin:0 0 14px; color:#fffaf4; font-size:14px; line-height:1.55;">Met sportieve groet,<br><strong>Team Medalling</strong></p>
                     <img src="${logoUrl}" width="132" alt="Medalling logo" style="display:block; width:132px; max-width:132px; height:auto; margin:0; border-radius:10px;">
                   </td>
                 </tr>
