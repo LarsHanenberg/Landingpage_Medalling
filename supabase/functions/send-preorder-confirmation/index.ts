@@ -85,17 +85,39 @@ async function savePreorder(payload: Required<PreorderPayload>) {
   return response.json();
 }
 
-async function sendConfirmationEmail(payload: Required<PreorderPayload>) {
+async function sendEmail(to: string, subject: string, html: string, text: string) {
   if (!RESEND_API_KEY) {
     return { skipped: true, reason: "RESEND_API_KEY is not configured." };
   }
 
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: FROM_EMAIL,
+      to,
+      subject,
+      html,
+      text,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(await response.text());
+  }
+
+  return response.json();
+}
+
+async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>) {
   const greeting = payload.fname ? `Hoi ${escapeHtml(payload.fname)},` : "Hoi,";
   const design = escapeHtml(payload.design);
   const logoUrl = `${SITE_URL}/images/Medalling_logo.jpeg`;
   const designUrl = `${SITE_URL}/images/Medalling_lights.png`;
   const designPageUrl = `${SITE_URL}/pages/Acryl_design.html`;
-  const contactUrl = `${SITE_URL}/#contact`;
   const html = `
     <!doctype html>
     <html lang="nl">
@@ -112,17 +134,13 @@ async function sendConfirmationEmail(payload: Required<PreorderPayload>) {
                 <tr>
                   <td style="padding:30px 30px 18px;">
                     <p style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Pre-order bevestigd</p>
-                    <h1 style="margin:0; color:#4f3f35; font-family:Georgia, 'Times New Roman', serif; font-size:34px; line-height:1.12;">Je pre-order is ontvangen</h1>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:0 30px 24px;">
                     <p style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
                     <p style="margin:0 0 14px; color:#725f53; font-size:16px; line-height:1.6;">
-                      Bedankt voor je pre-order bij Medalling. We hebben je aanvraag voor het <strong style="color:#5a463a;">${design}</strong> ontvangen.
-                    </p>
-                    <p style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
-                      Je hoeft nu nog niets te betalen. Zodra er meer informatie is over productie, levering en de volgende stap, nemen we contact met je op.
+                      Bedankt voor je pre-order bij Medalling. Je staat op de lijst voor het <strong style="color:#4f3f35;">${design}</strong>.
                     </p>
                   </td>
                 </tr>
@@ -130,27 +148,16 @@ async function sendConfirmationEmail(payload: Required<PreorderPayload>) {
                   <td style="padding:0 30px 26px;">
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3ecdf; border:1px solid rgba(79,63,53,0.12); border-radius:18px; overflow:hidden;">
                       <tr>
-                        <td>
-                          <img src="${designUrl}" alt="Bestelde Medalling acryl medaillehouder" width="578" style="display:block; width:100%; max-width:578px; height:auto;">
+                        <td width="260" valign="top" style="padding:0;">
+                          <a href="${designPageUrl}" style="text-decoration:none;">
+                            <img src="${designUrl}" alt="Modern medaillehouder design voor een marathon medaille of andere sport medaille" width="260" style="display:block; width:100%; max-width:260px; height:auto;">
+                          </a>
                         </td>
-                      </tr>
-                      <tr>
-                        <td style="padding:18px 20px 20px;">
-                          <p style="margin:0 0 10px; color:#4f3f35; font-size:15px; font-weight:700;">Wat je hebt besteld</p>
-                          <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                            <tr>
-                              <td style="padding:0 0 7px; color:#8a7668; font-size:13px; line-height:1.45; width:92px;">Product</td>
-                              <td style="padding:0 0 7px; color:#4f3f35; font-size:13px; line-height:1.45; font-weight:700;">${design}</td>
-                            </tr>
-                            <tr>
-                              <td style="padding:0 0 7px; color:#8a7668; font-size:13px; line-height:1.45;">Status</td>
-                              <td style="padding:0 0 7px; color:#4f3f35; font-size:13px; line-height:1.45;">Pre-order ontvangen</td>
-                            </tr>
-                            <tr>
-                              <td style="padding:0; color:#8a7668; font-size:13px; line-height:1.45;">Betaling</td>
-                              <td style="padding:0; color:#4f3f35; font-size:13px; line-height:1.45;">Nu nog niet nodig</td>
-                            </tr>
-                          </table>
+                        <td valign="top" style="padding:22px 22px 20px;">
+                          <h2 style="margin:0 0 10px; color:#4f3f35; font-family:Georgia, 'Times New Roman', serif; font-size:22px; line-height:1.2;">Acryl design</h2>
+                          <p style="margin:0; color:#725f53; font-size:15px; line-height:1.6;">
+                            Het design is gemaakt van hoogwaardig acryl en beukenhout, met een LED-lamp die je medaille en route tot leven brengt. Het ontwerp combineert je medaille met de gelopen route met bovenaanzicht van de stad erin verwerkt.
+                          </p>
                         </td>
                       </tr>
                     </table>
@@ -158,8 +165,9 @@ async function sendConfirmationEmail(payload: Required<PreorderPayload>) {
                 </tr>
                 <tr>
                   <td style="padding:0 30px 30px;">
-                    <a href="${designPageUrl}" style="display:inline-block; padding:13px 20px; background:#b8913f; color:#ffffff; border-radius:12px; font-size:15px; font-weight:700; text-decoration:none;">Bekijk het design</a>
-                    <a href="${contactUrl}" style="display:inline-block; margin-left:10px; padding:13px 20px; color:#4f3f35; border:1px solid rgba(79,63,53,0.22); border-radius:12px; font-size:15px; font-weight:700; text-decoration:none;">Contact</a>
+                    <p style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
+                      We houden je op de hoogte wanneer het product gereed is om de mogelijkheid te krijgen om het te bestellen. Hierin volgt dan ook de leverdatum.
+                    </p>
                   </td>
                 </tr>
                 <tr>
@@ -178,40 +186,67 @@ async function sendConfirmationEmail(payload: Required<PreorderPayload>) {
   `;
   const text = `${greeting}
 
-Bedankt voor je pre-order bij Medalling. We hebben je aanvraag voor het ${payload.design} ontvangen.
+Bedankt voor je pre-order bij Medalling. Je staat op de lijst voor het ${payload.design}.
 
-Jouw pre-order:
-Product: ${payload.design}
-Status: pre-order ontvangen
-Betaling: nu nog niet nodig
+Acryl design
+Het design is gemaakt van hoogwaardig acryl en beukenhout, met een LED-lamp die je medaille en route tot leven brengt. Het ontwerp combineert je medaille met de gelopen route met bovenaanzicht van de stad erin verwerkt.
 
-We nemen contact met je op zodra er meer informatie is over productie, levering en de volgende stap.
+We houden je op de hoogte wanneer het product gereed is om de mogelijkheid te krijgen om het te bestellen. Hierin volgt dan ook de leverdatum.
 
 Bekijk het design: ${designPageUrl}
 
 Sportieve groet,
 Team Medalling`;
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: FROM_EMAIL,
-      to: payload.email,
-      subject: "Bevestiging van je Medalling pre-order",
-      html,
-      text,
-    }),
-  });
+  return sendEmail(payload.email, "Bevestiging van je Medalling pre-order", html, text);
+}
 
-  if (!response.ok) {
-    throw new Error(await response.text());
-  }
+async function sendNewsletterConfirmationEmail(payload: Required<PreorderPayload>) {
+  const greeting = payload.fname ? `Hoi ${escapeHtml(payload.fname)},` : "Hoi,";
+  const logoUrl = `${SITE_URL}/images/Medalling_logo.jpeg`;
+  const html = `
+    <!doctype html>
+    <html lang="nl">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bevestiging nieuwsbrief Medalling</title>
+      </head>
+      <body style="margin:0; padding:0; background:#f6f1e8; color:#4f3f35; font-family:Inter, Arial, sans-serif;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f1e8; padding:28px 12px;">
+          <tr>
+            <td align="center">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px; overflow:hidden; background:#fffaf4; border:1px solid rgba(79,63,53,0.14); border-radius:20px;">
+                <tr>
+                  <td style="padding:30px;">
+                    <p style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Nieuwsbrief</p>
+                    <p style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
+                    <p style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
+                      Bedankt voor het aanmelden voor de nieuwsbrief. Wanneer we een speciale mededeling hebben, ben jij de eerste die het hoort.
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:24px 30px 26px; background:#4f3f35;">
+                    <p style="margin:0 0 14px; color:#fffaf4; font-size:14px; line-height:1.55;">Met sportieve groet,<br><strong>Team Medalling</strong></p>
+                    <img src="${logoUrl}" width="132" alt="Medalling logo" style="display:block; width:132px; max-width:132px; height:auto; margin:0; border-radius:10px;">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+  `;
+  const text = `${greeting}
 
-  return response.json();
+Bedankt voor het aanmelden voor de nieuwsbrief. Wanneer we een speciale mededeling hebben, ben jij de eerste die het hoort.
+
+Met sportieve groet,
+Team Medalling`;
+
+  return sendEmail(payload.email, "Je bent aangemeld voor de Medalling nieuwsbrief", html, text);
 }
 
 function getErrorMessage(error: unknown) {
@@ -279,16 +314,33 @@ Deno.serve(async (req) => {
     }
 
     const preorder = await savePreorder(payload);
-    let email: unknown = null;
+    const email: {
+      preorder: unknown;
+      newsletter?: unknown;
+    } = {
+      preorder: null,
+    };
 
     try {
-      email = await sendConfirmationEmail(payload);
+      email.preorder = await sendPreorderConfirmationEmail(payload);
     } catch (emailError) {
-      email = {
+      email.preorder = {
         skipped: true,
         reason: getErrorMessage(emailError),
       };
-      console.warn("Preorder saved, but confirmation email failed:", email);
+      console.warn("Preorder saved, but preorder confirmation email failed:", email.preorder);
+    }
+
+    if (payload.newsletter) {
+      try {
+        email.newsletter = await sendNewsletterConfirmationEmail(payload);
+      } catch (emailError) {
+        email.newsletter = {
+          skipped: true,
+          reason: getErrorMessage(emailError),
+        };
+        console.warn("Preorder saved, but newsletter confirmation email failed:", email.newsletter);
+      }
     }
 
     return jsonResponse({ preorder, email }, 200, origin);
