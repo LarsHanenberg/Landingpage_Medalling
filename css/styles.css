@@ -598,6 +598,20 @@ main > * + * {
     border: 1px solid rgba(30, 78, 216, 0.12);
     border-radius: 28px;
     box-shadow: var(--shadow-card);
+    color: inherit;
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.event-highlight:hover,
+.event-highlight:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(30, 78, 216, 0.28);
+    box-shadow: 0 16px 40px rgba(30, 78, 216, 0.14);
+}
+
+.event-highlight:focus-visible {
+    outline: 3px solid rgba(30, 78, 216, 0.28);
+    outline-offset: 4px;
 }
 
 .event-highlight__logo {
@@ -627,6 +641,10 @@ main > * + * {
 .event-highlight__meta {
     margin-bottom: 8px;
     font-weight: 700;
+}
+
+.event-highlight__text {
+    margin-bottom: 0;
 }
 
 .event-highlight__cta {
@@ -860,7 +878,10 @@ textarea:focus {
 }
 
 .page-image-card {
-    padding: var(--space-2);
+    display: grid;
+    place-items: center;
+    padding: var(--space-3);
+    background: #ffffff;
 }
 
 .page-image-card img {
@@ -1212,9 +1233,10 @@ main,
 
 /* Small modifier to reduce the inline logo on the Over Ons page */
 .inline-logo--small {
-    width: 75%;
+    width: min(100%, 260px);
     height: auto;
-    max-width: 220px;
+    max-width: 260px;
+    border-radius: 0;
 }
 
 .site-nav a,
