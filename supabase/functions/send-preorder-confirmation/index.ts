@@ -116,7 +116,7 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
   const greeting = payload.fname ? `Hoi ${escapeHtml(payload.fname)},` : "Hoi,";
   const design = escapeHtml(payload.design);
   const logoUrl = `${SITE_URL}/images/Medalling_logo.jpeg`;
-  const designUrl = `${SITE_URL}/images/Medalling_lights.png`;
+  const designUrl = `${SITE_URL}/images/img_design_without_medal.jpeg`;
   const designPageUrl = `${SITE_URL}/pages/Acryl_design.html`;
   const html = `
     <!doctype html>
