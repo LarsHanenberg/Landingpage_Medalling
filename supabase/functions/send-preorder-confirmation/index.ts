@@ -48,8 +48,12 @@ function jsonResponse(body: unknown, status = 200, origin: string | null = null)
   });
 }
 
-function cleanText(value: unknown) {
-  return String(value ?? "").trim();
+function cleanText(value: unknown, maxLength = 160) {
+  return String(value ?? "").trim().slice(0, maxLength);
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
 }
 
 function escapeHtml(value: string) {
@@ -126,7 +130,7 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="light dark">
         <meta name="supported-color-schemes" content="light dark">
-        <title>Bevestiging van je Medalling pre-order</title>
+        <title>Bevestiging van je Medalling bestelverzoek</title>
         <style>
           :root {
             color-scheme: light dark;
@@ -226,14 +230,14 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
               <table class="email-card" role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px; overflow:hidden; background:#fffaf4; border:1px solid rgba(79,63,53,0.14); border-radius:20px;">
                 <tr>
                   <td class="email-section" style="padding:30px 30px 18px;">
-                    <p class="email-kicker" style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Pre-order bevestigd</p>
+                    <p class="email-kicker" style="margin:0 0 10px; color:#b8913f; font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;">Bestelverzoek ontvangen</p>
                   </td>
                 </tr>
                 <tr>
                   <td class="email-section" style="padding:0 30px 24px;">
                     <p class="email-strong" style="margin:0 0 14px; color:#4f3f35; font-size:16px; line-height:1.6;">${greeting}</p>
                     <p class="email-text" style="margin:0 0 14px; color:#725f53; font-size:16px; line-height:1.6;">
-                      Bedankt voor je pre-order bij Medalling. Je staat op de lijst voor het <strong class="email-strong" style="color:#4f3f35;">${design}</strong>.
+                      Bedankt voor je bestelverzoek bij Medalling. We nemen contact met je op over beschikbaarheid, betaling en levering voor het <strong class="email-strong" style="color:#4f3f35;">${design}</strong>.
                     </p>
                   </td>
                 </tr>
@@ -259,7 +263,7 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
                 <tr>
                   <td class="email-section" style="padding:0 30px 30px;">
                     <p class="email-text" style="margin:0; color:#725f53; font-size:16px; line-height:1.6;">
-                      We houden je op de hoogte wanneer het product gereed is om de mogelijkheid te krijgen om het te bestellen. Hierin volgt dan ook de leverdatum.
+                      Dit is nog geen betaalde bestelling. We stemmen de volgende stap persoonlijk met je af voordat er een definitieve koop ontstaat.
                     </p>
                   </td>
                 </tr>
@@ -279,19 +283,19 @@ async function sendPreorderConfirmationEmail(payload: Required<PreorderPayload>)
   `;
   const text = `${greeting}
 
-Bedankt voor je pre-order bij Medalling. Je staat op de lijst voor het ${payload.design}.
+Bedankt voor je bestelverzoek bij Medalling. We nemen contact met je op over beschikbaarheid, betaling en levering voor het ${payload.design}.
 
 Acryl design
 Het design is gemaakt van hoogwaardig acryl en beukenhout, met een LED-lamp die je medaille en route tot leven brengt. Het ontwerp combineert je medaille met de gelopen route met bovenaanzicht van de stad erin verwerkt.
 
-We houden je op de hoogte wanneer het product gereed is om de mogelijkheid te krijgen om het te bestellen. Hierin volgt dan ook de leverdatum.
+Dit is nog geen betaalde bestelling. We stemmen de volgende stap persoonlijk met je af voordat er een definitieve koop ontstaat.
 
 Bekijk het design: ${designPageUrl}
 
 Sportieve groet,
 Team Medalling`;
 
-  return sendEmail(payload.email, "Bevestiging van je Medalling pre-order", html, text);
+  return sendEmail(payload.email, "Bevestiging van je Medalling bestelverzoek", html, text);
 }
 
 async function sendNewsletterConfirmationEmail(payload: Required<PreorderPayload>) {
@@ -454,14 +458,14 @@ Deno.serve(async (req) => {
   try {
     const body = await req.json() as PreorderPayload;
     const payload: Required<PreorderPayload> = {
-      fname: cleanText(body.fname),
-      lname: cleanText(body.lname),
-      email: cleanText(body.email),
-      design: cleanText(body.design || "Acryl design"),
+      fname: cleanText(body.fname, 80),
+      lname: cleanText(body.lname, 120),
+      email: cleanText(body.email, 180).toLowerCase(),
+      design: cleanText(body.design || "Acryl design", 120),
       newsletter: Boolean(body.newsletter),
     };
 
-    if (!payload.fname || !payload.lname || !payload.email.includes("@") || !payload.design) {
+    if (!payload.fname || !payload.lname || !isValidEmail(payload.email) || !payload.design) {
       return jsonResponse({ error: "Vul alle verplichte velden correct in." }, 400, origin);
     }
 

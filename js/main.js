@@ -191,9 +191,81 @@ function setupHeader(header) {
     markActiveLinks(nav.querySelectorAll("a"));
 }
 
+function setupPingPongVideos() {
+    document.querySelectorAll("video[data-ping-pong-video]").forEach((video) => {
+        let isReversing = false;
+        let frameId = 0;
+        let lastFrameTime = 0;
+        const reverseSpeed = Number(video.dataset.reverseSpeed) || 1;
+
+        function stopReverseFrame() {
+            if (frameId) {
+                window.cancelAnimationFrame(frameId);
+                frameId = 0;
+            }
+            lastFrameTime = 0;
+        }
+
+        function playForward() {
+            stopReverseFrame();
+            isReversing = false;
+            video.loop = false;
+            video.playbackRate = 1;
+            video.currentTime = 0;
+
+            const playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === "function") {
+                playPromise.catch(() => {});
+            }
+        }
+
+        function reverseStep(timestamp) {
+            if (!isReversing) {
+                return;
+            }
+
+            if (!lastFrameTime) {
+                lastFrameTime = timestamp;
+            }
+
+            const elapsedSeconds = (timestamp - lastFrameTime) / 1000;
+            lastFrameTime = timestamp;
+            video.currentTime = Math.max(0, video.currentTime - elapsedSeconds * reverseSpeed);
+
+            if (video.currentTime <= 0.02) {
+                playForward();
+                return;
+            }
+
+            frameId = window.requestAnimationFrame(reverseStep);
+        }
+
+        function playReverse() {
+            if (isReversing || !Number.isFinite(video.duration)) {
+                return;
+            }
+
+            isReversing = true;
+            video.pause();
+            video.currentTime = Math.max(0, video.duration - 0.03);
+            stopReverseFrame();
+            frameId = window.requestAnimationFrame(reverseStep);
+        }
+
+        video.loop = false;
+        video.addEventListener("ended", playReverse);
+        video.addEventListener("loadedmetadata", () => {
+            if (video.autoplay) {
+                playForward();
+            }
+        });
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     setupHeader(document.querySelector(".site-header"));
     setupPreorderAnchor();
     setupHeroNextAnchor();
     setupSmoothScroll();
+    setupPingPongVideos();
 });

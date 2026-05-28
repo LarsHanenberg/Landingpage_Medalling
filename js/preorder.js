@@ -102,7 +102,8 @@
                 cache: "no-store",
                 credentials: "omit",
                 headers: {
-                    "Accept": "application/json"
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(payload),
                 signal: timeout.signal
@@ -243,14 +244,14 @@
                 submitButton.disabled = true;
             }
 
-            setPreorderStatus(status, "Je gegevens worden opgeslagen...", "loading");
+            setPreorderStatus(status, "Je bestelverzoek wordt opgeslagen...", "loading");
 
             try {
                 const insertedRows = await submitPreorder(payload);
                 console.log("Preorder verwerkt:", insertedRows);
                 trackPreorderAnalytics(payload);
                 form.reset();
-                setPreorderStatus(status, "Je pre-order is opgeslagen. Je wordt doorgestuurd...", "success");
+                setPreorderStatus(status, "Je bestelverzoek is opgeslagen. Je wordt doorgestuurd...", "success");
                 redirectToThankYouPage(payload);
             } catch (error) {
                 setPreorderStatus(
