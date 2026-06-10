@@ -27,7 +27,25 @@ function setupGoogleAnalytics(measurementId) {
     gtag("config", trimmedId);
 }
 
-setupGoogleAnalytics(GA_MEASUREMENT_ID);
+// Laad analytics pas na pagina-interactie zodat LCP niet vertraagd wordt
+function loadAnalyticsOnInteraction() {
+    setupGoogleAnalytics(GA_MEASUREMENT_ID);
+    ["click", "scroll", "keydown", "touchstart"].forEach(function(e) {
+        document.removeEventListener(e, loadAnalyticsOnInteraction);
+    });
+}
+
+if ("requestIdleCallback" in window) {
+    requestIdleCallback(function() {
+        ["click", "scroll", "keydown", "touchstart"].forEach(function(e) {
+            document.addEventListener(e, loadAnalyticsOnInteraction, { once: true, passive: true });
+        });
+        // Laad uiterlijk na 4 seconden alsnog
+        setTimeout(function() { setupGoogleAnalytics(GA_MEASUREMENT_ID); }, 4000);
+    });
+} else {
+    setTimeout(function() { setupGoogleAnalytics(GA_MEASUREMENT_ID); }, 3000);
+}
 
 function trackAnalyticsEvent(eventName, parameters = {}) {
     if (typeof window.gtag !== "function") {
