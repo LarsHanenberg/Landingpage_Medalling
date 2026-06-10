@@ -8,6 +8,10 @@
     <link rel="canonical" href="https://medailledesign.nl/">
     <link rel="icon" type="image/png" href="images/Medalling-removebg.png">
     <link rel="apple-touch-icon" href="images/Medalling-removebg.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="images/IMG_Design-dark-background.png" fetchpriority="high">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="nl_NL">
     <meta property="og:site_name" content="Medalling">
@@ -17,7 +21,7 @@
     <meta property="og:image" content="https://medailledesign.nl/images/IMG_Design-dark-background.png">
     <meta property="og:image:alt" content="Modern medaillehouder design van Medalling voor sportmedailles">
     <link rel="stylesheet" href="css/styles.css">
-    <script src="js/analytics.js"></script>
+    <script src="js/analytics.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/preorder.js" defer></script>
     <script type="application/ld+json">
@@ -73,8 +77,8 @@
     <main id="top">
         <section class="hero">
             <div class="hero-background intro-slider" aria-hidden="true">
-                <img src="images/IMG_Design-dark-background.png" alt="Medalling medaillehouder met verlichting voor sporters en marathon medaille">
-                <img src="images/HMV.jpg" alt="Aankomend event">
+                <img src="images/IMG_Design-dark-background.png" width="1152" height="836" fetchpriority="high" decoding="async" alt="Medalling medaillehouder met verlichting voor sporters en marathon medaille">
+                <img src="images/HMV.jpg" width="1440" height="925" loading="lazy" decoding="async" alt="Aankomend event">
 
             </div>
             <div class="hero-overlay" aria-hidden="true"></div>
@@ -90,7 +94,7 @@
 
         <a class="event-highlight" href="#hmv-2026" aria-labelledby="event-highlight-title">
             <div class="event-highlight__logo">
-                <img src="images/HMV.jpg" alt="Halve Marathon Veghel voor sporters en marathonlopers">
+                <img src="images/HMV.jpg" width="1440" height="925" loading="lazy" decoding="async" alt="Halve Marathon Veghel voor sporters en marathonlopers">
             </div>
             <div class="event-highlight__content">
                 <p class="event-highlight__eyebrow">Terugblik event</p>
@@ -109,7 +113,7 @@
 
             <div class="hmv-feature">
                 <div class="hmv-video">
-                    <video controls muted preload="metadata" poster="images/HMV 2026/Teamfoto.jpeg">
+                    <video controls muted preload="none" poster="images/HMV 2026/Teamfoto.jpeg">
                         <source src="videos/HMV 2026/Start.mp4" type="video/mp4">
                         Je browser ondersteunt deze video niet.
                     </video>
@@ -142,19 +146,19 @@
 
             <div class="hmv-gallery" aria-label="Foto's van Medalling bij de Halve Marathon Veghel 2026">
                 <figure class="hmv-gallery__item hmv-gallery__item--large">
-                    <img src="images/HMV 2026/Klant+product.jpeg" alt="Loper van de Halve Marathon Veghel met een Medalling medaillehouder">
+                    <img src="images/HMV 2026/Klant+product.jpeg" width="1200" height="1600" loading="lazy" decoding="async" alt="Loper van de Halve Marathon Veghel met een Medalling medaillehouder">
                     <figcaption>Finishers bekijken hun herinnering direct na de race.</figcaption>
                 </figure>
                 <figure class="hmv-gallery__item">
-                    <img src="images/HMV 2026/Productfoto-stand.jpeg" alt="Medalling medaillehouder met Halve Marathon Veghel route op de stand">
+                    <img src="images/HMV 2026/Productfoto-stand.jpeg" width="1536" height="2048" loading="lazy" decoding="async" alt="Medalling medaillehouder met Halve Marathon Veghel route op de stand">
                     <figcaption>Het eventdesign met route, datum en afstand.</figcaption>
                 </figure>
                 <figure class="hmv-gallery__item">
-                    <img src="images/HMV 2026/Verkoop(1).jpeg" alt="Medalling team in gesprek met bezoekers bij de verkoopstand">
+                    <img src="images/HMV 2026/Verkoop(1).jpeg" width="1536" height="2048" loading="lazy" decoding="async" alt="Medalling team in gesprek met bezoekers bij de verkoopstand">
                     <figcaption>In gesprek met lopers en supporters.</figcaption>
                 </figure>
                 <figure class="hmv-gallery__item">
-                    <img src="images/HMV 2026/Teamfoto.jpeg" alt="Team Medalling achter de stand met meerdere medaillehouders">
+                    <img src="images/HMV 2026/Teamfoto.jpeg" width="2040" height="1530" loading="lazy" decoding="async" alt="Team Medalling achter de stand met meerdere medaillehouders">
                     <figcaption>Klaar voor verkoop op locatie.</figcaption>
                 </figure>
             </div>
@@ -220,7 +224,7 @@
             <div class="design-feature">
                 <article class="design-slide design-slide--featured">
                     <a href="pages/Acryl_design.html">
-                        <img src="images/IMG_Design-dark-background.png" alt="Modern medaillehouder design voor een marathon medaille of andere sport medaille">
+                        <img src="images/IMG_Design-dark-background.png" width="1152" height="836" loading="lazy" decoding="async" alt="Modern medaillehouder design voor een marathon medaille of andere sport medaille">
                     </a>
                     <div class="design-slide__body">
                         <h3><a href="pages/Acryl_design.html">Acryl design</a></h3>
@@ -270,7 +274,7 @@
 
             <div class="preorder-panel">
                 <div class="preorder-preview">
-                    <img src="images/IMG_Design-dark-background.png" alt="Acryl design van Medalling met warme LED-verlichting">
+                    <img src="images/IMG_Design-dark-background.png" width="1152" height="836" loading="lazy" decoding="async" alt="Acryl design van Medalling met warme LED-verlichting">
                 </div>
 
                 <div class="preorder-panel__form">
@@ -321,7 +325,7 @@
     <footer class="site-footer" id="contact">
         <div class="site-footer__inner">
             <div class="site-footer__brand">
-                <img class="site-footer__logo" src="images/Medalling-removebg.png" alt="Medalling logo">
+                <img class="site-footer__logo" src="images/Medalling-removebg.png" width="527" height="524" loading="lazy" decoding="async" alt="Medalling logo">
                 <div>
                     <p class="site-footer__title">Medalling</p>
                     <p class="site-footer__text">Unieke medaillehouders die sportprestaties zichtbaar maken.</p>
@@ -330,12 +334,12 @@
             <div class="site-footer__columns" aria-label="Contact en socials">
                 <div class="site-footer__group">
                     <h3>Contact</h3>
-                    <a href="mailto:info@medailledesign.nl"><img class="footer-icon" src="images/Mail_(iOS).svg.png" alt="">info@medailledesign.nl</a>
+                    <a href="mailto:info@medailledesign.nl"><img class="footer-icon" src="images/Mail_(iOS).svg.png" width="960" height="960" loading="lazy" decoding="async" alt="">info@medailledesign.nl</a>
                 </div>
                 <div class="site-footer__group">
                     <h3>Socials</h3>
-                    <a href="https://www.instagram.com/medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/Instagram_icon.png" alt="">Instagram</a>
-                    <a href="https://www.linkedin.com/company/medalling" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/LinkedIn_logo_initials.png" alt="">LinkedIn</a>
+                    <a href="https://www.instagram.com/medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/Instagram_icon.png" width="1280" height="1280" loading="lazy" decoding="async" alt="">Instagram</a>
+                    <a href="https://www.linkedin.com/company/medalling" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/LinkedIn_logo_initials.png" width="1024" height="1024" loading="lazy" decoding="async" alt="">LinkedIn</a>
                 </div>
                 <div class="site-footer__group">
                     <h3>Informatie</h3>
