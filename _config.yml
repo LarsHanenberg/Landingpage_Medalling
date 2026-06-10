@@ -1,0 +1,50 @@
+# Jekyll configuration for Medalling landing page
+title: Medalling
+description: Medaillehouder kopen voor sporters - Marathon medaille display houders
+url: "https://medailledesign.nl"
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-minimal
+
+# Performance & Caching
+compress_html:
+  clipped: true
+  comments: all
+  endings: all
+  ignore:
+    envs: []
+  blanklines: false
+  profile: false
+  startings: []
+
+# Exclude files from Jekyll processing
+exclude:
+  - .git
+  - .gitignore
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - Gemfile
+  - Gemfile.lock
+
+# Include dotfiles
+include:
+  - .htaccess
+
+# Output settings
+encoding: utf-8
+incremental: false
+lsi: false
+safe: true
+source: .
+destination: ./_site
+
+# Disable standard Jekyll processing for static files
+keep_files:
+  - images
+  - js
+  - css
+  - videos

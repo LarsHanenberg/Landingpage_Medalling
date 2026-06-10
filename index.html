@@ -10,8 +10,19 @@
     <link rel="apple-touch-icon" href="images/Medalling-removebg.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="image" href="images/optimized/design-640.jpg" imagesrcset="images/optimized/design-640.jpg 640w, images/optimized/design-960.jpg 960w, images/optimized/design-1152.jpg 1152w" imagesizes="100vw" fetchpriority="high">
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    <link rel="preload" as="image" href="images/AVIF/design-640.avif" imagesrcset="images/AVIF/design-640.avif 640w, images/AVIF/design-960.avif 960w, images/AVIF/design-1152.avif 1152w" imagesizes="100vw" fetchpriority="high">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap">
+    <style>
+        @font-face {font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQA.woff2') format('woff2');}
+        @font-face {font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQA.woff2') format('woff2');}
+        @font-face {font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQA.woff2') format('woff2');}
+        @font-face {font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQA.woff2') format('woff2');}
+        @font-face {font-family: 'Playfair Display'; font-style: normal; font-weight: 600; font-display: swap; src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFiD-vgS-t7tjcEM_EEYPesZW2xOQ-xrCPrNFPrRlW8xXJY.woff2') format('woff2');}
+        @font-face {font-family: 'Playfair Display'; font-style: normal; font-weight: 700; font-display: swap; src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFiD-vgS-t7tjcEM_EEYPesZW2xOQ-xrCPrNFPrRlW8xXJY.woff2') format('woff2');}
+        @font-face {font-family: 'Playfair Display'; font-style: normal; font-weight: 800; font-display: swap; src: url('https://fonts.gstatic.com/s/playfairdisplay/v30/nuFiD-vgS-t7tjcEM_EEYPesZW2xOQ-xrCPrNFPrRlW8xXJY.woff2') format('woff2');}
+        :root{--color-bg:#f7f2ea;--color-surface:#fffaf4;--color-primary:#e8ddcf;--color-brown:#5a463a;--color-brown-soft:#7a6355;--color-gold:#c8a44d;--color-blue:#1e4ed8;--color-border:rgba(90,70,58,.12);--shadow-soft:0 14px 40px rgba(90,70,58,.12);--shadow-card:0 10px 30px rgba(90,70,58,.1);--container:1100px;--space-1:8px;--space-2:16px;--space-3:24px;--space-4:32px;--space-5:48px;--space-6:64px;--header-height:76px}*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:hidden;font-family:"Inter",sans-serif;color:var(--color-brown);background:radial-gradient(circle at top left,rgba(200,164,77,.18),transparent 28%),linear-gradient(180deg,#fbf7f1 0%,var(--color-bg) 100%);line-height:1.5;display:flex;flex-direction:column;min-height:100vh}img{display:block;max-width:100%;height:auto}h1,h2,h3{margin:0 0 var(--space-2);font-family:"Playfair Display",Georgia,serif;color:var(--color-brown);line-height:1.1;text-wrap:balance}p,li{font-size:1rem}p{margin:0 0 var(--space-2)}.site-header{position:sticky;top:0;z-index:1000;padding:12px 16px;background:rgba(255,250,244,.94);backdrop-filter:blur(18px);border-bottom:1px solid rgba(90,70,58,.08)}.site-header>div,.nav-shell{width:min(100%,var(--container));min-height:52px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}.site-nav,.site-header>div>div:last-child{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex:1;flex-wrap:wrap}.site-nav a,.site-header a{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 16px;color:var(--color-brown);font-weight:600;border-radius:999px;transition:background-color .2s ease,color .2s ease}.site-nav a:hover,.site-header a:hover,.site-nav a.is-active,.site-header a.is-active{color:var(--color-blue);background:rgba(30,78,216,.08)}.hero{position:relative;min-height:calc(100svh - var(--header-height));display:flex;align-items:flex-end;overflow:hidden;width:100vw;margin-top:calc(-1*var(--space-4));margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);padding:24px 20px 28px;background:radial-gradient(circle at 22% 26%,rgba(200,164,77,.18),transparent 24%),linear-gradient(135deg,#211a16 0%,#3a2d25 36%,#5a463a 100%)}.hero-background{position:absolute;inset:0}.intro-slider img{position:absolute;left:50%;bottom:0;width:min(138%,940px);height:100%;object-fit:contain;object-position:center;transform:translateX(-50%);opacity:0;filter:saturate(1.08) brightness(1.02) drop-shadow(0 36px 64px rgba(0,0,0,.2));animation:heroFade 8s infinite}.intro-slider img:first-child{opacity:1}.intro-slider img:nth-child(1){animation-delay:0s}.intro-slider img:nth-child(2){animation-delay:4s}@keyframes heroFade{0%,45%{opacity:.8;transform:translateX(-50%) scale(1.02)}50%,95%{opacity:0;transform:translateX(-50%) scale(1.02)}100%{opacity:.8;transform:translateX(-50%) scale(1.02)}}.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,15,12,.18) 0%,rgba(20,15,12,.44) 100%),linear-gradient(90deg,rgba(20,15,12,.48) 0%,rgba(20,15,12,.24) 46%,rgba(20,15,12,.14) 100%)}.hero-content{position:relative;z-index:1;width:min(100%,420px);margin:0;text-align:left;padding:0 0 12px}.hero-kicker{margin-bottom:10px;color:var(--color-gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}.hero-title{margin:0;font-size:clamp(1.9rem,8vw,3.2rem);color:#fff8f0;text-shadow:0 12px 30px rgba(0,0,0,.3)}.hero-subtitle{margin:0;max-width:24ch;color:rgba(255,248,240,.92);font-size:clamp(.95rem,3.8vw,1rem)}.hero-cta{margin-top:var(--space-3)}.hero-note{margin-top:12px;color:rgba(255,248,240,.82);font-size:clamp(.82rem,3.2vw,.92rem)}.button-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 24px;border-radius:12px;font-weight:600;transition:all .2s ease;border:none;cursor:pointer;text-decoration:none;background:var(--color-blue);color:#fff8f0;box-shadow:0 4px 12px rgba(30,78,216,.24)}.button-link:hover{background:#1e3fa8;box-shadow:0 8px 20px rgba(30,78,216,.32)}.section-heading{margin-bottom:var(--space-4)}.section-kicker{margin:0;color:var(--color-gold);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;margin-bottom:var(--space-1)}.content-section{display:grid;gap:var(--space-3)}main{width:min(calc(100% - 24px),var(--container));margin:0 auto;padding:var(--space-4) 0 var(--space-5)}.site-footer{margin-top:auto;background:var(--color-brown);color:#fff8f0}
+    </style>
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"></noscript>
     <meta property="og:type" content="website">
     <meta property="og:locale" content="nl_NL">
@@ -21,8 +32,9 @@
     <meta property="og:url" content="https://medailledesign.nl/">
     <meta property="og:image" content="https://medailledesign.nl/images/IMG_Design-dark-background.png">
     <meta property="og:image:alt" content="Modern medaillehouder design van Medalling voor sportmedailles">
-    <link rel="stylesheet" href="css/styles.css">
-    <script src="js/analytics.js" defer></script>
+    <link rel="stylesheet" href="css/styles.css" media="print" onload="this.media='all';this.onload=null;">
+    <noscript><link rel="stylesheet" href="css/styles.css"></noscript>
+    <script src="js/analytics.js" async></script>
     <script src="js/main.js" defer></script>
     <script src="js/preorder.js" defer></script>
     <script type="application/ld+json">
@@ -63,7 +75,7 @@
 <body>
     <header class="site-header">
         <div class="nav-shell">
-            <img src="images/optimized/medalling-logo-96.png" width="96" height="95" alt="Medalling logo">
+            <img src="images/AVIF/medalling-logo-96.avif" width="96" height="95" alt="Medalling logo" decoding="async">
 
             <nav class="site-nav" aria-label="Hoofdnavigatie">
                 <a href="pages/Acryl_design.html">Design</a>
@@ -78,8 +90,8 @@
     <main id="top">
         <section class="hero">
             <div class="hero-background intro-slider" aria-hidden="true">
-                <img src="images/optimized/design-640.jpg" srcset="images/optimized/design-640.jpg 640w, images/optimized/design-960.jpg 960w, images/optimized/design-1152.jpg 1152w" sizes="100vw" width="640" height="464" fetchpriority="high" decoding="async" alt="Medalling medaillehouder met verlichting voor sporters en marathon medaille">
-                <img src="images/optimized/hmv-640.jpg" width="640" height="411" loading="lazy" decoding="async" alt="Aankomend event">
+                <img src="images/AVIF/design-640.avif" srcset="images/AVIF/design-640.avif 640w, images/AVIF/design-960.avif 960w, images/AVIF/design-1152.avif 1152w" sizes="100vw" width="640" height="464" fetchpriority="high" decoding="async" alt="Medalling medaillehouder met verlichting voor sporters en marathon medaille">
+                <img src="images/AVIF/hmv-640.avif" width="640" height="411" loading="lazy" decoding="async" alt="Aankomend event">
 
             </div>
             <div class="hero-overlay" aria-hidden="true"></div>
@@ -95,7 +107,7 @@
 
         <a class="event-highlight" href="#hmv-2026" aria-labelledby="event-highlight-title">
             <div class="event-highlight__logo">
-                <img src="images/optimized/hmv-640.jpg" width="640" height="411" loading="lazy" decoding="async" alt="Halve Marathon Veghel voor sporters en marathonlopers">
+                <img src="images/AVIF/hmv-640.avif" width="640" height="411" loading="lazy" decoding="async" alt="Halve Marathon Veghel voor sporters en marathonlopers">
             </div>
             <div class="event-highlight__content">
                 <p class="event-highlight__eyebrow">Terugblik event</p>
@@ -114,7 +126,7 @@
 
             <div class="hmv-feature">
                 <div class="hmv-video">
-                    <video controls muted preload="none" poster="images/optimized/teamfoto-640.jpg">
+                    <video controls muted preload="none" poster="images/AVIF/teamfoto-640.avif">
                         <source src="videos/HMV 2026/Start.mp4" type="video/mp4">
                         Je browser ondersteunt deze video niet.
                     </video>
@@ -147,19 +159,19 @@
 
             <div class="hmv-gallery" aria-label="Foto's van Medalling bij de Halve Marathon Veghel 2026">
                 <figure class="hmv-gallery__item hmv-gallery__item--large">
-                    <img src="images/optimized/klant-product-480.jpg" srcset="images/optimized/klant-product-480.jpg 480w, images/optimized/klant-product-720.jpg 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" width="480" height="640" loading="lazy" decoding="async" alt="Loper van de Halve Marathon Veghel met een Medalling medaillehouder">
+                    <img src="images/AVIF/klant-product-480.avif" srcset="images/AVIF/klant-product-480.avif 480w, images/AVIF/klant-product-720.avif 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" width="480" height="640" loading="lazy" decoding="async" alt="Loper van de Halve Marathon Veghel met een Medalling medaillehouder">
                     <figcaption>Finishers bekijken hun herinnering direct na de race.</figcaption>
                 </figure>
                 <figure class="hmv-gallery__item">
-                    <img src="images/optimized/productfoto-stand-480.jpg" srcset="images/optimized/productfoto-stand-480.jpg 480w, images/optimized/productfoto-stand-720.jpg 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" width="480" height="640" loading="lazy" decoding="async" alt="Medalling medaillehouder met Halve Marathon Veghel route op de stand">
+                    <img src="images/AVIF/productfoto-stand-480.avif" srcset="images/AVIF/productfoto-stand-480.avif 480w, images/AVIF/productfoto-stand-720.avif 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" width="480" height="640" loading="lazy" decoding="async" alt="Medalling medaillehouder met Halve Marathon Veghel route op de stand">
                     <figcaption>Het eventdesign met route, datum en afstand.</figcaption>
                 </figure>
                 <figure class="hmv-gallery__item">
-                    <img src="images/optimized/verkoop-1-480.jpg" srcset="images/optimized/verkoop-1-480.jpg 480w, images/optimized/verkoop-1-720.jpg 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" width="480" height="640" loading="lazy" decoding="async" alt="Medalling team in gesprek met bezoekers bij de verkoopstand">
+                    <img src="images/AVIF/verkoop-1-480.avif" srcset="images/AVIF/verkoop-1-480.avif 480w, images/AVIF/verkoop-1-720.avif 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" width="480" height="640" loading="lazy" decoding="async" alt="Medalling team in gesprek met bezoekers bij de verkoopstand">
                     <figcaption>In gesprek met lopers en supporters.</figcaption>
                 </figure>
                 <figure class="hmv-gallery__item">
-                    <img src="images/optimized/teamfoto-640.jpg" srcset="images/optimized/teamfoto-640.jpg 640w, images/optimized/teamfoto-960.jpg 960w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" width="640" height="480" loading="lazy" decoding="async" alt="Team Medalling achter de stand met meerdere medaillehouders">
+                    <img src="images/AVIF/teamfoto-640.avif" srcset="images/AVIF/teamfoto-640.avif 640w, images/AVIF/teamfoto-960.avif 960w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" width="640" height="480" loading="lazy" decoding="async" alt="Team Medalling achter de stand met meerdere medaillehouders">
                     <figcaption>Klaar voor verkoop op locatie.</figcaption>
                 </figure>
             </div>
@@ -225,7 +237,7 @@
             <div class="design-feature">
                 <article class="design-slide design-slide--featured">
                     <a href="pages/Acryl_design.html">
-                        <img src="images/optimized/design-640.jpg" srcset="images/optimized/design-640.jpg 640w, images/optimized/design-960.jpg 960w, images/optimized/design-1152.jpg 1152w" sizes="(min-width: 769px) 430px, calc(100vw - 64px)" width="640" height="464" loading="lazy" decoding="async" alt="Modern medaillehouder design voor een marathon medaille of andere sport medaille">
+                        <img src="images/AVIF/design-640.avif" srcset="images/AVIF/design-640.avif 640w, images/AVIF/design-960.avif 960w, images/AVIF/design-1152.avif 1152w" sizes="(min-width: 769px) 430px, calc(100vw - 64px)" width="640" height="464" loading="lazy" decoding="async" alt="Modern medaillehouder design voor een marathon medaille of andere sport medaille">
                     </a>
                     <div class="design-slide__body">
                         <h3><a href="pages/Acryl_design.html">Acryl design</a></h3>
@@ -275,7 +287,7 @@
 
             <div class="preorder-panel">
                 <div class="preorder-preview">
-                    <img src="images/optimized/design-640.jpg" srcset="images/optimized/design-640.jpg 640w, images/optimized/design-960.jpg 960w, images/optimized/design-1152.jpg 1152w" sizes="(min-width: 769px) 450px, calc(100vw - 64px)" width="640" height="464" loading="lazy" decoding="async" alt="Acryl design van Medalling met warme LED-verlichting">
+                    <img src="images/AVIF/design-640.avif" srcset="images/AVIF/design-640.avif 640w, images/AVIF/design-960.avif 960w, images/AVIF/design-1152.avif 1152w" sizes="(min-width: 769px) 450px, calc(100vw - 64px)" width="640" height="464" loading="lazy" decoding="async" alt="Acryl design van Medalling met warme LED-verlichting">
                 </div>
 
                 <div class="preorder-panel__form">
@@ -326,7 +338,7 @@
     <footer class="site-footer" id="contact">
         <div class="site-footer__inner">
             <div class="site-footer__brand">
-                <img class="site-footer__logo" src="images/optimized/medalling-logo-160.png" width="160" height="159" loading="lazy" decoding="async" alt="Medalling logo">
+                <img class="site-footer__logo" src="images/AVIF/medalling-logo-160.avif" width="160" height="159" loading="lazy" decoding="async" alt="Medalling logo">
                 <div>
                     <p class="site-footer__title">Medalling</p>
                     <p class="site-footer__text">Unieke medaillehouders die sportprestaties zichtbaar maken.</p>
@@ -335,12 +347,12 @@
             <div class="site-footer__columns" aria-label="Contact en socials">
                 <div class="site-footer__group">
                     <h3>Contact</h3>
-                    <a href="mailto:info@medailledesign.nl"><img class="footer-icon" src="images/optimized/mail-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">info@medailledesign.nl</a>
+                    <a href="mailto:info@medailledesign.nl"><img class="footer-icon" src="images/AVIF/mail-64.avif" width="64" height="64" loading="lazy" decoding="async" alt="">info@medailledesign.nl</a>
                 </div>
                 <div class="site-footer__group">
                     <h3>Socials</h3>
-                    <a href="https://www.instagram.com/medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/optimized/instagram-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">Instagram</a>
-                    <a href="https://www.linkedin.com/company/medalling" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/optimized/linkedin-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">LinkedIn</a>
+                    <a href="https://www.instagram.com/medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/AVIF/instagram-64.avif" width="64" height="64" loading="lazy" decoding="async" alt="">Instagram</a>
+                    <a href="https://www.linkedin.com/company/medalling" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/AVIF/linkedin-64.avif" width="64" height="64" loading="lazy" decoding="async" alt="">LinkedIn</a>
                 </div>
                 <div class="site-footer__group">
                     <h3>Informatie</h3>
