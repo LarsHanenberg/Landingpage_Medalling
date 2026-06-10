@@ -49,6 +49,14 @@ img {
     height: auto;
 }
 
+picture {
+    display: contents;
+}
+
+picture img {
+    display: block;
+}
+
 .visually-hidden {
     position: absolute;
     width: 1px;
@@ -238,9 +246,12 @@ main > * + * {
 .hero-background {
     position: absolute;
     inset: 0;
+    contain: layout paint;
 }
 
-.intro-slider img {
+.intro-slider {
+    contain: layout paint style;
+}
     position: absolute;
     left: 50%;
     bottom: 0;
@@ -252,6 +263,9 @@ main > * + * {
     opacity: 0;
     filter: saturate(1.08) brightness(1.02) drop-shadow(0 36px 64px rgba(0, 0, 0, 0.2));
     animation: heroFade 8s infinite;
+    will-change: opacity;
+    contain: layout paint;
+    backface-visibility: hidden;
 }
 
 .intro-slider img:first-child {
@@ -270,16 +284,13 @@ main > * + * {
     0%,
     45% {
         opacity: 0.8;
-        transform: translateX(-50%) scale(1.02);
     }
     50%,
     95% {
         opacity: 0;
-        transform: translateX(-50%) scale(1.02);
     }
     100% {
         opacity: 0.8;
-        transform: translateX(-50%) scale(1.02);
     }
 }
 
