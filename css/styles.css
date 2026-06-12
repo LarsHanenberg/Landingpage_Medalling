@@ -35,6 +35,158 @@
     --header-height: 76px;
 }
 
+/* ── Dark mode ────────────────────────────────────────────── */
+[data-theme="dark"] {
+    --color-bg: #1a1310;
+    --color-surface: #231a16;
+    --color-primary: #2e2420;
+    --color-brown: #e8ddd4;
+    --color-brown-soft: #b8a89a;
+    --color-gold: #d4af5a;
+    --color-blue: #7da4f8;
+    --color-border: rgba(255, 240, 220, 0.1);
+    --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] body {
+    background:
+        radial-gradient(circle at top left, rgba(200, 164, 77, 0.10), transparent 28%),
+        linear-gradient(180deg, #211a16 0%, #1a1310 100%);
+}
+
+[data-theme="dark"] .site-header {
+    background: rgba(26, 19, 16, 0.94);
+    border-bottom-color: rgba(255, 240, 220, 0.08);
+}
+
+[data-theme="dark"] .site-footer {
+    background: #120f0d;
+    border-top-color: rgba(255, 240, 220, 0.08);
+}
+
+/* Secties met hard-coded lichte achtergronden */
+[data-theme="dark"] .hmv-section {
+    background:
+        linear-gradient(180deg, rgba(200, 164, 77, 0.07), rgba(0, 0, 0, 0)),
+        var(--color-surface);
+}
+
+[data-theme="dark"] .event-highlight {
+    background: linear-gradient(135deg, rgba(30, 78, 216, 0.14), rgba(35, 26, 22, 0.98));
+}
+
+[data-theme="dark"] .comparison-card--problem {
+    background: linear-gradient(180deg, rgba(188, 59, 47, 0.14), rgba(35, 26, 22, 0.96));
+}
+
+[data-theme="dark"] .comparison-card--solution {
+    background: linear-gradient(180deg, rgba(31, 122, 66, 0.14), rgba(35, 26, 22, 0.96));
+}
+
+[data-theme="dark"] .comparison-badge--problem { color: #f08070; }
+[data-theme="dark"] .comparison-badge--solution { color: #5acc8a; }
+
+[data-theme="dark"] .contact-card--primary {
+    background: linear-gradient(135deg, rgba(200, 164, 77, 0.12), rgba(35, 26, 22, 0.98));
+}
+
+[data-theme="dark"] .page-image-card {
+    background: #1e1612;
+}
+
+[data-theme="dark"] .page-image-card--logo {
+    background: #2a1e18;
+}
+
+[data-theme="dark"] .design-video {
+    background: var(--color-surface);
+}
+
+[data-theme="dark"] .menu-toggle {
+    background: #2e2420;
+    border-color: rgba(255, 240, 220, 0.12);
+}
+
+[data-theme="dark"] .hmv-gallery__item {
+    background: #1e1612;
+}
+
+/* Blog en content kaarten met witte tekst-vlakken */
+[data-theme="dark"] .blog-card,
+[data-theme="dark"] .content-card,
+[data-theme="dark"] .step-card,
+[data-theme="dark"] .bullet-card,
+[data-theme="dark"] .preorder-panel,
+[data-theme="dark"] .faq-item {
+    background: var(--color-surface);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Cart paneel */
+[data-theme="dark"] .cart-panel {
+    background: rgba(35, 26, 22, 0.98);
+    border-color: rgba(255, 240, 220, 0.12);
+}
+
+/* Blog CTA onderaan */
+[data-theme="dark"] .blog-cta {
+    background: linear-gradient(135deg, rgba(200, 164, 77, 0.18), #2e2218);
+    border: 1px solid rgba(200, 164, 77, 0.22);
+    color: var(--color-brown);
+}
+
+[data-theme="dark"] .blog-cta h2,
+[data-theme="dark"] .blog-cta p {
+    color: var(--color-brown);
+}
+
+[data-theme="dark"] .blog-hero__image {
+    background: #1e1612;
+}
+
+/* Blog callout kaarten (Waarom geen haakje / kleinschalige startup) */
+[data-theme="dark"] .blog-callout {
+    background: linear-gradient(135deg, rgba(30, 78, 216, 0.12), rgba(35, 26, 22, 0.96));
+    border-color: rgba(30, 78, 216, 0.2);
+}
+
+/* HMV stat kaarten (Live verkocht / Eventdesign / B2B proof) */
+[data-theme="dark"] .hmv-stats article {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 240, 220, 0.1);
+}
+
+/* Dark mode toggle knop in nav */
+.theme-toggle {
+    background: none;
+    border: 1.5px solid var(--color-border);
+    border-radius: 999px;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s, border-color 0.2s;
+    flex-shrink: 0;
+    padding: 0;
+    color: var(--color-brown);
+}
+
+.theme-toggle:hover {
+    background: rgba(200, 164, 77, 0.12);
+    border-color: var(--color-gold);
+    box-shadow: none;
+    transform: none;
+}
+
+.theme-toggle .icon-sun  { display: inline; }
+.theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun  { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: inline; }
+
 *,
 *::before,
 *::after {
@@ -275,25 +427,56 @@ main > * + * {
     inset: 0;
 }
 
-/* Dag/nacht hero afbeeldingen */
+/* Dag modus: blur-laag verbergen, verder identiek aan nacht */
+.hero:not(.is-night) .hero-img-blur {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Dag/nacht hero afbeeldingen — gedeelde basisstijl */
 .hero-img {
     position: absolute;
-    inset: 0;
-    width: 100%;
+    top: 0;
     height: 100%;
     object-fit: cover;
     object-position: center 65%;
     transition: opacity 1.2s ease;
 }
 
+/* Wazige achterlaag — volledige breedte, vult de zijkanten */
+.hero-img-blur {
+    left: 0;
+    width: 100%;
+    filter: blur(22px) brightness(0.7);
+    transform: scale(1.04); /* voorkomt witte blur-rand */
+    z-index: 0;
+}
+
+/* Scherpe voorlaag — 80% breedte gecentreerd met zachte randen */
+.hero-img-sharp {
+    left: 10%;
+    width: 80%;
+    z-index: 1;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
 .hero-img--day {
     opacity: 1;
-    filter: brightness(0.82) saturate(1.05);
+    filter: brightness(0.95) saturate(1.05);
+}
+
+.hero-img-blur.hero-img--day {
+    filter: blur(22px) brightness(0.72) saturate(1.05);
 }
 
 .hero-img--night {
     opacity: 0;
     filter: brightness(0.65) saturate(1.15);
+}
+
+.hero-img-blur.hero-img--night {
+    filter: blur(22px) brightness(0.55) saturate(1.15);
 }
 
 /* is-night class op de section schakelt om */
@@ -367,23 +550,24 @@ main > * + * {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(20,15,12,0.35);
+    background: rgba(20, 15, 12, 0.45);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.15);
+    border: 2px solid rgba(200, 164, 77, 0.85);
     border-radius: 999px;
-    width: 44px;
-    height: 44px;
-    color: rgba(255,255,255,0.8);
+    width: 48px;
+    height: 48px;
+    color: rgba(200, 164, 77, 1);
     cursor: pointer;
     box-shadow: none;
     min-height: unset;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
     animation: heroScrollBounce 2s ease-in-out infinite;
 }
 
 .hero-scroll-btn:hover {
-    background: rgba(200,164,77,0.4);
-    color: #fff;
+    background: rgba(200, 164, 77, 0.18);
+    border-color: rgba(200, 164, 77, 1);
+    color: rgba(200, 164, 77, 1);
     box-shadow: none;
     transform: translateX(-50%) translateY(2px);
 }
@@ -393,12 +577,19 @@ main > * + * {
     50%       { transform: translateX(-50%) translateY(6px); }
 }
 
+
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background:
-        linear-gradient(180deg, rgba(20, 15, 12, 0.18) 0%, rgba(20, 15, 12, 0.44) 100%),
-        linear-gradient(90deg, rgba(20, 15, 12, 0.48) 0%, rgba(20, 15, 12, 0.24) 46%, rgba(20, 15, 12, 0.14) 100%);
+    background: linear-gradient(90deg,
+        transparent 0%,
+        transparent 10%,
+        rgba(20, 15, 12, 0.58) 16%,
+        rgba(20, 15, 12, 0.40) 38%,
+        rgba(20, 15, 12, 0.10) 68%,
+        transparent 90%,
+        transparent 100%
+    );
 }
 
 .hero-content {
@@ -797,7 +988,7 @@ main > * + * {
 .event-highlight__logo img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .event-highlight__eyebrow {
@@ -1835,9 +2026,15 @@ main,
     }
 
     .hero-overlay {
-        background:
-            linear-gradient(90deg, rgba(20, 15, 12, 0.72) 0%, rgba(20, 15, 12, 0.58) 26%, rgba(20, 15, 12, 0.26) 52%, rgba(20, 15, 12, 0.06) 76%, rgba(20, 15, 12, 0.08) 100%),
-            linear-gradient(180deg, rgba(20, 15, 12, 0.06) 0%, rgba(20, 15, 12, 0.18) 100%);
+        background: linear-gradient(90deg,
+            transparent 0%,
+            transparent 10%,
+            rgba(20, 15, 12, 0.58) 16%,
+            rgba(20, 15, 12, 0.40) 38%,
+            rgba(20, 15, 12, 0.10) 68%,
+            transparent 90%,
+            transparent 100%
+        );
     }
 
     .hero-scroll {

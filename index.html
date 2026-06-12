@@ -20,6 +20,7 @@
     <meta property="og:image" content="https://medailledesign.nl/images/IMG_Design-dark-background.png">
     <meta property="og:image:alt" content="Modern medaillehouder design van Medalling voor sportmedailles">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/theme.js"></script>
     <script src="js/analytics.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/preorder.js" defer></script>
@@ -77,6 +78,10 @@
                 <a href="pages/OverOns.html">Over ons</a>
                 <a href="pages/Contact.html">Contact</a>
                 <a href="pages/shop.html" class="nav-shop-link">Bestel nu</a>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Schakel naar donkere modus" aria-pressed="false">
+                    <span class="icon-sun">☀️</span>
+                    <span class="icon-moon">🌙</span>
+                </button>
             </nav>
         </div>
     </header>
@@ -84,18 +89,28 @@
     <main id="top">
         <section class="hero">
             <div class="hero-background" aria-hidden="true">
-                <!-- Dag foto (standaard zichtbaar) -->
-                <img class="hero-img hero-img--day"
-                     src="images/optimized/product-light-640.webp"
-                     srcset="images/optimized/product-light-640.webp 640w, images/optimized/product-light-960.webp 960w, images/optimized/product-light-1152.webp 1152w"
+                <!-- Wazige achterlaag — volledige breedte, vult de zijkanten -->
+                <img class="hero-img hero-img-blur hero-img--day"
+                     src="images/optimized/product-hmv-640.webp"
+                     srcset="images/optimized/product-hmv-640.webp 640w, images/optimized/product-hmv-960.webp 960w, images/optimized/product-hmv-1152.webp 1152w"
                      sizes="100vw" width="960" height="640"
-                     fetchpriority="high" decoding="async"
-                     alt="Medalling medaillehouder in daglicht">
-                <!-- Nacht foto -->
-                <img class="hero-img hero-img--night"
+                     fetchpriority="high" decoding="async" alt="">
+                <img class="hero-img hero-img-blur hero-img--night"
                      src="images/optimized/design-640.webp"
                      srcset="images/optimized/design-640.webp 640w, images/optimized/design-960.webp 960w, images/optimized/design-1152.webp 1152w"
                      sizes="100vw" width="640" height="464"
+                     loading="eager" decoding="async" alt="">
+                <!-- Scherpe voorlaag — 80% breedte gecentreerd -->
+                <img class="hero-img hero-img-sharp hero-img--day"
+                     src="images/optimized/product-hmv-640.webp"
+                     srcset="images/optimized/product-hmv-640.webp 640w, images/optimized/product-hmv-960.webp 960w, images/optimized/product-hmv-1152.webp 1152w"
+                     sizes="80vw" width="960" height="640"
+                     fetchpriority="high" decoding="async"
+                     alt="Medalling medaillehouder in daglicht">
+                <img class="hero-img hero-img-sharp hero-img--night"
+                     src="images/optimized/design-640.webp"
+                     srcset="images/optimized/design-640.webp 640w, images/optimized/design-960.webp 960w, images/optimized/design-1152.webp 1152w"
+                     sizes="80vw" width="640" height="464"
                      loading="eager" decoding="async"
                      alt="Medalling medaillehouder met warme LED-verlichting">
             </div>
@@ -128,8 +143,8 @@
 
             <!-- Scroll-pijl — gecentreerd onderaan -->
             <button class="hero-scroll-btn" onclick="(function(){ const el=document.getElementById('event-highlight'); window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 12, behavior:'smooth'}); })()" aria-label="Scroll naar meer informatie">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 12 15 18 9"/>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="5 8 12 16 19 8"/>
                 </svg>
             </button>
 
@@ -394,7 +409,6 @@
             const btnDay = document.getElementById('btn-day');
             const btnNight = document.getElementById('btn-night');
             let mode = 'day';
-            let autoTimer;
 
             // Sluit de gap tussen header en hero, vul exact de resterende viewport
             function fitHero() {
@@ -423,31 +437,24 @@
                     btnNight.setAttribute('aria-pressed', 'true');
                     btnDay.classList.remove('is-active');
                     btnDay.setAttribute('aria-pressed', 'false');
+                    applyTheme('dark');
                 } else {
                     hero.classList.remove('is-night');
                     btnDay.classList.add('is-active');
                     btnDay.setAttribute('aria-pressed', 'true');
                     btnNight.classList.remove('is-active');
                     btnNight.setAttribute('aria-pressed', 'false');
+                    applyTheme('light');
                 }
-                resetAutoTimer();
             }
 
-            function resetAutoTimer() {
-                clearInterval(autoTimer);
-                autoTimer = setInterval(function () {
-                    setDayNight(mode === 'day' ? 'night' : 'day');
-                }, 5000);
+            // Sync hero with saved theme on load
+            if (window.getTheme && window.getTheme() === 'dark') {
+                setDayNight('night');
             }
 
             // Maak globaal zodat onclick in HTML werkt
             window.setDayNight = setDayNight;
-
-            // Start automatisch wisselen na 3 seconden
-            autoTimer = setTimeout(function () {
-                setDayNight('night');
-                resetAutoTimer();
-            }, 3000);
         })();
     </script>
 </body>
