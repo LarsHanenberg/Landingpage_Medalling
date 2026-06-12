@@ -142,7 +142,7 @@
             </div>
 
             <!-- Scroll-pijl — gecentreerd onderaan -->
-            <button class="hero-scroll-btn" onclick="(function(){ const el=document.getElementById('event-highlight'); window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 12, behavior:'smooth'}); })()" aria-label="Scroll naar meer informatie">
+            <button class="hero-scroll-btn" onclick="(function(){ const el=document.getElementById('event-highlight'); window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - (document.querySelector('.site-header')?.offsetHeight || 80), behavior:'smooth'}); })()" aria-label="Scroll naar meer informatie">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="5 8 12 16 19 8"/>
                 </svg>
