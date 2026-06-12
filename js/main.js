@@ -139,54 +139,54 @@ function setupHeader(header) {
         nav.appendChild(contactLink);
     }
 
-    if (!header.querySelector(".menu-toggle")) {
-        const toggle = document.createElement("button");
+    let toggle = header.querySelector(".menu-toggle");
+    if (!toggle) {
+        toggle = document.createElement("button");
         toggle.type = "button";
         toggle.className = "menu-toggle";
-        toggle.setAttribute("aria-expanded", "false");
-        toggle.setAttribute("aria-controls", nav.id);
-        toggle.setAttribute("aria-label", "Open navigatiemenu");
-        // Changed: replace the mobile "Menu" label with a hamburger icon while keeping the same toggle behavior.
         toggle.innerHTML = '<span class="menu-toggle__icon" aria-hidden="true"></span>';
-
-        toggle.addEventListener("click", () => {
-            const isOpen = header.classList.toggle("is-open");
-            toggle.setAttribute("aria-expanded", String(isOpen));
-            toggle.setAttribute("aria-label", isOpen ? "Sluit navigatiemenu" : "Open navigatiemenu");
-        });
-
         wrapper.appendChild(toggle);
+    }
 
-        nav.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", () => {
-                header.classList.remove("is-open");
-                toggle.setAttribute("aria-expanded", "false");
-                toggle.setAttribute("aria-label", "Open navigatiemenu");
-            });
-        });
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", nav.id);
+    toggle.setAttribute("aria-label", "Open navigatiemenu");
 
-        document.addEventListener("click", (event) => {
-            if (!header.classList.contains("is-open")) {
-                return;
-            }
+    toggle.addEventListener("click", () => {
+        const isOpen = header.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", String(isOpen));
+        toggle.setAttribute("aria-label", isOpen ? "Sluit navigatiemenu" : "Open navigatiemenu");
+    });
 
-            if (header.contains(event.target)) {
-                return;
-            }
-
+    nav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
             header.classList.remove("is-open");
             toggle.setAttribute("aria-expanded", "false");
             toggle.setAttribute("aria-label", "Open navigatiemenu");
         });
+    });
 
-        window.addEventListener("resize", () => {
-            if (window.innerWidth > 768 && header.classList.contains("is-open")) {
-                header.classList.remove("is-open");
-                toggle.setAttribute("aria-expanded", "false");
-                toggle.setAttribute("aria-label", "Open navigatiemenu");
-            }
-        });
-    }
+    document.addEventListener("click", (event) => {
+        if (!header.classList.contains("is-open")) {
+            return;
+        }
+
+        if (header.contains(event.target)) {
+            return;
+        }
+
+        header.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Open navigatiemenu");
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 768 && header.classList.contains("is-open")) {
+            header.classList.remove("is-open");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Open navigatiemenu");
+        }
+    });
 
     markActiveLinks(nav.querySelectorAll("a"));
 }

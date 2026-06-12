@@ -194,7 +194,7 @@
       </div>
       <div class="site-footer__columns">
         <div class="site-footer__group"><h3>Contact</h3><a href="mailto:info.medailledesign@gmail.com"><img class="footer-icon" src="../images/optimized/mail-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">info.medailledesign@gmail.com</a></div>
-        <div class="site-footer__group"><h3>Socials</h3><a href="https://www.instagram.com/medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon" src="../images/optimized/instagram-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">Instagram</a><a href="https://www.tiktok.com/@medalling" target="_blank" rel="noreferrer"><img class="footer-icon" src="../images/tiktok_logo.png" width="64" height="64" loading="lazy" decoding="async" alt="TikTok">TikTok</a></div>
+        <div class="site-footer__group"><h3>Socials</h3><a href="https://www.instagram.com/medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon" src="../images/optimized/instagram-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">Instagram</a><a href="https://www.tiktok.com/@medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon footer-icon--tiktok" src="../images/tiktok_icon.png" width="64" height="64" loading="lazy" decoding="async" alt="TikTok">TikTok</a></div>
         <div class="site-footer__group"><h3>Informatie</h3><a href="Privacy.html">Privacyverklaring</a><a href="AlgemeneVoorwaarden.html">Algemene voorwaarden</a></div>
       </div>
     </div>
@@ -230,6 +230,24 @@
       errEl.style.display = 'none';
 
       const form = e.target;
+
+      const vereist = [
+        ['voornaam', 'Vul je voornaam in.'],
+        ['achternaam', 'Vul je achternaam in.'],
+        ['email', 'Vul je e-mailadres in.'],
+        ['adres', 'Vul je straat en huisnummer in.'],
+        ['postcode', 'Vul je postcode in.'],
+        ['plaats', 'Vul je plaats in.'],
+      ];
+      for (const [naam, melding] of vereist) {
+        if (!form[naam].value.trim()) {
+          errEl.textContent = melding;
+          errEl.style.display = 'block';
+          form[naam].focus();
+          return;
+        }
+      }
+
       const betaalmethode = form.querySelector('input[name="betaalmethode"]:checked')?.value;
       if (!betaalmethode) {
         errEl.textContent = 'Kies een betaalmethode.';
@@ -245,21 +263,25 @@
       const voornaam = form.voornaam.value.trim();
       const achternaam = form.achternaam.value.trim();
 
-      const { data: order, error } = await db.from('orders').insert({
-        klant_naam: `${voornaam} ${achternaam}`,
-        voornaam,
-        achternaam,
-        email: form.email.value.trim(),
-        adres: form.adres.value.trim(),
-        postcode: form.postcode.value.trim(),
-        plaats: form.plaats.value.trim(),
-        totaal,
-        betaalmethode,
-        status: 'betaling_afwachting'
-      }).select().single();
+      let order;
+      try {
+        const { data, error } = await db.from('orders').insert({
+          klant_naam: `${voornaam} ${achternaam}`,
+          voornaam,
+          achternaam,
+          email: form.email.value.trim(),
+          adres: form.adres.value.trim(),
+          postcode: form.postcode.value.trim(),
+          plaats: form.plaats.value.trim(),
+          totaal,
+          betaalmethode,
+          status: 'betaling_afwachting'
+        }).select().single();
 
-      if (error) {
-        errEl.textContent = 'Er ging iets mis. Probeer het opnieuw.';
+        if (error) throw new Error('Er ging iets mis. Probeer het opnieuw.');
+        order = data;
+      } catch (err) {
+        errEl.textContent = err.message || 'Er ging iets mis. Probeer het opnieuw.';
         errEl.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'Bestelling plaatsen →';

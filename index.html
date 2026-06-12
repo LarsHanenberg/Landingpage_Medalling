@@ -88,7 +88,7 @@
 
     <main id="top">
         <section class="hero">
-            <div class="hero-background" aria-hidden="true">
+            <div class="hero-background" aria-hidden="false">
                 <!-- Wazige achterlaag — volledige breedte, vult de zijkanten -->
                 <img class="hero-img hero-img-blur hero-img--day"
                      src="images/optimized/product-hmv-640.webp"
@@ -113,6 +113,23 @@
                      sizes="80vw" width="640" height="464"
                      loading="eager" decoding="async"
                      alt="Medalling medaillehouder met warme LED-verlichting">
+
+                <!-- Dag/nacht toggle — linksonder in de afbeelding -->
+                <div class="daynight-toggle" role="group" aria-label="Dag of nacht weergave">
+                    <button class="daynight-btn daynight-btn--day is-active" id="btn-day" onclick="setDayNight('day')" aria-pressed="true" aria-label="Dagweergave">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                        </svg>
+                        <span>Dag</span>
+                    </button>
+                    <button class="daynight-btn daynight-btn--night" id="btn-night" onclick="setDayNight('night')" aria-pressed="false" aria-label="Nachtweergave">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                        <span>Nacht</span>
+                    </button>
+                </div>
             </div>
             <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -122,23 +139,6 @@
                 <p class="hero-subtitle">Laat je medaille niet verdwijnen, maar maak je hardloop prestaties zichtbaar met een unieke medaillehouder.</p>
                 <a class="button-link hero-cta" href="pages/shop.html">Bestel nu — €34,98</a>
                 <p class="hero-note">Vrijblijvend, zonder directe betaling.</p>
-            </div>
-
-            <!-- Dag/nacht toggle — linksonder -->
-            <div class="daynight-toggle" role="group" aria-label="Dag of nacht weergave">
-                <button class="daynight-btn daynight-btn--day is-active" id="btn-day" onclick="setDayNight('day')" aria-pressed="true" aria-label="Dagweergave">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="4"/>
-                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-                    </svg>
-                    <span>Dag</span>
-                </button>
-                <button class="daynight-btn daynight-btn--night" id="btn-night" onclick="setDayNight('night')" aria-pressed="false" aria-label="Nachtweergave">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                    <span>Nacht</span>
-                </button>
             </div>
 
             <!-- Scroll-pijl — gecentreerd onderaan -->
@@ -190,22 +190,23 @@
                 </div>
             </div>
 
-            <div class="hmv-stats" aria-label="Resultaten van Medalling bij Halve Marathon Veghel 2026">
-                <article>
+            <div class="hmv-combined-grid" aria-label="Resultaten en foto's van Medalling bij de Halve Marathon Veghel 2026">
+                <!-- kind 1: stat Live verkocht -->
+                <article class="hmv-stat-card">
                     <strong>Live verkocht</strong>
                     <span>Sporters konden het design meteen meenemen of een bestelverzoek plaatsen.</span>
                 </article>
-                <article>
+                <!-- kind 2: stat Eventdesign -->
+                <article class="hmv-stat-card">
                     <strong>Eventdesign</strong>
                     <span>De route van Halve Marathon Veghel werd verwerkt in het acryl ontwerp.</span>
                 </article>
-                <article>
+                <!-- kind 3: stat B2B proof -->
+                <article class="hmv-stat-card">
                     <strong>B2B proof</strong>
                     <span>Een tastbare activatie voor marathons die deelnemers een blijvende herinnering willen bieden.</span>
                 </article>
-            </div>
-
-            <div class="hmv-gallery" aria-label="Foto's van Medalling bij de Halve Marathon Veghel 2026">
+                <!-- kind 4: foto 1 (hoort bij Live verkocht) -->
                 <figure class="hmv-gallery__item hmv-gallery__item--large">
                     <picture>
                         <source srcset="images/optimized/klant-product-480.webp 480w, images/optimized/klant-product-720.webp 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" type="image/webp">
@@ -213,6 +214,7 @@
                     </picture>
                     <figcaption>Finishers bekijken hun herinnering direct na de race.</figcaption>
                 </figure>
+                <!-- kind 5: foto 2 (hoort bij Eventdesign) -->
                 <figure class="hmv-gallery__item">
                     <picture>
                         <source srcset="images/optimized/productfoto-stand-480.webp 480w, images/optimized/productfoto-stand-720.webp 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" type="image/webp">
@@ -220,6 +222,7 @@
                     </picture>
                     <figcaption>Het eventdesign met route, datum en afstand.</figcaption>
                 </figure>
+                <!-- kind 6: foto 3 (hoort bij B2B proof) -->
                 <figure class="hmv-gallery__item">
                     <picture>
                         <source srcset="images/optimized/verkoop-1-480.webp 480w, images/optimized/verkoop-1-720.webp 720w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" type="image/webp">
@@ -227,6 +230,7 @@
                     </picture>
                     <figcaption>In gesprek met lopers en supporters.</figcaption>
                 </figure>
+                <!-- kind 7: foto 4 (hoort bij Eventdesign) -->
                 <figure class="hmv-gallery__item">
                     <picture>
                         <source srcset="images/optimized/teamfoto-640.webp 640w, images/optimized/teamfoto-960.webp 960w" sizes="(min-width: 769px) 34vw, calc(100vw - 90px)" type="image/webp">
@@ -412,6 +416,14 @@
 
             // Sluit de gap tussen header en hero, vul exact de resterende viewport
             function fitHero() {
+                // Op mobiel: CSS-variabele updaten zodat hero exact de resterende hoogte krijgt
+                if (window.innerWidth <= 700) {
+                    const headerH = document.querySelector('.site-header').getBoundingClientRect().height;
+                    document.documentElement.style.setProperty('--header-height', Math.round(headerH) + 'px');
+                    hero.style.height = '';
+                    hero.style.marginTop = '';
+                    return;
+                }
                 requestAnimationFrame(function () {
                     requestAnimationFrame(function () {
                         const headerBottom = document.querySelector('.site-header').getBoundingClientRect().bottom;
