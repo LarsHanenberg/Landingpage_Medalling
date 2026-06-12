@@ -1681,6 +1681,19 @@ textarea:focus {
     background: rgba(255, 250, 244, 0.9);
 }
 
+/* Dark mode: form inputs leesbaar in checkout */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-brown);
+    border-color: rgba(255, 240, 220, 0.15);
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: rgba(255, 240, 220, 0.35);
+}
+
 .site-nav,
 .site-header > div > div:last-child {
     position: absolute;
