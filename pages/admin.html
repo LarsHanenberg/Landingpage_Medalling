@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin | Medalling</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" type="image/png" href="../images/Medalling-removebg.png">
+  <link rel="preload" as="font" href="../fonts/inter.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="../fonts/playfair-display.woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .admin-toolbar {
+      display: flex; flex-wrap: wrap;
+      gap: 10px; align-items: center;
+      margin-bottom: var(--space-3);
+    }
+    .filter-btn {
+      min-height: 38px; padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 0.85rem; font-weight: 700;
+      background: var(--color-surface);
+      color: var(--color-brown);
+      border: 1.5px solid var(--color-border);
+      box-shadow: none; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .filter-btn.is-active, .filter-btn:hover {
+      border-color: var(--color-gold);
+      background: rgba(200,164,77,0.1);
+      box-shadow: none; transform: none;
+    }
+    .orders-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .orders-table th {
+      text-align: left; padding: 10px 12px;
+      font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--color-brown-soft); border-bottom: 2px solid var(--color-border);
+    }
+    .orders-table td { padding: 12px; border-bottom: 1px solid var(--color-border); vertical-align: middle; }
+    .orders-table tr:last-child td { border-bottom: none; }
+    .orders-table tr:hover td { background: rgba(200,164,77,0.04); }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 999px;
+      font-size: 0.78rem; font-weight: 700; white-space: nowrap;
+    }
+    .pill-nieuw { background:rgba(30,78,216,0.1); color:#1e4ed8; }
+    .pill-betaling_afwachting { background:rgba(200,164,77,0.14); color:#8a6d10; }
+    .pill-betaald { background:rgba(31,122,66,0.12); color:#1f7a42; }
+    .pill-verzonden { background:rgba(31,122,66,0.2); color:#145c30; }
+    .action-btn {
+      min-height: 32px; padding: 6px 12px;
+      font-size: 0.8rem; border-radius: 10px;
+      cursor: pointer;
+    }
+    .table-wrap { overflow-x: auto; border-radius: 20px; }
+    .stat-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: var(--space-2); }
+    .stat-card {
+      padding: var(--space-2) var(--space-3);
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: 18px; box-shadow: var(--shadow-card);
+    }
+    .stat-card__num { font-size: 2rem; font-weight: 800; font-family: "Playfair Display", serif; color: var(--color-brown); }
+    .stat-card__label { font-size: 0.82rem; color: var(--color-brown-soft); }
+    .login-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--color-bg);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .login-box { width: min(100%, 360px); display: grid; gap: var(--space-2); }
+    @media (min-width: 769px) {
+      .stat-grid { grid-template-columns: repeat(4,1fr); }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+</head>
+<body>
+
+  <!-- Login scherm -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-box content-card">
+      <div class="section-heading">
+        <p class="section-kicker">Admin</p>
+        <h1 style="font-size:1.8rem">Inloggen</h1>
+      </div>
+      <div>
+        <label for="admin-pw">Wachtwoord</label>
+        <input type="password" id="admin-pw" placeholder="••••••••" autofocus>
+      </div>
+      <p id="login-error" style="color:#b42318;font-weight:600;display:none">Onjuist wachtwoord.</p>
+      <button type="button" onclick="checkLogin()">Inloggen</button>
+      <p style="font-size:0.8rem;color:var(--color-brown-soft);text-align:center;margin:0">
+        Stel het wachtwoord in als <code>ADMIN_PASSWORD</code> in dit bestand.
+      </p>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand-link" href="../index.html">
+        <img src="../images/optimized/medalling-logo-96.png" width="96" height="95" alt="Medalling logo">
+      </a>
+      <span style="font-weight:700;color:var(--color-brown);font-size:0.85rem">Admin dashboard</span>
+      <button onclick="logout()" class="button-link button-link--secondary" style="min-height:38px;padding:6px 14px;font-size:0.85rem">Uitloggen</button>
+    </div>
+  </header>
+
+  <main class="page-main" id="admin-main" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:var(--space-3)">
+      <div>
+        <p class="section-kicker">Medalling</p>
+        <h1 style="font-size:1.8rem;margin:0">Orders</h1>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="filter-btn" onclick="exportCSV()">⬇ Exporteer CSV</button>
+        <button class="filter-btn" onclick="loadOrders()">↺ Vernieuwen</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stat-grid" id="stats-grid">
+      <div class="stat-card"><div class="stat-card__num" id="stat-total">—</div><div class="stat-card__label">Totaal orders</div></div>
+      <div class="stat-card"><div class="stat-card__num" id="stat-afwachting">—</div><div class="stat-card__label">Betaling afwachting</div></div>
+      <div class="stat-card"><div class="stat-card__num" id="stat-betaald">—</div><div class="stat-card__label">Betaald</div></div>
+      <div class="stat-card"><div class="stat-card__num" id="stat-omzet">—</div><div class="stat-card__label">Totale omzet</div></div>
+    </div>
+
+    <!-- Filter knoppen -->
+    <div class="admin-toolbar" style="margin-top:var(--space-3)">
+      <button class="filter-btn is-active" onclick="setFilter('alle', this)">Alle</button>
+      <button class="filter-btn" onclick="setFilter('betaling_afwachting', this)">Betaling afwachting</button>
+      <button class="filter-btn" onclick="setFilter('betaald', this)">Betaald</button>
+      <button class="filter-btn" onclick="setFilter('verzonden', this)">Verzonden</button>
+    </div>
+
+    <!-- Tabel -->
+    <div class="table-wrap content-card" style="padding:0">
+      <table class="orders-table" id="orders-table">
+        <thead>
+          <tr>
+            <th>Order-ID</th>
+            <th>Klant</th>
+            <th>E-mail</th>
+            <th>Betaalmethode</th>
+            <th>Totaal</th>
+            <th>Datum</th>
+            <th>Status</th>
+            <th>Actie</th>
+          </tr>
+        </thead>
+        <tbody id="orders-body">
+          <tr><td colspan="8" style="text-align:center;padding:24px;color:var(--color-brown-soft)">Laden…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="../js/supabase-client.js"></script>
+  <script>
+    // TODO: verander dit wachtwoord!
+    const ADMIN_PASSWORD = 'medalling2024';
+
+    let allOrders = [];
+    let activeFilter = 'alle';
+
+    function checkLogin() {
+      const pw = document.getElementById('admin-pw').value;
+      if (pw === ADMIN_PASSWORD) {
+        sessionStorage.setItem('admin_auth', '1');
+        document.getElementById('login-overlay').style.display = 'none';
+        document.getElementById('admin-main').style.display = 'block';
+        loadOrders();
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    }
+
+    function logout() {
+      sessionStorage.removeItem('admin_auth');
+      location.reload();
+    }
+
+    document.getElementById('admin-pw')?.addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkLogin();
+    });
+
+    if (sessionStorage.getItem('admin_auth') === '1') {
+      document.getElementById('login-overlay').style.display = 'none';
+      document.getElementById('admin-main').style.display = 'block';
+      loadOrders();
+    }
+
+    async function loadOrders() {
+      const { data, error } = await db.from('orders')
+        .select('*').order('created_at', { ascending: false });
+      if (error) { console.error(error); return; }
+      allOrders = data || [];
+      renderStats(allOrders);
+      renderTable(allOrders, activeFilter);
+    }
+
+    function renderStats(orders) {
+      document.getElementById('stat-total').textContent = orders.length;
+      document.getElementById('stat-afwachting').textContent =
+        orders.filter(o => o.status === 'betaling_afwachting').length;
+      document.getElementById('stat-betaald').textContent =
+        orders.filter(o => ['betaald','verzonden'].includes(o.status)).length;
+      const omzet = orders
+        .filter(o => ['betaald','verzonden'].includes(o.status))
+        .reduce((s, o) => s + Number(o.totaal), 0);
+      document.getElementById('stat-omzet').textContent =
+        '€' + omzet.toFixed(2).replace('.', ',');
+    }
+
+    function setFilter(filter, btn) {
+      activeFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      renderTable(allOrders, filter);
+    }
+
+    function renderTable(orders, filter) {
+      const filtered = filter === 'alle' ? orders : orders.filter(o => o.status === filter);
+      const tbody = document.getElementById('orders-body');
+      if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--color-brown-soft)">Geen orders gevonden.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = filtered.map(o => `
+        <tr>
+          <td style="font-family:monospace;font-size:0.8rem">Medalling-${o.id.slice(0,8).toUpperCase()}</td>
+          <td style="font-weight:600">${o.klant_naam || `${o.voornaam||''} ${o.achternaam||''}`.trim()}</td>
+          <td><a href="mailto:${o.email}" style="color:var(--color-blue)">${o.email}</a></td>
+          <td>${o.betaalmethode === 'tikkie' ? '💬 Tikkie' : '🏦 Overboeking'}</td>
+          <td style="font-weight:700">€${Number(o.totaal).toFixed(2).replace('.',',')}</td>
+          <td style="white-space:nowrap;font-size:0.85rem">${o.created_at ? new Date(o.created_at).toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'}) : '—'}</td>
+          <td><span class="status-pill pill-${o.status}">${statusLabel(o.status)}</span></td>
+          <td>
+            ${actionButtons(o)}
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function statusLabel(s) {
+      return { nieuw:'Nieuw', betaling_afwachting:'Afwachting', betaald:'Betaald', verzonden:'Verzonden' }[s] || s;
+    }
+
+    function actionButtons(order) {
+      const btns = [];
+      if (order.status === 'betaling_afwachting') {
+        btns.push(`<button class="button-link action-btn" onclick="updateStatus('${order.id}','betaald')">✓ Betaald</button>`);
+      }
+      if (order.status === 'betaald') {
+        btns.push(`<button class="button-link action-btn" onclick="updateStatus('${order.id}','verzonden')">📦 Verzonden</button>`);
+      }
+      btns.push(`<a class="button-link button-link--secondary action-btn" href="order-status.html?id=${order.id}" target="_blank">👁</a>`);
+      return btns.join(' ');
+    }
+
+    async function updateStatus(id, status) {
+      const { error } = await db.from('orders').update({ status }).eq('id', id);
+      if (error) { alert('Fout bij updaten: ' + error.message); return; }
+      await loadOrders();
+    }
+
+    function exportCSV() {
+      if (allOrders.length === 0) return;
+      const cols = ['id','klant_naam','email','adres','postcode','plaats','totaal','betaalmethode','status','created_at'];
+      const header = cols.join(';');
+      const rows = allOrders.map(o => cols.map(c => `"${(o[c]||'').toString().replace(/"/g,'""')}"`).join(';'));
+      const csv = [header, ...rows].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `medalling-orders-${new Date().toISOString().slice(0,10)}.csv`;
+      a.click();
+    }
+
+    // Realtime updates
+    db.channel('admin-orders')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, () => loadOrders())
+      .subscribe();
+  </script>
+</body>
+</html>

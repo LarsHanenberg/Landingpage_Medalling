@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orderstatus | Medalling</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../images/Medalling-removebg.png">
+  <link rel="preload" as="font" href="../fonts/inter.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="../fonts/playfair-display.woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .status-wrap { max-width: 540px; margin: 0 auto; display: grid; gap: var(--space-3); }
+    .status-timeline { display: grid; gap: 0; }
+    .timeline-step {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      position: relative;
+    }
+    .timeline-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      left: 19px; top: 40px;
+      width: 2px; height: calc(100% + 4px);
+      background: var(--color-border);
+    }
+    .timeline-step.is-done::before { background: var(--color-gold); }
+    .timeline-dot {
+      width: 40px; height: 40px;
+      border-radius: 999px;
+      border: 2px solid var(--color-border);
+      background: var(--color-surface);
+      display: grid; place-items: center;
+      font-size: 1rem;
+      z-index: 1;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .timeline-step.is-done .timeline-dot {
+      border-color: var(--color-gold);
+      background: linear-gradient(135deg, var(--color-gold), #d7b467);
+      color: #fff;
+    }
+    .timeline-step.is-active .timeline-dot {
+      border-color: var(--color-gold);
+      animation: ringPulse 2s infinite;
+    }
+    @keyframes ringPulse {
+      0%,100%{box-shadow:0 0 0 0 rgba(200,164,77,0.4)}
+      50%{box-shadow:0 0 0 8px rgba(200,164,77,0)}
+    }
+    .timeline-body { padding: 8px 0 24px; }
+    .timeline-body h3 { font-size: 1rem; margin-bottom: 4px; }
+    .timeline-body p { font-size: 0.88rem; color: var(--color-brown-soft); margin: 0; }
+    .lookup-form { display: grid; gap: 10px; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand-link" href="../index.html" aria-label="Ga naar home">
+        <img src="../images/optimized/medalling-logo-96.png" width="96" height="95" alt="Medalling logo">
+      </a>
+      <button class="menu-toggle" aria-label="Menu openen" aria-expanded="false" aria-controls="main-nav">
+        <span class="menu-toggle__icon"></span>
+      </button>
+      <nav class="site-nav" id="main-nav" aria-label="Hoofdnavigatie">
+        <a href="shop.html">Winkel</a>
+        <a href="FAQ.html">FAQ</a>
+        <a href="Contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <div class="status-wrap">
+      <div class="section-heading">
+        <p class="section-kicker">Jouw bestelling</p>
+        <h1>Orderstatus</h1>
+      </div>
+
+      <!-- Zoekformulier (als geen order_id in URL) -->
+      <div class="content-card" id="lookup-section" style="display:none">
+        <h2 style="font-size:1.1rem;margin-bottom:var(--space-2)">Order opzoeken</h2>
+        <form class="lookup-form" onsubmit="lookupOrder(event)">
+          <div>
+            <label for="order-input">Order-ID</label>
+            <input type="text" id="order-input" placeholder="bijv. A1B2C3D4" required>
+          </div>
+          <button type="submit">Opzoeken</button>
+        </form>
+      </div>
+
+      <!-- Laad indicator -->
+      <div id="loading" style="text-align:center;padding:var(--space-4);color:var(--color-brown-soft)">
+        Bestelling ophalen…
+      </div>
+
+      <!-- Order details -->
+      <div id="order-details" style="display:none">
+        <div class="content-card" style="display:grid;gap:var(--space-2);margin-bottom:var(--space-3)">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div>
+              <p style="font-size:0.8rem;color:var(--color-brown-soft);margin:0">Ordernummer</p>
+              <p style="font-weight:800;font-size:1.05rem;margin:0" id="detail-id">—</p>
+            </div>
+            <div id="status-chip"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div>
+              <p style="font-size:0.8rem;color:var(--color-brown-soft);margin:0">Klant</p>
+              <p style="font-weight:600;margin:0" id="detail-naam">—</p>
+            </div>
+            <div>
+              <p style="font-size:0.8rem;color:var(--color-brown-soft);margin:0">Totaal</p>
+              <p style="font-weight:600;margin:0" id="detail-totaal">—</p>
+            </div>
+            <div>
+              <p style="font-size:0.8rem;color:var(--color-brown-soft);margin:0">Betaalmethode</p>
+              <p style="font-weight:600;margin:0" id="detail-methode">—</p>
+            </div>
+            <div>
+              <p style="font-size:0.8rem;color:var(--color-brown-soft);margin:0">Datum</p>
+              <p style="font-weight:600;margin:0" id="detail-datum">—</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="content-card">
+          <h2 style="font-size:1.1rem;margin-bottom:var(--space-3)">Status</h2>
+          <div class="status-timeline" id="timeline">
+            <div class="timeline-step" data-step="nieuw">
+              <div class="timeline-dot">✓</div>
+              <div class="timeline-body">
+                <h3>Bestelling geplaatst</h3>
+                <p>Je bestelling is ontvangen.</p>
+              </div>
+            </div>
+            <div class="timeline-step" data-step="betaling_afwachting">
+              <div class="timeline-dot">💳</div>
+              <div class="timeline-body">
+                <h3>Betaling in afwachting</h3>
+                <p>We controleren je betaling.</p>
+              </div>
+            </div>
+            <div class="timeline-step" data-step="betaald">
+              <div class="timeline-dot">✓</div>
+              <div class="timeline-body">
+                <h3>Betaling ontvangen</h3>
+                <p>Je betaling is bevestigd.</p>
+              </div>
+            </div>
+            <div class="timeline-step" data-step="verzonden">
+              <div class="timeline-dot">📦</div>
+              <div class="timeline-body">
+                <h3>Verzonden</h3>
+                <p>Je bestelling is onderweg.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Niet gevonden -->
+      <div id="not-found" style="display:none" class="content-card" >
+        <p>Bestelling niet gevonden. Controleer het order-ID en probeer opnieuw.</p>
+        <a href="shop.html" class="button-link" style="margin-top:var(--space-2)">Terug naar winkel</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <div class="site-footer__brand">
+        <img class="site-footer__logo" src="../images/optimized/medalling-logo-160.png" width="160" height="159" loading="lazy" decoding="async" alt="Medalling logo">
+        <div><p class="site-footer__title">Medalling</p></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/supabase-client.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    const STATUS_ORDER = ['nieuw', 'betaling_afwachting', 'betaald', 'verzonden'];
+    const STATUS_LABELS = {
+      nieuw: 'Besteld',
+      betaling_afwachting: 'Betaling afwachting',
+      betaald: 'Betaald',
+      verzonden: 'Verzonden'
+    };
+    const STATUS_COLORS = {
+      nieuw: 'rgba(30,78,216,0.1)',
+      betaling_afwachting: 'rgba(200,164,77,0.12)',
+      betaald: 'rgba(31,122,66,0.1)',
+      verzonden: 'rgba(31,122,66,0.18)'
+    };
+
+    let currentOrderId = null;
+
+    async function loadOrder(id) {
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('order-details').style.display = 'none';
+      document.getElementById('not-found').style.display = 'none';
+
+      const { data, error } = await db.from('orders').select('*').eq('id', id).single();
+      document.getElementById('loading').style.display = 'none';
+
+      if (error || !data) {
+        document.getElementById('not-found').style.display = 'block';
+        return;
+      }
+
+      currentOrderId = data.id;
+      renderOrder(data);
+      subscribeToOrder(data.id);
+    }
+
+    function renderOrder(data) {
+      document.getElementById('order-details').style.display = 'block';
+      document.getElementById('detail-id').textContent = 'Medalling-' + data.id.slice(0, 8).toUpperCase();
+      document.getElementById('detail-naam').textContent = data.klant_naam || `${data.voornaam} ${data.achternaam}`;
+      document.getElementById('detail-totaal').textContent = '€' + Number(data.totaal).toFixed(2).replace('.', ',');
+      document.getElementById('detail-methode').textContent = data.betaalmethode === 'tikkie' ? '💬 Tikkie' : '🏦 Overboeking';
+      document.getElementById('detail-datum').textContent = data.created_at
+        ? new Date(data.created_at).toLocaleDateString('nl-NL', { day:'numeric', month:'short', year:'numeric' })
+        : '—';
+
+      // Status chip
+      const chip = document.getElementById('status-chip');
+      const label = STATUS_LABELS[data.status] || data.status;
+      chip.innerHTML = `<span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font-weight:700;font-size:0.85rem;background:${STATUS_COLORS[data.status] || 'rgba(90,70,58,0.08)'};">${label}</span>`;
+
+      // Timeline
+      const stepIdx = STATUS_ORDER.indexOf(data.status);
+      document.querySelectorAll('.timeline-step').forEach((el, i) => {
+        el.classList.remove('is-done', 'is-active');
+        if (i < stepIdx) el.classList.add('is-done');
+        else if (i === stepIdx) el.classList.add('is-active', 'is-done');
+      });
+    }
+
+    function subscribeToOrder(id) {
+      db.channel('status-' + id)
+        .on('postgres_changes', {
+          event: 'UPDATE', schema: 'public', table: 'orders', filter: `id=eq.${id}`
+        }, (payload) => renderOrder(payload.new))
+        .subscribe();
+    }
+
+    async function lookupOrder(e) {
+      e.preventDefault();
+      const val = document.getElementById('order-input').value.trim();
+      if (!val) return;
+      // Probeer eerst als UUID, anders als prefix
+      await loadOrder(val);
+    }
+
+    // Init
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (id) {
+      loadOrder(id);
+    } else {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('lookup-section').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" href="images/Medalling-removebg.png">
     <link rel="preload" as="font" href="fonts/inter.woff2" type="font/woff2" crossorigin>
     <link rel="preload" as="font" href="fonts/playfair-display.woff2" type="font/woff2" crossorigin>
-    <link rel="preload" as="image" href="images/optimized/design-640.webp" imagesrcset="images/optimized/design-640.webp 640w, images/optimized/design-960.webp 960w, images/optimized/design-1152.webp 1152w" imagesizes="100vw" fetchpriority="high">
+    <link rel="preload" as="image" href="images/optimized/product-light-640.webp" imagesrcset="images/optimized/product-light-640.webp 640w, images/optimized/product-light-960.webp 960w, images/optimized/product-light-1152.webp 1152w" imagesizes="50vw" fetchpriority="high">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="nl_NL">
     <meta property="og:site_name" content="Medalling">
@@ -76,16 +76,28 @@
                 <a href="pages/blog.html">Blog</a>
                 <a href="pages/OverOns.html">Over ons</a>
                 <a href="pages/Contact.html">Contact</a>
+                <a href="pages/shop.html" class="nav-shop-link">Bestel nu</a>
             </nav>
         </div>
     </header>
 
     <main id="top">
         <section class="hero">
-            <div class="hero-background intro-slider" aria-hidden="true">
-                <img src="images/optimized/design-640.webp" srcset="images/optimized/design-640.webp 640w, images/optimized/design-960.webp 960w, images/optimized/design-1152.webp 1152w" sizes="100vw" width="640" height="464" fetchpriority="high" decoding="async" alt="Medalling medaillehouder met verlichting voor sporters en marathon medaille">
-                <img src="images/optimized/hmv-640.webp" width="640" height="411" loading="lazy" decoding="async" alt="Aankomend event">
-
+            <div class="hero-background" aria-hidden="true">
+                <!-- Dag foto (standaard zichtbaar) -->
+                <img class="hero-img hero-img--day"
+                     src="images/optimized/product-light-640.webp"
+                     srcset="images/optimized/product-light-640.webp 640w, images/optimized/product-light-960.webp 960w, images/optimized/product-light-1152.webp 1152w"
+                     sizes="100vw" width="960" height="640"
+                     fetchpriority="high" decoding="async"
+                     alt="Medalling medaillehouder in daglicht">
+                <!-- Nacht foto -->
+                <img class="hero-img hero-img--night"
+                     src="images/optimized/design-640.webp"
+                     srcset="images/optimized/design-640.webp 640w, images/optimized/design-960.webp 960w, images/optimized/design-1152.webp 1152w"
+                     sizes="100vw" width="640" height="464"
+                     loading="eager" decoding="async"
+                     alt="Medalling medaillehouder met warme LED-verlichting">
             </div>
             <div class="hero-overlay" aria-hidden="true"></div>
 
@@ -93,12 +105,37 @@
                 <p class="hero-kicker">Medalling</p>
                 <h1 class="hero-title">Unieke medaillehouder voor sporters</h1>
                 <p class="hero-subtitle">Laat je medaille niet verdwijnen, maar maak je hardloop prestaties zichtbaar met een unieke medaillehouder.</p>
-                <a class="button-link hero-cta" href="#preorder">Plaats bestelverzoek</a>
+                <a class="button-link hero-cta" href="pages/shop.html">Bestel nu — €34,98</a>
                 <p class="hero-note">Vrijblijvend, zonder directe betaling.</p>
             </div>
+
+            <!-- Dag/nacht toggle — linksonder -->
+            <div class="daynight-toggle" role="group" aria-label="Dag of nacht weergave">
+                <button class="daynight-btn daynight-btn--day is-active" id="btn-day" onclick="setDayNight('day')" aria-pressed="true" aria-label="Dagweergave">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                    </svg>
+                    <span>Dag</span>
+                </button>
+                <button class="daynight-btn daynight-btn--night" id="btn-night" onclick="setDayNight('night')" aria-pressed="false" aria-label="Nachtweergave">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                    <span>Nacht</span>
+                </button>
+            </div>
+
+            <!-- Scroll-pijl — gecentreerd onderaan -->
+            <button class="hero-scroll-btn" onclick="(function(){ const el=document.getElementById('event-highlight'); window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - 12, behavior:'smooth'}); })()" aria-label="Scroll naar meer informatie">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </button>
+
         </section>
 
-        <a class="event-highlight" href="#hmv-2026" aria-labelledby="event-highlight-title">
+        <a class="event-highlight" id="event-highlight" href="#hmv-2026" aria-labelledby="event-highlight-title">
             <div class="event-highlight__logo">
                 <picture>
                     <source srcset="images/optimized/hmv-640.webp" type="image/webp">
@@ -132,7 +169,7 @@
                     <h3>Getest met echte finishers, zichtbaar op een echte marathonlocatie</h3>
                     <p>De reacties in Veghel bevestigden wat wij belangrijk vinden: een medaillehouder moet persoonlijk voelen, netjes staan in huis en herkenbaar zijn voor het event waar de prestatie is geleverd.</p>
                     <div class="hmv-proof__actions">
-                        <a class="button-link" href="#preorder">Bestelverzoek plaatsen</a>
+                        <a class="button-link" href="pages/shop.html">Bestelverzoek plaatsen</a>
                         <a class="button-link button-link--secondary" href="pages/Contact.html">Aanvraag voor jouw marathon</a>
                     </div>
                 </div>
@@ -264,7 +301,7 @@
                         </p>
                         <div class="design-slide__actions">
                             <a class="button-link" href="pages/Acryl_design.html">Meer info</a>
-                            <a class="button-link button-link--secondary" href="#preorder">Bestelverzoek</a>
+                            <a class="button-link button-link--secondary" href="pages/shop.html">Bestelverzoek</a>
                         </div>
                     </div>
                 </article>
@@ -296,61 +333,25 @@
         </section>
 
         <section class="final-cta" id="preorder">
-            <div class="section-heading section-heading--center">
-                <p class="section-kicker">Bestellen</p>
-                <h2>Plaats een vrijblijvend bestelverzoek</h2>
-                <p>Laat je gegevens achter. We nemen contact met je op over beschikbaarheid, betaling en levering voordat er een definitieve bestelling ontstaat.</p>
-            </div>
-
-            <div class="preorder-panel">
-                <div class="preorder-preview">
+            <div class="preorder-panel" style="text-align:center; grid-template-columns:1fr; justify-items:center;">
+                <div class="section-heading section-heading--center">
+                    <p class="section-kicker">Bestellen</p>
+                    <h2>Klaar om te bestellen?</h2>
+                    <p>Kies je betaalmethode, vul je gegevens in en ontvang een bevestiging per e-mail. Vrijblijvend — je betaalt pas na bevestiging.</p>
+                </div>
+                <div class="preorder-preview" style="max-width:460px; width:100%;">
                     <picture>
                         <source srcset="images/optimized/design-640.webp 640w, images/optimized/design-960.webp 960w, images/optimized/design-1152.webp 1152w" sizes="(min-width: 769px) 450px, calc(100vw - 64px)" type="image/webp">
                         <img src="images/optimized/design-640.jpg" srcset="images/optimized/design-640.jpg 640w, images/optimized/design-960.jpg 960w, images/optimized/design-1152.jpg 1152w" sizes="(min-width: 769px) 450px, calc(100vw - 64px)" width="640" height="464" loading="lazy" decoding="async" alt="Acryl design van Medalling met warme LED-verlichting">
                     </picture>
                 </div>
-
-                <div class="preorder-panel__form">
-                    <form id="preorder-form" class="preorder-form">
-                        <input type="hidden" id="design" name="design" value="Acryl design">
-
-                        <div>
-                            <label for="fname">Voornaam</label>
-                            <input type="text" id="fname" name="fname" placeholder="Voornaam" required>
-                        </div>
-
-                        <div>
-                            <label for="lname">Achternaam</label>
-                            <input type="text" id="lname" name="lname" placeholder="Achternaam" required>
-                        </div>
-
-                        <div>
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" placeholder="naam@voorbeeld.nl" required>
-                        </div>
-
-                        <label class="checkbox-field" for="terms">
-                            <input type="checkbox" id="terms" name="terms" required>
-                            <span>
-                                Ik ga akkoord met de <a href="pages/AlgemeneVoorwaarden.html">algemene voorwaarden</a>.
-                                Lees ook onze <a href="pages/Privacy.html">privacyverklaring</a>.
-                            </span>
-                        </label>
-
-                        <label class="checkbox-field checkbox-field--optional" for="newsletter">
-                            <input type="checkbox" id="newsletter" name="newsletter">
-                            <span>
-                                Ik wil me aanmelden voor de nieuwsbrief en updates ontvangen over het design, events en bestelmogelijkheden.
-                            </span>
-                        </label>
-
-                        <p id="preorder-status" class="preorder-status" aria-live="polite"></p>
-
-                        <div class="preorder-actions">
-                            <button type="submit">Bestelverzoek plaatsen</button>
-                        </div>
-                    </form>
+                <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:var(--space-2)">
+                    <a class="button-link" href="pages/shop.html">Bestel nu — €34,98</a>
+                    <a class="button-link button-link--secondary" href="pages/Acryl_design.html">Meer info over het design</a>
                 </div>
+                <p style="font-size:0.85rem; color:var(--color-brown-soft); margin-top:10px;">
+                    Betalen via Tikkie of bankoverschrijving. Geen account nodig.
+                </p>
             </div>
         </section>
     </main>
@@ -386,5 +387,68 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        (function () {
+            const hero = document.querySelector('.hero');
+            const btnDay = document.getElementById('btn-day');
+            const btnNight = document.getElementById('btn-night');
+            let mode = 'day';
+            let autoTimer;
+
+            // Sluit de gap tussen header en hero, vul exact de resterende viewport
+            function fitHero() {
+                requestAnimationFrame(function () {
+                    requestAnimationFrame(function () {
+                        const headerBottom = document.querySelector('.site-header').getBoundingClientRect().bottom;
+                        const heroTop = hero.getBoundingClientRect().top;
+                        const gap = heroTop - headerBottom;
+                        if (gap > 0) {
+                            const curMargin = parseFloat(getComputedStyle(hero).marginTop) || 0;
+                            hero.style.marginTop = (curMargin - gap) + 'px';
+                        }
+                        hero.style.height = (window.innerHeight - headerBottom) + 'px';
+                    });
+                });
+            }
+            fitHero();
+            window.addEventListener('load', fitHero);
+            window.addEventListener('resize', fitHero);
+
+            function setDayNight(m) {
+                mode = m;
+                if (m === 'night') {
+                    hero.classList.add('is-night');
+                    btnNight.classList.add('is-active');
+                    btnNight.setAttribute('aria-pressed', 'true');
+                    btnDay.classList.remove('is-active');
+                    btnDay.setAttribute('aria-pressed', 'false');
+                } else {
+                    hero.classList.remove('is-night');
+                    btnDay.classList.add('is-active');
+                    btnDay.setAttribute('aria-pressed', 'true');
+                    btnNight.classList.remove('is-active');
+                    btnNight.setAttribute('aria-pressed', 'false');
+                }
+                resetAutoTimer();
+            }
+
+            function resetAutoTimer() {
+                clearInterval(autoTimer);
+                autoTimer = setInterval(function () {
+                    setDayNight(mode === 'day' ? 'night' : 'day');
+                }, 5000);
+            }
+
+            // Maak globaal zodat onclick in HTML werkt
+            window.setDayNight = setDayNight;
+
+            // Start automatisch wisselen na 3 seconden
+            autoTimer = setTimeout(function () {
+                setDayNight('night');
+                resetAutoTimer();
+            }, 3000);
+        })();
+    </script>
 </body>
 </html>
