@@ -19,7 +19,7 @@
     .betaling-hero {
       text-align: center;
       padding: var(--space-4) var(--space-3);
-      background: linear-gradient(135deg, rgba(200,164,77,0.12), rgba(255,250,244,0.96));
+      background: linear-gradient(135deg, rgba(200,164,77,0.12), var(--color-surface));
       border: 1px solid rgba(200,164,77,0.22);
       border-radius: 28px;
     }
@@ -54,7 +54,7 @@
       align-items: center;
       gap: 8px;
       padding: 12px 14px;
-      background: rgba(255,255,255,0.9);
+      background: var(--color-surface);
       border: 1.5px solid var(--color-border);
       border-radius: 12px;
       font-family: monospace;
@@ -92,7 +92,7 @@
     .pulse { animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
   <header class="site-header">
@@ -107,6 +107,7 @@
         <a href="Acryl_design.html">Design</a>
         <a href="FAQ.html">Veelgestelde vragen</a>
         <a href="shop.html">Winkel</a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Schakel naar donkere modus" aria-pressed="false"><span class="icon-sun">☀️</span><span class="icon-moon">🌙</span></button>
       </nav>
     </div>
   </header>
@@ -129,43 +130,45 @@
       </div>
 
       <!-- Tikkie scherm -->
-      <div id="tikkie-block" style="display:none;display:grid;gap:var(--space-2)">
-        <div class="betaling-hero">
-          <div class="betaling-icon">💬</div>
-          <h2 style="margin-bottom:8px">Betaal via Tikkie</h2>
-          <p style="color:var(--color-brown-soft);margin:0">Gebruik de link hieronder om direct te betalen.</p>
-        </div>
-
-        <div class="betaling-step">
-          <span class="betaling-step__num">1</span>
-          <div>
-            <p style="font-weight:700;margin-bottom:6px">Open de Tikkie-link</p>
-            <a id="tikkie-link" href="#" target="_blank" class="button-link" style="width:100%;justify-content:center">
-              Betaal €34,98 via Tikkie →
-            </a>
+      <div id="tikkie-block" style="display:none">
+        <div style="display:grid;gap:var(--space-2)">
+          <div class="betaling-hero">
+            <div class="betaling-icon">💬</div>
+            <h2 style="margin-bottom:8px">Betaal via Tikkie</h2>
+            <p style="color:var(--color-brown-soft);margin:0">Stuur ons een WhatsApp-bericht en je ontvangt direct een persoonlijke Tikkie-link.</p>
           </div>
-        </div>
 
-        <div class="betaling-step">
-          <span class="betaling-step__num">2</span>
-          <div>
-            <p style="font-weight:700;margin-bottom:4px">Of stuur een bericht via WhatsApp</p>
-            <p style="color:var(--color-brown-soft);font-size:0.9rem;margin-bottom:8px">
-              Vermeld je ordernummer in het bericht.
-            </p>
-            <a id="whatsapp-link" href="#" target="_blank" class="button-link button-link--secondary">
-              💬 Stuur WhatsApp bericht
-            </a>
+          <div class="betaling-step">
+            <span class="betaling-step__num">1</span>
+            <div>
+              <p style="font-weight:700;margin-bottom:4px">Stuur een WhatsApp-bericht</p>
+              <p style="color:var(--color-brown-soft);font-size:0.9rem;margin-bottom:8px">
+                Vermeld je ordernummer zodat wij de juiste Tikkie-link kunnen sturen.
+              </p>
+              <a id="whatsapp-link" href="#" target="_blank" class="button-link" style="width:100%;justify-content:center">
+                💬 Stuur WhatsApp bericht
+              </a>
+            </div>
           </div>
-        </div>
 
-        <div class="betaling-step">
-          <span class="betaling-step__num">3</span>
-          <div>
-            <p style="font-weight:700;margin-bottom:4px">Klik na betaling op de knop</p>
-            <button type="button" id="paid-btn-tikkie" onclick="markAsPending()" style="width:100%">
-              ✓ Ik heb betaald
-            </button>
+          <div class="betaling-step">
+            <span class="betaling-step__num">2</span>
+            <div>
+              <p style="font-weight:700;margin-bottom:4px">Betaal via de ontvangen Tikkie-link</p>
+              <p style="color:var(--color-brown-soft);font-size:0.9rem;margin:0">
+                Je ontvangt de link terug via WhatsApp en kunt daarna direct betalen.
+              </p>
+            </div>
+          </div>
+
+          <div class="betaling-step">
+            <span class="betaling-step__num">3</span>
+            <div>
+              <p style="font-weight:700;margin-bottom:4px">Klik na betaling op de knop</p>
+              <button type="button" id="paid-btn-tikkie" onclick="markAsPending()" style="width:100%">
+                ✓ Ik heb betaald
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -240,7 +243,15 @@
     <div class="site-footer__inner">
       <div class="site-footer__brand">
         <img class="site-footer__logo" src="../images/optimized/medalling-logo-160.png" width="160" height="159" loading="lazy" decoding="async" alt="Medalling logo">
-        <div><p class="site-footer__title">Medalling</p></div>
+        <div>
+          <p class="site-footer__title">Medalling</p>
+          <p class="site-footer__text">Unieke medaillehouders die sportprestaties zichtbaar maken.</p>
+        </div>
+      </div>
+      <div class="site-footer__columns">
+        <div class="site-footer__group"><h3>Contact</h3><a href="mailto:info.medailledesign@gmail.com"><img class="footer-icon" src="../images/optimized/mail-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">info.medailledesign@gmail.com</a></div>
+        <div class="site-footer__group"><h3>Socials</h3><a href="https://www.instagram.com/medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon" src="../images/optimized/instagram-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">Instagram</a><a href="https://www.tiktok.com/@medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon footer-icon--tiktok" src="../images/tiktok_icon.png" width="64" height="64" loading="lazy" decoding="async" alt="TikTok">TikTok</a></div>
+        <div class="site-footer__group"><h3>Informatie</h3><a href="Privacy.html">Privacyverklaring</a><a href="AlgemeneVoorwaarden.html">Algemene voorwaarden</a></div>
       </div>
     </div>
   </footer>
@@ -249,10 +260,8 @@
   <script src="../js/supabase-client.js"></script>
   <script src="../js/main.js"></script>
   <script>
-    // TODO: vervang deze placeholders
-    const TIKKIE_LINK = 'https://tikkie.me/pay/TODO';
-    const WHATSAPP_PHONE = '31612345678'; // zonder + en zonder 0 vooraan
-    const IBAN = 'NL00 INGB 0000 0000 00';
+    const WHATSAPP_PHONE = '31610751680';
+    const IBAN = 'NL34 RABO 0152 8022 82';
 
     const params = new URLSearchParams(window.location.search);
     const orderId = params.get('order_id');
@@ -269,9 +278,8 @@
 
     if (methode === 'tikkie') {
       document.getElementById('betaling-title').textContent = 'Betalen via Tikkie';
-      document.getElementById('tikkie-block').style.display = 'grid';
-      document.getElementById('tikkie-link').href = TIKKIE_LINK;
-      const msg = encodeURIComponent(`Hoi, ik heb zojuist een medaillehouder besteld. Ordernummer: Medalling-${(orderId||'').slice(0,8).toUpperCase()}`);
+      document.getElementById('tikkie-block').style.display = 'block';
+      const msg = encodeURIComponent(`Hoi, ik heb zojuist een medaillehouder besteld (ordernummer: Medalling-${(orderId||'').slice(0,8).toUpperCase()}). Kunnen jullie mij de Tikkie-link sturen?`);
       document.getElementById('whatsapp-link').href = `https://wa.me/${WHATSAPP_PHONE}?text=${msg}`;
     } else {
       document.getElementById('betaling-title').textContent = 'Betalen via overboeking';
