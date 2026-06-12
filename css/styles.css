@@ -1681,6 +1681,11 @@ textarea:focus {
     background: rgba(255, 250, 244, 0.9);
 }
 
+.footer-icon--tiktok {
+    background: #000;
+    border-radius: 50%;
+}
+
 /* Dark mode: form inputs leesbaar in checkout */
 [data-theme="dark"] input,
 [data-theme="dark"] select,

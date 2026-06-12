@@ -10,6 +10,7 @@
             btn.setAttribute('aria-label', theme === DARK ? 'Schakel naar lichte modus' : 'Schakel naar donkere modus');
             btn.setAttribute('aria-pressed', theme === DARK ? 'true' : 'false');
         });
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: theme } }));
     }
 
     function toggle() {

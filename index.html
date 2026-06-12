@@ -391,7 +391,7 @@
                 <div class="site-footer__group">
                     <h3>Socials</h3>
                     <a href="https://www.instagram.com/medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/optimized/instagram-64.png" width="64" height="64" loading="lazy" decoding="async" alt="">Instagram</a>
-                    <a href="https://www.tiktok.com/@medalling" target="_blank" rel="noreferrer"><img class="footer-icon" src="images/tiktok_logo.png" width="64" height="64" loading="lazy" decoding="async" alt="TikTok">TikTok</a>
+                    <a href="https://www.tiktok.com/@medailledesign" target="_blank" rel="noreferrer"><img class="footer-icon footer-icon--tiktok" src="images/tiktok_icon.png" width="64" height="64" loading="lazy" decoding="async" alt="TikTok">TikTok</a>
                 </div>
                 <div class="site-footer__group">
                     <h3>Informatie</h3>
@@ -452,6 +452,12 @@
             if (window.getTheme && window.getTheme() === 'dark') {
                 setDayNight('night');
             }
+
+            // Sync hero wanneer de header-toggle het thema wijzigt
+            document.addEventListener('themechange', function (e) {
+                var newMode = e.detail.theme === 'dark' ? 'night' : 'day';
+                if (newMode !== mode) setDayNight(newMode);
+            });
 
             // Maak globaal zodat onclick in HTML werkt
             window.setDayNight = setDayNight;
