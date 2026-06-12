@@ -421,6 +421,15 @@
                     document.documentElement.style.setProperty('--header-height', Math.round(headerH) + 'px');
                     hero.style.height = '';
                     hero.style.marginTop = '';
+                    requestAnimationFrame(function () {
+                        const headerBottom = document.querySelector('.site-header').getBoundingClientRect().bottom;
+                        const heroTop = hero.getBoundingClientRect().top;
+                        const gap = heroTop - headerBottom;
+                        if (gap > 0) {
+                            const curMargin = parseFloat(getComputedStyle(hero).marginTop) || 0;
+                            hero.style.marginTop = (curMargin - gap) + 'px';
+                        }
+                    });
                     return;
                 }
                 requestAnimationFrame(function () {
