@@ -20,7 +20,7 @@
     <meta property="og:image" content="https://medailledesign.nl/images/IMG_Design-dark-background.png">
     <meta property="og:image:alt" content="Modern medaillehouder design van Medalling voor sportmedailles">
     <link rel="stylesheet" href="css/styles.css?v=20260613">
-    <script src="js/theme.js"></script>
+    <script>(function(){var DARK='dark',LIGHT='light',KEY='medalling-theme';function applyTheme(t){document.documentElement.setAttribute('data-theme',t);localStorage.setItem(KEY,t);document.querySelectorAll('.theme-toggle').forEach(function(b){b.setAttribute('aria-label',t===DARK?'Schakel naar lichte modus':'Schakel naar donkere modus');b.setAttribute('aria-pressed',t===DARK?'true':'false')});document.dispatchEvent(new CustomEvent('themechange',{detail:{theme:t}}))}function toggle(){var c=document.documentElement.getAttribute('data-theme');applyTheme(c===DARK?LIGHT:DARK)}var saved=localStorage.getItem(KEY)||LIGHT;applyTheme(saved);window.toggleTheme=toggle;window.applyTheme=applyTheme;window.getTheme=function(){return document.documentElement.getAttribute('data-theme')}})()</script>
     <script src="js/analytics.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/preorder.js" defer></script>
@@ -149,7 +149,7 @@
 
         </section>
 
-        <a class="event-highlight" id="event-highlight" href="#hmv-2026" aria-labelledby="event-highlight-title">
+        <a class="event-highlight" id="event-highlight" href="#hmv-2026" aria-label="Terugblik event – Halve Marathon Veghel">
             <div class="event-highlight__logo">
                 <picture>
                     <source srcset="images/optimized/hmv-640.webp" type="image/webp">
