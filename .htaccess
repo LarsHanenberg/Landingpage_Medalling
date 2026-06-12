@@ -1,3 +1,8 @@
+# Redirect index.html to canonical root URL
+RewriteEngine On
+RewriteCond %{THE_REQUEST} \s/index\.html[\s?]
+RewriteRule ^index\.html$ / [R=301,L]
+
 # Cache control headers for static assets
 <FilesMatch "\.(jpg|jpeg|png|gif|ico|css|js|svg|webp|avif|woff|woff2|ttf|otf)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
