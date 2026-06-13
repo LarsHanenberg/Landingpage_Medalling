@@ -39,6 +39,14 @@ RewriteRule ^index\.html$ / [R=301,L]
 # Disable directory listing
 Options -Indexes
 
+# Blokkeer directe toegang tot admin.html op serverniveau
+<Files "admin.html">
+    AuthType Basic
+    AuthName "Admin toegang vereist"
+    AuthUserFile /path/to/.htpasswd
+    Require valid-user
+</Files>
+
 # Remove ETags
 Header unset ETag
 FileETag None
